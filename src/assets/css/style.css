@@ -283,8 +283,8 @@ a:focus {
   border-radius: 0;
 }
 .nav-link.active {
-    color: #506ffc !important;
-    border-bottom: 3px solid #506ffc !important;
+    color: #02BD64 !important;
+    border-bottom: 3px solid #02BD64 !important;
     border-radius: 0 !important;
 }
 .custom_nav-container .nav_search-btn {
