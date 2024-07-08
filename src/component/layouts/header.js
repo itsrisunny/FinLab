@@ -61,7 +61,7 @@ export default function Header({navigateMenu, activeMenu}) {
             </ul>
             <div className="user_option">
               <Link to="" className="user_link">
-                <div className="user_call"><img src={call} className="img-fluid" style={{"height":"15px"}} alt=""/> +1800-123-4567</div>
+                <div className="user_call"><img src={call} className="img-fluid" style={{"height":"15px"}} alt=""/> +1800-123-4567 00</div>
                 <div className="user_email"><img src={email} className="img-fluid" style={{"height":"15px"}} alt=""/> care@finlab.one</div>    
               </Link> 
 
