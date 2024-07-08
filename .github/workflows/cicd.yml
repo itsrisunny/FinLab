@@ -1,0 +1,33 @@
+name: Deploy to cPanel
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Install dependencies and build
+        run: |
+          npm install --legacy-peer-deps
+          npm run build
+          
+      - name: Deploy to cPanel
+        uses: actions/upload-artifact@v2
+        with:
+          name: build
+          path: build
+          
+      - name: Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          server: apisod.ai
+          username: finlab@apisod.ai
+          password: finlab@930
+          

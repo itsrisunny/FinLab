@@ -1,0 +1,576 @@
+
+
+@media (max-width: 1370px) {
+  .slider_section .detail-box {
+    margin: 10px auto 100px auto;
+  }
+  .slider_section .detail-box {
+    padding-top: 15px;
+  }
+  .slider_section .detail-box h1 {
+    font-size: 28px;
+  }
+  .slider_circle {
+    bottom: -22px;
+    transform: scale(0.8);
+  }
+  .detail-box .col-lg-2 {
+    display: none;
+  }
+  .backy {
+    height: 580px;
+  }
+  .slider_section {
+    height: 586px;
+    position: relative;
+  }
+  .threeCards {
+    bottom: 230px;
+  }
+}
+@media (max-width: 1200px) {
+  .custom_nav-container .navbar-nav .nav-item:hover .nav-link,
+  .custom_nav-container .navbar-nav .nav-item.active .nav-link {
+    border-bottom: 3px solid #02bd64;
+    border-radius: 0;
+    width: 180px;
+    margin: 5px auto;
+  }
+  .user_option {
+    margin: 0 !important;
+    justify-content: center;
+    margin-top: 15px !important;
+  }
+  .slider_circle {
+    bottom: -68px;
+    transform: scale(0.6);
+  }
+  .threeCards {
+    bottom: 140px;
+  }
+  .backy {
+    height: 518px;
+  }
+  .slider_section {
+    position: relative;
+    height: 488px;
+  }
+  .slider_section .detail-box {
+    color: #fff;
+    margin: 10px auto 100px auto;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  .login-left-side img {
+    height: 500px;
+    width: auto;
+  }
+}
+@media (max-width: 992px) {
+  /* ul.mysidepills li {
+    max-width: 100%;
+    width: 100%;
+    position: relative;
+    padding-left: 0px !important;
+    display: inline-block;
+  } */
+  ul.mysidepills li {
+    max-width: 100%;
+    width: 100%;
+    position: relative;
+    /* line-height: 60px; */
+    padding-left: 0px !important;
+    display: inline-block;
+}
+.navitemsPart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  flex: 0 0 100%;
+  max-width: 100%;
+}
+ul li.sidebar-lists::after {
+  content: "";
+  position: absolute;
+  left: -3px;
+  height: 24px;
+  width: 24px;
+  display: block;
+  background: #fff;
+  border-radius: 50%;
+  top: 8px;
+  z-index: -1;
+  border: 2px solid #5271ff40;
+}
+
+  /* 16-11-2023 start*/
+
+  ul.mysidepills li {
+    max-width: 100%;
+    width: 100%;
+    position: relative;
+    padding-left: 0px !important;
+    display: inline-block;
+}
+
+ul.mysidepills {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  min-height: 110px;
+  min-width: 360px;
+}
+
+  ul.mysidepills:before {
+    position: absolute;
+    content: "";
+    width: 286px;
+    border-top: 1px solid #0000ff47;
+    height: 2px;
+    top: 21px;
+    z-index: -1;
+    left: auto;
+    right: auto;
+}
+
+ul.mysidepills li span.liText {
+  line-height: 22px !important;
+  margin: 0 12px 0 0;
+  top: 45px;
+  position: relative;
+  left: -29px;
+  display: block;
+  text-align: center;
+}
+
+  ul li.sidebar-lists::before {
+    color: #5271ff;
+    content: "\2022";
+    font-weight: bold;
+    display: inline-block;
+    width: 52px;
+    font-size: 48px;
+    position: absolute;
+    line-height: 60px;
+    left: 0;
+    top: -12px;
+    z-index: 9;
+}
+
+h4.top-heading {
+  text-align: center;
+  font-weight: 600;
+  padding: 40px 0 5px 5px;
+}
+  ul li.sidebar-lists.active .liText::before {
+    content: "\f00c";
+    font-family: Fontawesome;
+    position: absolute;
+    left: 31px;
+    top: -36px;
+    color: #fff;
+    z-index: 66;
+    font-size: 14px;
+  }
+
+  /* 16-11-2023 end*/
+
+  .login-inner {
+    padding: 20px;
+  }
+  .login-head {
+    padding: 58px 58px 10px 18px;
+  }
+  .lender-box {
+    height: 100%;
+  }
+  .covered_blocks {
+    height: 100%;
+  }
+  .lender-box {
+    background-color: #fff;
+    padding: 30px 25px;
+    border-radius: 20px;
+    max-width: 350px;
+    margin: 10px auto;
+  }
+
+  .order-sec-2 {
+    order: 2 !important;
+  }
+  .number-one::before {
+    left: 2px;
+  }
+  .number-two::before {
+    left: 2px;
+  }
+  .number-three::before {
+    left: 2px;
+  }
+  .number-four::before {
+    left: 2px;
+  }
+  h2.green-border {
+    font-size: 32px;
+  }
+  .slider_section .detail-box h1 {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+  .lender-content h5 {
+    padding: 5px 0px;
+    font-weight: 700;
+    color: #1c1c1c;
+  }
+  .first-dotted-spaced,
+  .second-dotted-spaced,
+  .third-dotted-spaced,
+  .fourth-dotted-spaced {
+    background-image: none !important;
+  }
+  .lender-content h5 {
+    padding: 5px 30px;
+  }
+  .covered_blocks {
+    max-width: 350px;
+    margin: 20px auto;
+  }
+  .recommend-img img {
+    width: 100%;
+    max-height: 100% !important;
+  }
+  .imgcoverIcons {
+    width: 100%;
+    height: auto;
+  }
+  .eagertoForge {
+    text-align: center;
+  }
+  .eagertoForge .refer-btn {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+  }
+  .eagertoForge h2 {
+    font-family: Ubuntu;
+    font-weight: 600;
+    font-size: 28px;
+  }
+  .why-choose-left img {
+    max-height: 100%;
+    width: 100%;
+    height: auto;
+  }
+  /* new end */
+
+  .covered-head p {
+    color: #fff;
+    font-size: 16px;
+    margin: 25px auto 50px;
+    max-width: 350px;
+    text-align: center;
+  }
+
+  .custom_nav-container {
+    padding: 10px;
+  }
+  .bg-box img {
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+  }
+
+  .hero_area {
+    min-height: auto;
+  }
+
+  .custom_nav-container .navbar-nav .nav-item .nav-link {
+    padding: 5px 25px;
+    margin: 5px 0;
+  }
+  .row.lender-row {
+    opacity: 1;
+  }
+  .row.right-animation {
+    opacity: 1;
+  }
+  .slider_section .detail-box {
+    color: #fff;
+    margin: 30px auto 100px auto;
+    /* width: 100%; */
+  }
+  .threeCards {
+    max-width: 560px;
+    bottom: 140px;
+  }
+  .basicCards.purpleSecond,
+  .basicCards.purpleFirst {
+    height: 126px;
+    width: 31%;
+    top: 40px;
+  }
+  .basicCards.green {
+    width: 38%;
+    height: 140px;
+  }
+  .basicCards h4 {
+    font-size: 14px;
+  }
+  .backy {
+    height: 518px;
+  }
+  .slider_section {
+    height: 488px;
+    position: relative;
+  }
+  .slider_circle {
+    bottom: -82px;
+    transform: scale(0.5);
+  }
+}
+@media only screen and (max-width:767px){
+.card.finalcard {
+  margin: 40px 15px 0px 15px;
+  padding-left: 0;
+  padding-right: 0;
+  flex-direction: row;
+  gap: 10px;
+}
+.card.finalcard .logosize img {
+  width: 120px;
+}
+.card.finalcard p {
+  margin: 0;
+}
+.card.finalcard h5 {
+  font-size: 17px;
+}
+.card.finalcard p {
+  margin: 0;
+  font-size: 14px;
+}
+}
+@media (max-width: 767px) {
+  div#my-tooltip-1 {
+    max-width: 320px;
+    left: 0!important;
+    right: 0!important;
+    width: 100%;
+    margin: auto;
+  }
+
+  .lender-box {
+    height: auto;
+  }
+  .covered_blocks {
+    height: auto;
+  }
+  .backy {
+    height: 518px;
+  }
+  .slider_section {
+    height: 488px;
+  }
+  .slider_section .detail-box {
+    color: #fff;
+    margin: 0px auto 100px auto;
+  }
+  .slider_section .detail-box h1 {
+    font-size: 28px;
+  }
+  .slider_circle {
+    bottom: -82px;
+    transform: scale(0.5);
+  }
+}
+@media only screen and (max-width:600px){
+.card.finalcard .btn-login {
+  padding: 5px 15px;
+  font-size: 14px;
+}
+.card.finalcard h5 {
+  font-size: 14px;
+}
+.card.finalcard .logosize img {
+  width: 100px;
+}
+.card.finalcard p {
+  margin: 0;
+  font-size: 12px;
+}
+.card.finalcard {
+  padding-left: 5px;
+  padding-right: 5px;
+  gap: 0;
+  justify-content: space-between;
+}
+}
+@media (max-width: 681px) {
+  .imgcoverIcons {
+    width: auto !important;
+    height: auto !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .slider_section .detail-box h1 {
+    font-size: 30px;
+  }
+  .threeCards {
+    max-width: 470px;
+    bottom: 190px;
+  }
+  .basicCards.purpleSecond,
+  .basicCards.purpleFirst {
+    height: 105px;
+    width: 31%;
+    top: 40px;
+  }
+  .basicCards.green {
+    width: 38%;
+    height: 130px;
+  }
+  .basicCards.purpleFirst {
+    left: 20px;
+  }
+  .basicCards.purpleSecond {
+    right: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .basicCards.purpleFirst {
+    transform: rotate(-24deg);
+    position: relative;
+    left: 34px;
+    top: 60px;
+    height: 137px;
+    width: 240px;
+}
+.basicCards.purpleSecond {
+  transform: rotate(24deg);
+  position: relative;
+  right: 48px;
+  top: 59px;
+  height: 136px;
+  width: 240px;
+}
+  .basicCards img {
+    margin: 0 0 10px;
+    width: 25px;
+}
+  .threeCards {
+    max-width: 330px;
+    bottom: 160px;
+  }
+  .basicCards h4 {
+    font-size: 12px;
+  }
+  .basicCards.green {
+    width: 38%;
+    height: 80px;
+  }
+  .basicCards.purpleFirst {
+    left: 8px;
+  }
+  .basicCards.purpleSecond {
+    right: 8px;
+  }
+  .basicCards.purpleSecond,
+  .basicCards.purpleFirst {
+    height: 70px;
+    width: 31%;
+    top: 30px;
+  }
+  ul.mysidepills li span.liText {
+    line-height: 22px !important;
+    margin: 0 12px 0 0;
+    top: 45px;
+    position: relative;
+    left: auto;
+    display: block;
+    text-align: center;
+    font-size: 13px;
+}
+.mysidepills{
+  position: relative;
+}
+
+ul.mysidepills:before {
+  position: absolute;
+  content: "";
+  width: 238px;
+  border-top: 1px solid #0000ff47;
+  height: 2px;
+  top: 21px;
+  z-index: -1;
+  left: auto;
+  right: 36px;
+}
+.liText{
+  position: relative;
+}
+ul li.sidebar-lists.active .liText::before {
+  content: "\f00c";
+  font-family: Fontawesome;
+  position: absolute;
+  left:19px;
+  right: auto;
+  top: -36px;
+  color: #fff;
+  z-index: 66;
+  font-size: 14px;
+}
+ul li.sidebar-lists::after {
+  content: "";
+  position: absolute;
+  left: 14px;
+  height: 24px;
+  width: 24px;
+  display: block;
+  background: #fff;
+  border-radius: 50%;
+  top: 8px;
+  z-index: -1;
+  border: 2px solid #5271ff40;
+}
+ul li.sidebar-lists::before {
+  color: #5271ff;
+  content: "\2022";
+  font-weight: bold;
+  display: inline-block;
+  width: 52px;
+  font-size: 48px;
+  position: absolute;
+  line-height: 60px;
+  left: 0;
+  top: -12px;
+  z-index: 9;
+  display: flex;
+  justify-content: center;
+}
+}
+@media only screen and (max-width:480px){
+.card.finalcard {
+  align-content: center;
+  flex-direction: column;
+  gap: 10px;
+}
+.card.finalcard .logosize img {
+  width: 120px;
+}
+.card.finalcard h5 {
+  font-size: 18px;
+}
+.card.finalcard p {
+  margin: 0;
+  font-size: 14px;
+}
+ul.mysidepills {
+  min-width: 300px;
+}
+}
