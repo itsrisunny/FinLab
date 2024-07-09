@@ -3750,3 +3750,10 @@ span.toogle {
   display: flex;
   justify-content: center;
 }
+/* Admin partner checkbox*/
+.custom-checkbox .form-check-input {
+  width: 15px;
+  height: 15px;
+  transform: scale(1.5);
+  cursor: pointer;
+}

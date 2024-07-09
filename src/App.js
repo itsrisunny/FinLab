@@ -26,6 +26,7 @@ import AdminIncompleteLeadCase from './component/admin/case/incompleteLeadCase.j
 import AdminDeclinedLeadCases from './component/admin/case/declinedCases.js';
 import AdminPartnerList from './component/admin/partner/index.js';
 import AdminPartnerView from './component/admin/partner/partnerView.js';
+import AdminPartnerAssignRole from "./component/admin/partner/assignRole.js";
 import AdminWecomedUserList from './component/admin/case/listWelcomeCases.js'
 import AdminAddCase from "./component/admin/case/add-case"
 
@@ -90,6 +91,7 @@ function App() {
             <Route path="/admin/incomplete-lead-case" element={<AdminIncompleteLeadCase />} exact={true} />
             <Route path="/admin/declined-cases" element={<AdminDeclinedLeadCases />} exact={true} />
             <Route path="/admin/partner/index" element={<AdminPartnerList />} exact={true} />
+            <Route path="/admin/partner/assignRole" element={<AdminPartnerAssignRole />} exact={true} />
             <Route path="/admin/partner-detail/:Id" element={<AdminPartnerView />} exact={true} />
             <Route path="/admin/welcomed-cases" element={<AdminWecomedUserList/>} exact={true} />
             <Route path="/admin/add/case" element={<AdminAddCase />} exact={true} />
