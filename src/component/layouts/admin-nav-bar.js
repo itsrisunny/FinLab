@@ -66,11 +66,14 @@ export default function AdminNavBar(props){
 								</div>
 						</li>
 						<li className="nav-item dropdownitem">
-							<Link className={(window.location.pathname == "/admin/partner/index" || (window.location.pathname).toLowerCase().includes("/admin/partner-detail"))?"active":""} to="#" data-toggle="collapse" aria-expanded="true" data-target="#submenu-5" aria-controls="submenu-5"><i className="fa fa-link nav-icon" aria-hidden="true"></i>Partner<i className="fa fa-caret-down pull-right" aria-hidden="true"></i></Link>
+							<Link className={(window.location.pathname == "/admin/partner/index" || (window.location.pathname).toLowerCase().includes("/admin/partner-detail"))?"active":""} to="#" data-toggle="collapse" aria-expanded="true" data-target="#submenu-5" aria-controls="submenu-5"><i className="fa fa-link nav-icon" aria-hidden="true"></i>Partner Management<i className="fa fa-caret-down pull-right" aria-hidden="true"></i></Link>
 								<div id="submenu-5" className={(window.location.pathname == "/admin/partner/index" || (window.location.pathname).toLowerCase().includes("/admin/partner-detail"))?"submenu collapse show":"submenu collapse"}>
 									<ul className="nav flex-column">
 										<li className="nav-item pad">
 										<NavLink className="nav-link" to="/admin/partner/index">Partner List</NavLink>
+										</li>
+										<li className="nav-item pad">
+										<NavLink className="nav-link" to="#">Assign Role</NavLink>
 										</li>
 										
 									</ul>
