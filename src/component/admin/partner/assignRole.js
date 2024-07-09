@@ -127,28 +127,40 @@ export default function AssignRole() {
         console.log(err);
       });
   };
+  const handleValidation = () => {
+    let isFormValid = true;
+    if (!partnerId || !partnerName) {
+      isFormValid = false;
+    }
+    return isFormValid;
+  };
   const handleFormSubmit = () => {
-    const jsonFormData = {
-      partnerId: partnerId,
-      permissions: JSON.stringify({
-        isAdmin: isAdmin,
-        permissions,
-      }),
-    };
-    axios
-      .post(API_URL + "user-agent/save-permission", jsonFormData)
-      .then((res) => {
-        const { data } = res;
-        if (data?.status === 200) {
-          toast.success(data?.message);
-          handleResetFunc();
-        } else {
-          toast.error(data?.message);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (handleValidation()) {
+      const jsonFormData = {
+        partnerId: partnerId,
+        permissions: JSON.stringify({
+          isAdmin: isAdmin,
+          permissions,
+        }),
+      };
+      axios
+        .post(API_URL + "user-agent/save-permission", jsonFormData)
+        .then((res) => {
+          const { data } = res;
+          if (data?.status === 200) {
+            toast.success(data?.message);
+            handleResetFunc();
+          } else {
+            toast.error(data?.message);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      toast.error("Please enter valid partner ID!");
+    }
+
     // Handle form submit logic here
   };
 
