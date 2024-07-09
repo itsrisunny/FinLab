@@ -9,7 +9,10 @@ import { Row, Col, Form, Table } from 'react-bootstrap';
 export default function AssignRole() {
   const [partnerId, setPartnerId] = useState();
   const [isAdmin, setIsAdmin] = useState(false);
-  const [isAdminBasic, setIsAdminBasic] = useState(false);
+  const [selectAll, setSelectAll] = useState({
+    businessLoan: false,
+    personalLoan: false,
+  })
   const [permissions, setPermissions] = useState({
     businessLoan: {
       addCase: false,
@@ -39,12 +42,32 @@ export default function AssignRole() {
     }));
   };
 
-  const handleResetFunc = () => {
-  }
-
-
-  const handleFormSubmit = () => {
-  }
+  const handleSelectAll = (category, isChecked) => {
+    const updatedCategoryPermissions = {};
+    Object.keys(permissions[category]).forEach(permission => {
+      updatedCategoryPermissions[permission] = isChecked;
+    });
+    setPermissions(prev => ({
+      ...prev,
+      [category]: updatedCategoryPermissions,
+    }));
+    setSelectAll(prev => ({
+      ...prev,
+      [category]: isChecked,
+    }));
+  };
+  
+  const handleResetButton = () => {
+    setPermissions(permissions);
+    setSelectAll({
+      businessLoan: false,
+      personalLoan: false,
+    });
+  };
+  
+  
+    const handleFormSubmit = () => {
+    }
 
   return (
     <div className="layout-wrapper">
@@ -89,7 +112,7 @@ export default function AssignRole() {
                 </Col>
                 
               </Form.Group>
-              <>
+              <div style={{paddingBottom : "12px"}}>
               <Col sm={2} className="d-flex justify-content-center ">
                   <Form.Check
                     type="checkbox"
@@ -98,23 +121,15 @@ export default function AssignRole() {
                     onChange={() => setIsAdmin(!isAdmin)}
                     className="custom-checkbox"
                   />
-                </Col>
-                <Col sm={2} className="d-flex justify-content-center ">
-                  <Form.Check
-                    type="checkbox"
-                    label="Admin Basic"
-                    checked={isAdminBasic}
-                    onChange={() => setIsAdminBasic(!isAdminBasic)}
-                    className="custom-checkbox"
-                  />
-                </Col>
-                </>
+                </Col>               
+                </div>
               
               <Table bordered className="text-center w-100">
                 <thead>
                   <tr>
                     <th></th>
-                    <th>Add case</th>
+                    <th>Select All</th>
+                    <th>Add Case</th>
                     <th>Incomplete Lead</th>
                     <th>Lead</th>
                     <th>Offered Lead</th>
@@ -125,7 +140,16 @@ export default function AssignRole() {
                 <tbody>
                   {Object.keys(permissions).map(category => (
                     <tr key={category}>
-                      <td>{category.charAt(0).toUpperCase() + category.slice(1)}</td>
+                      <td>{category.charAt(0).toUpperCase() + category.slice(1)}
+                      </td>
+                      <td>
+                        <Form.Check
+                          type="checkbox"
+                          checked={selectAll[category]}
+                          onChange={(e) => handleSelectAll(category, e.target.checked)}
+                          className="custom-checkbox"
+                        />
+                      </td>
                       {Object.keys(permissions[category]).map(permission => (
                         <td key={permission}>
                           <Form.Check
@@ -141,7 +165,7 @@ export default function AssignRole() {
                 </tbody>
               </Table>
               <div className="text-center mt-4">
-                <button type="Close" className="btn btn-secondary" onClick={handleResetFunc}>Reset</button>&nbsp;
+                <button type="Close" className="btn btn-secondary" onClick={handleResetButton}>Reset</button>&nbsp;
                 <button type="button" className="btn btn-primary" onClick={handleFormSubmit}>Assign</button>
               </div>
             </Form>
