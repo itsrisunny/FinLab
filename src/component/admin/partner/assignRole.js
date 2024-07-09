@@ -4,17 +4,17 @@ import { API_URL } from "../../../config/constant";
 import AdminHeader from "../../layouts/admin-header";
 import AdminFooter from "../../layouts/admin-footer";
 import AdminNavBar from "../../layouts/admin-nav-bar";
-// import '/src/assets/css/style.css'
-// import 'bootstrap/dist/css/bootstrap.min.css';
 import { Row, Col, Form, Table } from "react-bootstrap";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function AssignRole() {
   const [partnerId, setPartnerId] = useState("");
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [isAdminBasic, setIsAdminBasic] = useState(false);
   const [partnerName, setPartnerName] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
   const [permissions, setPermissions] = useState({
     businessLoan: {
+      selectAll: false,
       addCase: false,
       incompleteLead: false,
       lead: false,
@@ -23,6 +23,7 @@ export default function AssignRole() {
       declinedLead: false,
     },
     personalLoan: {
+      selectAll: false,
       addCase: false,
       incompleteLead: false,
       lead: false,
@@ -33,13 +34,55 @@ export default function AssignRole() {
   });
 
   const togglePermission = (category, permission) => {
-    setPermissions((prev) => ({
-      ...prev,
-      [category]: {
+    setPermissions((prev) => {
+      const newPermissions = {
         ...prev[category],
         [permission]: !prev[category][permission],
+      };
+
+      if (permission !== "selectAll") {
+        newPermissions.selectAll = Object.keys(newPermissions).every(
+          (key) => key === "selectAll" || newPermissions[key]
+        );
+      } else {
+        for (let key in newPermissions) {
+          if (key !== "selectAll") {
+            newPermissions[key] = newPermissions.selectAll;
+          }
+        }
+      }
+
+      return {
+        ...prev,
+        [category]: newPermissions,
+      };
+    });
+  };
+
+  const handleResetFunc = () => {
+    setPermissions({
+      businessLoan: {
+        selectAll: false,
+        addCase: false,
+        incompleteLead: false,
+        lead: false,
+        offeredLead: false,
+        closedLead: false,
+        declinedLead: false,
       },
-    }));
+      personalLoan: {
+        selectAll: false,
+        addCase: false,
+        incompleteLead: false,
+        lead: false,
+        offeredLead: false,
+        closedLead: false,
+        declinedLead: false,
+      },
+    });
+    setIsAdmin(false);
+    setPartnerName("");
+    setPartnerId("");
   };
   const handleSearchPartner = () => {
     axios
@@ -48,6 +91,34 @@ export default function AssignRole() {
         let { data } = res;
         if (data?.status === 200) {
           setPartnerName(data?.data?.partner_name);
+          const permissions = data?.data?.permissions;
+          if (permissions) {
+            setIsAdmin(permissions?.isAdmin);
+            setPermissions(permissions?.permissions);
+          } else {
+            setIsAdmin(false);
+            setPermissions({
+              businessLoan: {
+                selectAll: false,
+                addCase: false,
+                incompleteLead: false,
+                lead: false,
+                offeredLead: false,
+                closedLead: false,
+                declinedLead: false,
+              },
+              personalLoan: {
+                selectAll: false,
+                addCase: false,
+                incompleteLead: false,
+                lead: false,
+                offeredLead: false,
+                closedLead: false,
+                declinedLead: false,
+              },
+            });
+          }
+          console.log(data?.data?.permissions);
         } else {
           setPartnerName("");
         }
@@ -56,9 +127,30 @@ export default function AssignRole() {
         console.log(err);
       });
   };
-  const handleResetFunc = () => {};
-
-  const handleFormSubmit = () => {};
+  const handleFormSubmit = () => {
+    const jsonFormData = {
+      partnerId: partnerId,
+      permissions: JSON.stringify({
+        isAdmin: isAdmin,
+        permissions,
+      }),
+    };
+    axios
+      .post(API_URL + "user-agent/save-permission", jsonFormData)
+      .then((res) => {
+        const { data } = res;
+        if (data?.status === 200) {
+          toast.success(data?.message);
+          handleResetFunc();
+        } else {
+          toast.error(data?.message);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    // Handle form submit logic here
+  };
 
   return (
     <div className="layout-wrapper">
@@ -114,31 +206,29 @@ export default function AssignRole() {
                   />
                 </Col>
               </Form.Group>
-              <>
-                <Col sm={2} className="d-flex justify-content-center ">
+              <Form.Group
+                as={Row}
+                className="mb-4 w-100"
+                controlId="formAdminCheckbox"
+              >
+                <Form.Label column sm={2} className="text-center">
+                  Admin
+                </Form.Label>
+                {/* <Col sm={1} className="d-flex justify-content-center"> */}
+                <Col sm={1} className="text-center">
                   <Form.Check
                     type="checkbox"
-                    label="Admin"
                     checked={isAdmin}
                     onChange={() => setIsAdmin(!isAdmin)}
                     className="custom-checkbox"
                   />
                 </Col>
-                <Col sm={2} className="d-flex justify-content-center ">
-                  <Form.Check
-                    type="checkbox"
-                    label="Admin Basic"
-                    checked={isAdminBasic}
-                    onChange={() => setIsAdminBasic(!isAdminBasic)}
-                    className="custom-checkbox"
-                  />
-                </Col>
-              </>
-
+              </Form.Group>
               <Table bordered className="text-center w-100">
                 <thead>
                   <tr>
                     <th></th>
+                    <th>Select All</th>
                     <th>Add case</th>
                     <th>Incomplete Lead</th>
                     <th>Lead</th>
@@ -171,7 +261,7 @@ export default function AssignRole() {
               </Table>
               <div className="text-center mt-4">
                 <button
-                  type="Close"
+                  type="button"
                   className="btn btn-secondary"
                   onClick={handleResetFunc}
                 >
@@ -191,6 +281,7 @@ export default function AssignRole() {
           <AdminFooter />
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 }
