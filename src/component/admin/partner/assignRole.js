@@ -1,15 +1,18 @@
 import React, { useState } from "react";
+import axios from "axios";
+import { API_URL } from "../../../config/constant";
 import AdminHeader from "../../layouts/admin-header";
 import AdminFooter from "../../layouts/admin-footer";
 import AdminNavBar from "../../layouts/admin-nav-bar";
 // import '/src/assets/css/style.css'
 // import 'bootstrap/dist/css/bootstrap.min.css';
-import { Row, Col, Form, Table } from 'react-bootstrap';
+import { Row, Col, Form, Table } from "react-bootstrap";
 
 export default function AssignRole() {
-  const [partnerId, setPartnerId] = useState();
+  const [partnerId, setPartnerId] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
   const [isAdminBasic, setIsAdminBasic] = useState(false);
+  const [partnerName, setPartnerName] = useState("");
   const [permissions, setPermissions] = useState({
     businessLoan: {
       addCase: false,
@@ -17,7 +20,7 @@ export default function AssignRole() {
       lead: false,
       offeredLead: false,
       closedLead: false,
-      declinedLead: false
+      declinedLead: false,
     },
     personalLoan: {
       addCase: false,
@@ -25,26 +28,37 @@ export default function AssignRole() {
       lead: false,
       offeredLead: false,
       closedLead: false,
-      declinedLead: false
+      declinedLead: false,
     },
   });
 
   const togglePermission = (category, permission) => {
-    setPermissions(prev => ({
+    setPermissions((prev) => ({
       ...prev,
       [category]: {
         ...prev[category],
-        [permission]: !prev[category][permission]
-      }
+        [permission]: !prev[category][permission],
+      },
     }));
   };
+  const handleSearchPartner = () => {
+    axios
+      .post(API_URL + "user-agent/partner-detail", { partnerID: partnerId })
+      .then((res) => {
+        let { data } = res;
+        if (data?.status === 200) {
+          setPartnerName(data?.data?.partner_name);
+        } else {
+          setPartnerName("");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  const handleResetFunc = () => {};
 
-  const handleResetFunc = () => {
-  }
-
-
-  const handleFormSubmit = () => {
-  }
+  const handleFormSubmit = () => {};
 
   return (
     <div className="layout-wrapper">
@@ -57,7 +71,11 @@ export default function AssignRole() {
               <h3>Partner Role Management</h3>
             </div>
             <Form className="d-flex flex-column align-items-center">
-              <Form.Group as={Row} className="mb-4 w-100" controlId="formPartnerId">
+              <Form.Group
+                as={Row}
+                className="mb-4 w-100"
+                controlId="formPartnerId"
+              >
                 <Form.Label column sm={2} className="text-center">
                   Partner Id
                 </Form.Label>
@@ -70,27 +88,34 @@ export default function AssignRole() {
                   />
                 </Col>
                 <Col sm={2}>
-                <button type="button" className="btn btn-primary" onClick={handleFormSubmit}>Search</button>
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={handleSearchPartner}
+                  >
+                    Search
+                  </button>
                 </Col>
-                
               </Form.Group>
-              <Form.Group as={Row} className="mb-4 w-100" controlId="formPartnerName">
+              <Form.Group
+                as={Row}
+                className="mb-4 w-100"
+                controlId="formPartnerName"
+              >
                 <Form.Label column sm={2} className="text-center">
                   Partner Name
                 </Form.Label>
                 <Col sm={4}>
                   <Form.Control
                     type="string"
-                    value={partnerId}
-                    onChange={(e) => setPartnerId(e.target.value)}
+                    value={partnerName}
                     className="text-center"
                     readOnly
                   />
                 </Col>
-                
               </Form.Group>
               <>
-              <Col sm={2} className="d-flex justify-content-center ">
+                <Col sm={2} className="d-flex justify-content-center ">
                   <Form.Check
                     type="checkbox"
                     label="Admin"
@@ -108,8 +133,8 @@ export default function AssignRole() {
                     className="custom-checkbox"
                   />
                 </Col>
-                </>
-              
+              </>
+
               <Table bordered className="text-center w-100">
                 <thead>
                   <tr>
@@ -123,15 +148,19 @@ export default function AssignRole() {
                   </tr>
                 </thead>
                 <tbody>
-                  {Object.keys(permissions).map(category => (
+                  {Object.keys(permissions).map((category) => (
                     <tr key={category}>
-                      <td>{category.charAt(0).toUpperCase() + category.slice(1)}</td>
-                      {Object.keys(permissions[category]).map(permission => (
+                      <td>
+                        {category.charAt(0).toUpperCase() + category.slice(1)}
+                      </td>
+                      {Object.keys(permissions[category]).map((permission) => (
                         <td key={permission}>
                           <Form.Check
                             type="checkbox"
                             checked={permissions[category][permission]}
-                            onChange={() => togglePermission(category, permission)}
+                            onChange={() =>
+                              togglePermission(category, permission)
+                            }
                             className="custom-checkbox"
                           />
                         </td>
@@ -141,8 +170,21 @@ export default function AssignRole() {
                 </tbody>
               </Table>
               <div className="text-center mt-4">
-                <button type="Close" className="btn btn-secondary" onClick={handleResetFunc}>Reset</button>&nbsp;
-                <button type="button" className="btn btn-primary" onClick={handleFormSubmit}>Assign</button>
+                <button
+                  type="Close"
+                  className="btn btn-secondary"
+                  onClick={handleResetFunc}
+                >
+                  Reset
+                </button>
+                &nbsp;
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={handleFormSubmit}
+                >
+                  Assign
+                </button>
               </div>
             </Form>
           </div>
