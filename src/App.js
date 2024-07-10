@@ -37,6 +37,10 @@ import TermsOfUse from "./component/home/termsofuse.js";
 import Declaration from "./component/home/declaration.js";
 import PrivacyPolicy from "./component/home/privacypolicy.js";
 
+import AssignCases from "./component/admin/userManagement/assignCases.js";
+import AddUserManage from "./component/admin/userManagement/add-user.js";
+import AssignRole from "./component/admin/userManagement/assign-role.js";
+import AdminUserManage from "./component/admin/userManagement/adminUser.js";
 
 import PartnersLogin from "./component/partners/login";
 import PartnerResetPassword from "./component/partners/login/forgot-password";
@@ -49,6 +53,9 @@ import PartnerPersonalAddCases from "./component/partners/personalCases/add-case
 import PartnerAddCase from "./component/partners/cases/add-case"
 import PartnerPersonalAddCase from "./component/partners/personalCases/add-case"
 import PartnerViewPersIndividualCases from "./component/partners/personalCases/view-individual-case";
+
+import PartnerAddUserManage from "./component/partners/userManagementPartner/add-user.js";
+import PartnerAssignRole from "./component/partners/userManagementPartner/assign-role.js";
 
 import PerosnalIncLeadCase from './component/admin/personalLoan/incompleteLeadCase';
 import PerosnalLeadCase from './component/admin/personalLoan/leadCase';
@@ -103,6 +110,12 @@ function App() {
             <Route path="/admin/personal/welcomed-cases" element={<PerosnalWelcomeCase />} exact={true} />
             <Route path="/admin/personal/declined-cases" element={<PerosnalDeclinedCase />} exact={true} />
             <Route path="/admin/personal/case-detail/:caseID/:type/:offerId" element={<PerosnalCaseDetail />} exact={true} />
+
+            <Route path="/admin/userManagement/assignCases" element={<AssignCases />} exact={true} />
+            <Route path="/admin/userManagement/add-user" element={<AddUserManage />} exact={true} />
+            <Route path="/admin/userManagement/assign-role" element={<AssignRole />} exact={true} />
+            <Route path="/admin/userManagement/adminUser" element={<AdminUserManage />} exact={true} />
+
             
             <Route path="/partners/login" element={<PartnersLogin />} exact={true} />
             <Route path="/partners/reset-password" element={<PartnerResetPassword />} exact={true} />
@@ -114,6 +127,9 @@ function App() {
             <Route path="/partners-admin/personal/add-case" element={<PartnerPersonalAddCase />} exact={true} />
             <Route path="/partners-admin/personal/case-detail/:caseID/:type/:offerId" element={<PartnerViewPersIndividualCases />} exact={true} />
             <Route path="/verify-email" element={<VerifyEmailComponent />} exact={true}/>
+
+            <Route path="/partners-admin/userManagementPartner/add-user" element={<PartnerAddUserManage />} exact={true} />
+            <Route path="/partners-admin/userManagementPartner/assign-role" element={<PartnerAssignRole />} exact={true} />
         </Routes> 
     </BrowserRouter>
     );
