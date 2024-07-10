@@ -79,6 +79,29 @@ li.nav-item.pad {
 .layout_padding2 {
   padding: 75px 0;
 }
+
+/*Access Denied*/
+.access-denied-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f0f0f0;
+  padding: 20px;
+}
+
+.access-denied-container h1 {
+  font-size: 36px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.access-denied-container p {
+  margin-bottom: 20px;
+}
+
+
 .progress-bar-head{
   text-align: center;
   margin-top: 15px;
