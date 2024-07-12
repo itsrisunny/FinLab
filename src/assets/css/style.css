@@ -3780,3 +3780,15 @@ span.toogle {
   transform: scale(1.5);
   cursor: pointer;
 }
+
+/* Admin User Management*/
+.authentic-add-user .card-body {
+  padding-top: 1.5rem;
+}
+
+.add-user .row {
+  display: flex;
+  justify-content: center
+}
+
+

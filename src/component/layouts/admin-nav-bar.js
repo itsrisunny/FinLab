@@ -257,7 +257,80 @@ export default function AdminNavBar(props) {
                   </ul>
                 </div>
               </li>
-
+              <li className="nav-item dropdownitem">
+                <Link
+                  className={
+                    window.location.pathname ==
+                      "/admin/userManagement/add-user" ||
+                    window.location.pathname ==
+                      "/admin/userManagement/assign-role" ||
+                    window.location.pathname ==
+                      "/admin/userManagement/adminUserList"
+                      ? "active"
+                      : ""
+                  }
+                  to="#"
+                  data-toggle="collapse"
+                  aria-expanded="true"
+                  data-target="#submenu-7"
+                  aria-controls="submenu-7"
+                >
+                  <i className="fa fa-futbol-o nav-icon" aria-hidden="true"></i>
+                  User Management
+                  <i
+                    className="fa fa-caret-down pull-right"
+                    aria-hidden="true"
+                  ></i>
+                </Link>
+                <div
+                  id="submenu-7"
+                  className={
+                    window.location.pathname ==
+                      "/admin/userManagement/add-user" ||
+                    window.location.pathname ==
+                      "/admin/userManagement/assign-role" ||
+                    window.location.pathname ==
+                      "/admin/userManagement/adminUserList"
+                      ? "submenu collapse show"
+                      : "submenu collapse"
+                  }
+                >
+                  <ul className="nav flex-column">
+                    <li className="nav-item pad">
+                      <NavLink
+                        className="nav-link"
+                        to="/admin/userManagement/add-user"
+                      >
+                        Add User
+                      </NavLink>
+                    </li>
+                    <li className="nav-item pad">
+                      <NavLink
+                        className="nav-link"
+                        to="/admin/userManagement/assign-role"
+                      >
+                        Assign role to user
+                      </NavLink>
+                    </li>
+                    <li className="nav-item pad">
+                      <NavLink
+                        className="nav-link"
+                        to="/admin/userManagement/adminUserList"
+                      >
+                        Admin User List
+                      </NavLink>
+                    </li>
+                    <li className="nav-item pad">
+                      <NavLink
+                        className="nav-link"
+                        to="/admin/userManagement/assignCases"
+                      >
+                        Assign Cases
+                      </NavLink>
+                    </li>
+                  </ul>
+                </div>
+              </li>
               <li className="nav-item dropdownitem">
                 <Link
                   className={
