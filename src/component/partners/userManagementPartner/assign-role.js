@@ -114,7 +114,7 @@ export default function AssignRole() {
              
               <Form.Group as={Row} className="mb-4 w-100" controlId="formAdminCheckbox">
               <Form.Label column sm={2} className="text-center">
-                  Assign as Admin
+                  Assign as Agent
                 </Form.Label>
                 {/* <Col sm={1} className="d-flex justify-content-center"> */}
                 <Col sm={1} className="text-center">
@@ -122,30 +122,6 @@ export default function AssignRole() {
                     type="checkbox"
                     checked={isAdmin}
                     onChange={() => setIsAdmin(!isAdmin)}
-                    className="custom-checkbox"
-                  />
-                </Col>
-                <Form.Label column sm={2} className="text-center">
-                  Master
-                </Form.Label>
-                {/* <Col sm={1} className="d-flex justify-content-center"> */}
-                <Col sm={1} className="text-center">
-                  <Form.Check
-                    type="checkbox"
-                    checked={isMaster}
-                    onChange={() => setIsMaster(!isMaster)}
-                    className="custom-checkbox"
-                  />
-                </Col>
-                <Form.Label column sm={2} className="text-center">
-                  Partner List
-                </Form.Label>
-                {/* <Col sm={1} className="d-flex justify-content-center"> */}
-                <Col sm={1} className="text-center">
-                  <Form.Check
-                    type="checkbox"
-                    checked={isPartnerList}
-                    onChange={() => setIsPartnerList(!isPartnerList)}
                     className="custom-checkbox"
                   />
                 </Col>

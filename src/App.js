@@ -40,7 +40,7 @@ import PrivacyPolicy from "./component/home/privacypolicy.js";
 import AssignCases from "./component/admin/userManagement/assignCases.js";
 import AddUserManage from "./component/admin/userManagement/add-user.js";
 import AssignRole from "./component/admin/userManagement/assign-role.js";
-import AdminUserManage from "./component/admin/userManagement/adminUser.js";
+import AdminUserList from "./component/admin/userManagement/adminUserList.js";
 
 import PartnersLogin from "./component/partners/login";
 import PartnerResetPassword from "./component/partners/login/forgot-password";
@@ -114,7 +114,7 @@ function App() {
             <Route path="/admin/userManagement/assignCases" element={<AssignCases />} exact={true} />
             <Route path="/admin/userManagement/add-user" element={<AddUserManage />} exact={true} />
             <Route path="/admin/userManagement/assign-role" element={<AssignRole />} exact={true} />
-            <Route path="/admin/userManagement/adminUser" element={<AdminUserManage />} exact={true} />
+            <Route path="/admin/userManagement/adminUserList" element={<AdminUserList />} exact={true} />
 
             
             <Route path="/partners/login" element={<PartnersLogin />} exact={true} />
