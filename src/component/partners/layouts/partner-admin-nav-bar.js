@@ -4,17 +4,6 @@ import FinlabLogo from "../../../assets/images/admin-dashboard/logofront.svg";
 import { API_URL } from "../../../config/constant";
 
 export default function AdminNavBar({ menuAccess }) {
-  console.log(menuAccess);
-  /*const { permissions } = menuAccess;
-  const { businessLoan, personalLoan } = permissions;
-  const {
-    addCase,
-    closedLead,
-    declinedLead,
-    incompleteLead,
-    lead,
-    offeredLead,
-  } = businessLoan;*/
   const { permissions } = menuAccess;
   return (
     <>
@@ -44,7 +33,16 @@ export default function AdminNavBar({ menuAccess }) {
                   <Link
                     className={
                       window.location.pathname === "/partners-admin/add/case" ||
-                      window.location.pathname === "/partners-admin/add-cases"
+                      window.location.pathname ===
+                        "/partners-admin/lead-cases" ||
+                      window.location.pathname ===
+                        "/partners-admin/incomplete-cases" ||
+                      window.location.pathname ===
+                        "/partners-admin/offered-cases" ||
+                      window.location.pathname ===
+                        "/partners-admin/closed-cases" ||
+                      window.location.pathname ===
+                        "/partners-admin/declined-cases"
                         ? "active"
                         : ""
                     }
@@ -68,7 +66,16 @@ export default function AdminNavBar({ menuAccess }) {
                     id="submenu-3"
                     className={
                       window.location.pathname === "/partners-admin/add/case" ||
-                      window.location.pathname === "/partners-admin/add-cases"
+                      window.location.pathname ===
+                        "/partners-admin/lead-cases" ||
+                      window.location.pathname ===
+                        "/partners-admin/incomplete-cases" ||
+                      window.location.pathname ===
+                        "/partners-admin/closed-cases" ||
+                      window.location.pathname ===
+                        "/partners-admin/offered-cases" ||
+                      window.location.pathname ===
+                        "/partners-admin/declined-cases"
                         ? "submenu collapse show"
                         : "submenu collapse"
                     }
@@ -90,7 +97,7 @@ export default function AdminNavBar({ menuAccess }) {
                         <li className="nav-item  pad">
                           <NavLink
                             className="nav-link"
-                            to="/partners-admin/add-cases"
+                            to="/partners-admin/incomplete-cases"
                           >
                             Incomplete Cases
                           </NavLink>
@@ -102,7 +109,7 @@ export default function AdminNavBar({ menuAccess }) {
                         <li className="nav-item  pad">
                           <NavLink
                             className="nav-link"
-                            to="/partners-admin/add-cases"
+                            to="/partners-admin/lead-cases"
                           >
                             Lead Cases
                           </NavLink>
@@ -114,7 +121,7 @@ export default function AdminNavBar({ menuAccess }) {
                         <li className="nav-item  pad">
                           <NavLink
                             className="nav-link"
-                            to="/partners-admin/add-cases"
+                            to="/partners-admin/offered-cases"
                           >
                             Offered Cases
                           </NavLink>
@@ -126,7 +133,7 @@ export default function AdminNavBar({ menuAccess }) {
                         <li className="nav-item  pad">
                           <NavLink
                             className="nav-link"
-                            to="/partners-admin/add-cases"
+                            to="/partners-admin/closed-cases"
                           >
                             Closed Cases
                           </NavLink>
@@ -138,7 +145,7 @@ export default function AdminNavBar({ menuAccess }) {
                         <li className="nav-item  pad">
                           <NavLink
                             className="nav-link"
-                            to="/partners-admin/add-cases"
+                            to="/partners-admin/declined-cases"
                           >
                             Declined Cases
                           </NavLink>
@@ -164,7 +171,15 @@ export default function AdminNavBar({ menuAccess }) {
                       window.location.pathname ===
                         "/partners-admin/personal/add-case" ||
                       window.location.pathname ===
-                        "/partners-admin/personal/add-cases"
+                        "/partners-admin/personal/lead-cases" ||
+                      window.location.pathname ===
+                        "/partners-admin/personal/incomplete-cases" ||
+                      window.location.pathname ===
+                        "/partners-admin/personal/offered-cases" ||
+                      window.location.pathname ===
+                        "/partners-admin/personal/closed-cases" ||
+                      window.location.pathname ===
+                        "/partners-admin/personal/declined-cases"
                         ? "active"
                         : ""
                     }
@@ -187,10 +202,18 @@ export default function AdminNavBar({ menuAccess }) {
                   <div
                     id="submenu-5"
                     className={
-                      window.location.pathname ==
+                      window.location.pathname ===
                         "/partners-admin/personal/add-case" ||
-                      window.location.pathname ==
-                        "/partners-admin/personal/add-cases"
+                      window.location.pathname ===
+                        "/partners-admin/personal/lead-cases" ||
+                      window.location.pathname ===
+                        "/partners-admin/personal/incomplete-cases" ||
+                      window.location.pathname ===
+                        "/partners-admin/personal/offered-cases" ||
+                      window.location.pathname ===
+                        "/partners-admin/personal/closed-cases" ||
+                      window.location.pathname ===
+                        "/partners-admin/personal/declined-cases"
                         ? "submenu collapse show"
                         : "submenu collapse"
                     }
@@ -212,7 +235,7 @@ export default function AdminNavBar({ menuAccess }) {
                         <li className="nav-item  pad">
                           <NavLink
                             className="nav-link"
-                            to="/partners-admin/personal/add-cases"
+                            to="/partners-admin/personal/incomplete-cases"
                           >
                             Incomplete Cases
                           </NavLink>
@@ -224,7 +247,7 @@ export default function AdminNavBar({ menuAccess }) {
                         <li className="nav-item  pad">
                           <NavLink
                             className="nav-link"
-                            to="/partners-admin/personal/add-cases"
+                            to="/partners-admin/personal/lead-cases"
                           >
                             Lead Cases
                           </NavLink>
@@ -236,7 +259,7 @@ export default function AdminNavBar({ menuAccess }) {
                         <li className="nav-item  pad">
                           <NavLink
                             className="nav-link"
-                            to="/partners-admin/personal/add-cases"
+                            to="/partners-admin/personal/offered-cases"
                           >
                             Offered Cases
                           </NavLink>
@@ -248,7 +271,7 @@ export default function AdminNavBar({ menuAccess }) {
                         <li className="nav-item  pad">
                           <NavLink
                             className="nav-link"
-                            to="/partners-admin/personal/add-cases"
+                            to="/partners-admin/personal/closed-cases"
                           >
                             Closed Cases
                           </NavLink>
@@ -260,7 +283,7 @@ export default function AdminNavBar({ menuAccess }) {
                         <li className="nav-item  pad">
                           <NavLink
                             className="nav-link"
-                            to="/partners-admin/personal/add-cases"
+                            to="/partners-admin/personal/declined-cases"
                           >
                             Declined Cases
                           </NavLink>

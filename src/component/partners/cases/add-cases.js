@@ -77,6 +77,7 @@ const LeadCase = ({ menuAccess }) => {
       limit: LIMIT,
       offset: page,
       loanType: "Business Loan",
+      loanStatus: "leads",
       created_by_id: localStorage.getItem("partner_id"),
     };
 
@@ -392,27 +393,6 @@ const LeadCase = ({ menuAccess }) => {
               <div className="topHeadings">
                 <h3>Lead cases</h3>
               </div>
-              {permissions?.addCase ? (
-                <div>
-                  <button
-                    className="btn btn-primary"
-                    style={{ marginRight: "3px" }}
-                    onClick={() => uploadDetails()}
-                  >
-                    Bulk Upload
-                  </button>
-                  <span>
-                    <Link
-                      to="/partners-admin/add/case"
-                      className="btn btn-success"
-                    >
-                      Create New
-                    </Link>
-                  </span>
-                </div>
-              ) : (
-                ""
-              )}
 
               {loader ? (
                 <Loader display={"flex"} />

@@ -59,10 +59,18 @@ import AdminPersonalAddCase from "./component/admin/personalLoan/add-case";
 import VerifyEmailComponent from "./component/VerifyEmailComponent";
 import RoleWrapper from "./RoleRoute";
 import UnAuthorized from "./component/unAuthorised.js";
+import IncompletePersonalLeadCase from "./component/partners/personalCases/incomplete-cases";
+import PartnerPersonalOfferedCases from "./component/partners/personalCases/offered-cases.js";
+import PartnerPersonalClosedCases from "./component/partners/personalCases/closed-cases.js";
+import PartnerPersonalDeclinedCases from "./component/partners/personalCases/declined-cases.js";
+
+import IncompleteBusinessLeadCase from "./component/partners/cases/incomplete-cases";
+import PartnerBusinessOfferedCases from "./component/partners/cases/offered-cases.js";
+import PartnerBusinessClosedCases from "./component/partners/cases/closed-cases.js";
+import PartnerBusinessDeclinedCases from "./component/partners/cases/declined-cases.js";
 
 function App() {
   const [menuAccess, setMenuAccess] = React.useState({});
-  console.log(menuAccess);
   return (
     <BrowserRouter>
       <Routes>
@@ -204,15 +212,63 @@ function App() {
           exact={true}
         />
         <Route
-          path="/partners-admin/add-cases"
+          path="/partners-admin/lead-cases"
           element={
             <RoleWrapper role="Partner" setMenuAccess={setMenuAccess}>
-              {menuAccess?.permissions?.businessLoan?.closedLead ||
-              menuAccess?.permissions?.businessLoan?.declinedLead ||
-              menuAccess?.permissions?.businessLoan?.incompleteLead ||
-              menuAccess?.permissions?.businessLoan?.lead ||
-              menuAccess?.permissions?.businessLoan?.offeredLead ? (
+              {menuAccess?.permissions?.businessLoan?.lead ? (
                 <PartnerAddCases menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorized menuAccess={menuAccess} />
+              )}
+            </RoleWrapper>
+          }
+          exact={true}
+        />
+        <Route
+          path="/partners-admin/incomplete-cases"
+          element={
+            <RoleWrapper role="Partner" setMenuAccess={setMenuAccess}>
+              {menuAccess?.permissions?.businessLoan?.incompleteLead ? (
+                <IncompleteBusinessLeadCase menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorized menuAccess={menuAccess} />
+              )}
+            </RoleWrapper>
+          }
+          exact={true}
+        />
+        <Route
+          path="/partners-admin/offered-cases"
+          element={
+            <RoleWrapper role="Partner" setMenuAccess={setMenuAccess}>
+              {menuAccess?.permissions?.businessLoan?.offeredLead ? (
+                <PartnerBusinessOfferedCases menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorized menuAccess={menuAccess} />
+              )}
+            </RoleWrapper>
+          }
+          exact={true}
+        />
+        <Route
+          path="/partners-admin/closed-cases"
+          element={
+            <RoleWrapper role="Partner" setMenuAccess={setMenuAccess}>
+              {menuAccess?.permissions?.businessLoan?.closedLead ? (
+                <PartnerBusinessClosedCases menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorized menuAccess={menuAccess} />
+              )}
+            </RoleWrapper>
+          }
+          exact={true}
+        />
+        <Route
+          path="/partners-admin/declined-cases"
+          element={
+            <RoleWrapper role="Partner" setMenuAccess={setMenuAccess}>
+              {menuAccess?.permissions?.businessLoan?.declinedLead ? (
+                <PartnerBusinessDeclinedCases menuAccess={menuAccess} />
               ) : (
                 <UnAuthorized menuAccess={menuAccess} />
               )}
@@ -234,15 +290,63 @@ function App() {
           exact={true}
         />
         <Route
-          path="/partners-admin/personal/add-cases"
+          path="/partners-admin/personal/incomplete-cases"
           element={
             <RoleWrapper role="Partner" setMenuAccess={setMenuAccess}>
-              {menuAccess?.permissions?.personalLoan?.closedLead ||
-              menuAccess?.permissions?.personalLoan?.declinedLead ||
-              menuAccess?.permissions?.personalLoan?.incompleteLead ||
-              menuAccess?.permissions?.personalLoan?.lead ||
-              menuAccess?.permissions?.personalLoan?.offeredLead ? (
+              {menuAccess?.permissions?.personalLoan?.incompleteLead ? (
+                <IncompletePersonalLeadCase menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorized menuAccess={menuAccess} />
+              )}
+            </RoleWrapper>
+          }
+          exact={true}
+        />
+        <Route
+          path="/partners-admin/personal/lead-cases"
+          element={
+            <RoleWrapper role="Partner" setMenuAccess={setMenuAccess}>
+              {menuAccess?.permissions?.personalLoan?.lead ? (
                 <PartnerPersonalAddCases menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorized menuAccess={menuAccess} />
+              )}
+            </RoleWrapper>
+          }
+          exact={true}
+        />
+        <Route
+          path="/partners-admin/personal/offered-cases"
+          element={
+            <RoleWrapper role="Partner" setMenuAccess={setMenuAccess}>
+              {menuAccess?.permissions?.personalLoan?.offeredLead ? (
+                <PartnerPersonalOfferedCases menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorized menuAccess={menuAccess} />
+              )}
+            </RoleWrapper>
+          }
+          exact={true}
+        />
+        <Route
+          path="/partners-admin/personal/closed-cases"
+          element={
+            <RoleWrapper role="Partner" setMenuAccess={setMenuAccess}>
+              {menuAccess?.permissions?.personalLoan?.closedLead ? (
+                <PartnerPersonalClosedCases menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorized menuAccess={menuAccess} />
+              )}
+            </RoleWrapper>
+          }
+          exact={true}
+        />
+        <Route
+          path="/partners-admin/personal/declined-cases"
+          element={
+            <RoleWrapper role="Partner" setMenuAccess={setMenuAccess}>
+              {menuAccess?.permissions?.personalLoan?.declinedLead ? (
+                <PartnerPersonalDeclinedCases menuAccess={menuAccess} />
               ) : (
                 <UnAuthorized menuAccess={menuAccess} />
               )}

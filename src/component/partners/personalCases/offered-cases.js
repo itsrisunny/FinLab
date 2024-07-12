@@ -81,7 +81,7 @@ const LeadCase = ({ menuAccess }) => {
       limit: LIMIT,
       offset: page,
       loanType: "Personal Loan",
-      loanStatus: "leads",
+      loanStatus: "offered",
       created_by_id: localStorage.getItem("partner_id"),
     };
 
@@ -402,7 +402,7 @@ const LeadCase = ({ menuAccess }) => {
             {/* The main Code */}
             <div className="mainContent">
               <div className="topHeadings">
-                <h3>Lead cases</h3>
+                <h3>Offered cases</h3>
               </div>
 
               {loader ? (

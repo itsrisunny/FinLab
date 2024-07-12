@@ -10,6 +10,9 @@ import InputMask from "react-input-mask";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import numberToText from "number-to-text";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
+import Paginator from "react-hooks-paginator";
 require("number-to-text/converters/en-in");
 export default function AddCase({ menuAccess }) {
   const [loader, setLoader] = useState(true);
@@ -43,6 +46,16 @@ export default function AddCase({ menuAccess }) {
   const [emailIDError, setEmailIDError] = useState(false);
   const [invalidEmailIDError, setInvalidEmailIDError] = useState(false);
   const [emailID, setEmailID] = useState("");
+
+  const [file, setFile] = useState(null);
+  const [fileName, setFileName] = useState(null);
+  const [fileUploaded, setFileUploaded] = useState(false);
+
+  const [dupOffset, setDupOffset] = useState(0);
+  const [dupCurrentPage, setDupCurrentPage] = useState(1);
+  const [dupNoOfRecord, setDupNoOfRecord] = useState(0);
+  const [totalNoOfRecord, setTotalNoOfRecord] = useState([]);
+  const [error, setError] = useState(null);
   useEffect(() => {
     getLoanPurposeData();
   }, []);
@@ -266,6 +279,263 @@ export default function AddCase({ menuAccess }) {
       setInvalidLoanAmountError(false);
     }
   };
+
+  const arraysEqual = (arr1, arr2) => {
+    if (arr1.length !== arr2.length) return false;
+    for (let i = 0; i < arr1.length; i++) {
+      if (arr1[i] !== arr2[i]) return false;
+    }
+    return true;
+  };
+  function formatDate(inputDate) {
+    /*let date = new Date(inputDate);
+    if (isNaN(date.getTime())) {
+      return "Invalid Date";
+    } else {
+      let formattedDate = date.toISOString().slice(0,10);
+      return formattedDate;
+    }*/
+    if (inputDate) {
+      const [day, month, year] = inputDate.split("-");
+      const formattedDate = `${year}-${month}-${day}`;
+      return formattedDate;
+    } else {
+      return inputDate;
+    }
+  }
+  const DUPLIMIT = 10;
+  const expectedHeaders = [
+    "Loan Purpose",
+    "Sub Loan Purpose",
+    "Loan Amount",
+    "Duration",
+    "Employement Type",
+    "Business Type",
+    "Profession",
+    "Name",
+    "Mobile Number",
+    "Email ID",
+    "PAN Number",
+    "Date Of Birth",
+    "Date of Incorporation",
+    "Address 1",
+    "Address 2",
+    "Landmark",
+    "PIN Code",
+    "City, District",
+    "State",
+    "Ifile",
+    "GST Number",
+    "Turnover Yearly",
+    "Gross Annual Profit",
+    "Industry",
+    "Sub Industry",
+  ];
+  const handleFileChange = async (e) => {
+    setError(null);
+    if (e.target.files) {
+      try {
+        const file = e.target.files[0];
+        setFileName(file.name);
+
+        const fileUrl = URL.createObjectURL(file);
+        const response = await fetch(fileUrl);
+        const text = await response.text();
+
+        const lines = text.split("\n");
+        const _data = lines.map((line, index) => {
+          return line
+            .split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/)
+            .map(function (item) {
+              return item.trim().replace(/^"|"$/g, "");
+            });
+        });
+        let headers = _data[0];
+        if (!arraysEqual(headers, expectedHeaders)) {
+          setError("The uploaded file does not match the expected format.");
+          return;
+        }
+
+        const [keys, ...values] = _data;
+        var regex = /[^\w\s]/gi;
+        const arrNewValue = values.filter((subArray) => subArray.length > 1);
+        const arrayOfObjects = arrNewValue.map((row) => {
+          if (row.length) {
+            const obj = {};
+            keys.forEach((key, index) => {
+              obj[
+                key.trim().toLowerCase().replace(regex, "").replace(/\s+/g, "_")
+              ] = row[index];
+            });
+            return obj;
+          }
+        });
+        arrayOfObjects.map((v, i) => {
+          v["city"] = v["city_district"];
+          v["date_of_birth"] = formatDate(v["date_of_birth"]);
+          v["date_of_incorporation"] = formatDate(v["date_of_incorporation"]);
+          delete v["city_district"];
+        });
+
+        uploadFileData(arrayOfObjects);
+        setFile(_data);
+        setFileUploaded(true);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  };
+
+  // console.log("error",error);
+
+  const [dupRecords, setDupRecords] = useState([]);
+  const [newRecords, setNewRecords] = useState([]);
+  const [newRecordsNo, setNewRecordsNo] = useState(0);
+
+  const [invalidRecords, setInvalidRecords] = useState([]);
+
+  const uploadFileData = (datas) => {
+    setLoader(true);
+    let jsonData = {
+      partner_id: localStorage.getItem("partner_id"),
+      data: datas,
+    };
+
+    axios
+      .post(API_URL + `partners-admin/bulk-upload-case-leads`, jsonData)
+      .then((res) => {
+        //   axios.post(API_URL+`bulk-upload/bulk-upload-case-leads`,jsonData).then((res) => {
+        let response = res.data;
+        if (response?.status === 200) {
+          // toast.success(response?.message);
+          //downloadDataAsCSV(response?.not_inserted_data);
+          let new_record = response?.new_records;
+          new_record.length &&
+            new_record.map((v, i) => {
+              if (v.duration > 5) {
+                v.duration = "5+";
+              }
+              return v;
+            });
+          setFile(null);
+          setFileName(null);
+          document.getElementById("files").value = "";
+          setDupRecords(response?.not_inserted_data);
+          setDupNoOfRecord(response?.not_inserted_data.length);
+          setNewRecords(new_record);
+          setNewRecordsNo(response?.new_records.length);
+          setInvalidRecords(response?.invalid_records);
+          let merged = [
+            ...response?.not_inserted_data,
+            ...response?.new_records,
+            ...response?.invalid_records,
+          ];
+          /*  console.log( new_record)
+           console.log( response?.new_records)
+           console.log(merged);*/
+          setTotalNoOfRecord(merged);
+        }
+
+        setLoader(false);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  //console.log("data",file);
+
+  function convertArrayOfObjectsToCSV(array) {
+    // Ensure we have an array and it's not empty
+    if (array == null || array.length === 0) {
+      return null;
+    }
+
+    const header = Object.keys(array[0]).join(",");
+    const rows = array.map((obj) => Object.values(obj).join(","));
+    const csv = [header, ...rows].join("\n");
+    return csv;
+  }
+
+  function downloadCSV(csv, filename) {
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = filename;
+    link.click();
+    window.URL.revokeObjectURL(url);
+  }
+
+  const downloadDataAsCSV = (data, fileName) => {
+    const csv = convertArrayOfObjectsToCSV(data);
+    if (csv) {
+      downloadCSV(csv, fileName);
+    }
+  };
+  const [detailsShow, setDetailsShow] = useState(false);
+  const handleCloseDetails = () => {
+    setDetailsShow(false);
+    setDupRecords([]);
+    setNewRecords([]);
+    setInvalidRecords([]);
+    setDupNoOfRecord(0);
+    setNewRecordsNo(0);
+    setTotalNoOfRecord([]);
+    setFileUploaded(false);
+    setError(null);
+  };
+
+  const uploadDetails = () => {
+    setDetailsShow(true);
+  };
+
+  const handelNewRecords = () => {
+    setLoader(true);
+    let jsonData = {
+      partner_id: localStorage.getItem("partner_id"),
+      data: newRecords,
+    };
+
+    axios
+      .post(
+        API_URL + `partners-admin/bulk-upload-case-leads-insert-data`,
+        jsonData
+      )
+      .then((res) => {
+        let response = res.data;
+        if (response?.status === 200) {
+          toast.success(response?.message);
+          dupRecords.map((v, i) => {
+            delete v.recordExists;
+            return v;
+          });
+          invalidRecords.map((v, i) => {
+            delete v.phoneInvalid;
+            delete v.emailInvalid;
+            delete v.panInvalid;
+            delete v.amountInvalid;
+            delete v.loanPurposeInvalid;
+            return v;
+          });
+          downloadDataAsCSV(dupRecords, "duplicate_records.csv");
+          downloadDataAsCSV(invalidRecords, "invalid_records.csv");
+          setFile(null);
+          setFileName(null);
+          document.getElementById("files").value = "";
+          //  setDupRecords(response?.not_inserted_data);
+          //  setDupNoOfRecord(response?.not_inserted_data.length);
+          //  setNewRecords(response?.new_records);
+          //  setNewRecordsNo(response?.new_records.length);
+          handleCloseDetails();
+        }
+
+        setLoader(false);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
   return (
     <>
       {loader ? <Loader /> : ""}
@@ -275,8 +545,17 @@ export default function AddCase({ menuAccess }) {
           <div className="adminMain-wrapper">
             <AdminHeader />
             <div className="mainContent">
-              <div className="topHeadings">
+              <div className="topHeadings" style={{ position: "relative" }}>
                 <h3>Create New</h3>
+                <div style={{ position: "absolute", top: "5px", right: "0px" }}>
+                  <button
+                    className="btn btn-primary"
+                    style={{ marginRight: "3px" }}
+                    onClick={() => uploadDetails()}
+                  >
+                    Bulk Upload
+                  </button>
+                </div>
               </div>
               <div className="contentBlocks">
                 <div className="sectionTable">
@@ -545,6 +824,234 @@ export default function AddCase({ menuAccess }) {
           </div>
         </div>
       </div>
+      <Modal
+        show={detailsShow}
+        onHide={handleCloseDetails}
+        backdrop="static"
+        keyboard={false}
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        size="lg"
+        fullscreen={true}
+        dialogClassName="my-modal"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Bulk Upload </Modal.Title>
+        </Modal.Header>
+        <Modal.Body style={{ maxHeight: "500px", overflowX: "auto" }}>
+          <div className="row add-bank-info">
+            <div className="col-md-12 label-line-height">
+              {!fileUploaded ? (
+                <>
+                  <span>
+                    <label style={{ marginRight: "3px" }}>
+                      {fileName == null ? "Select file to upload" : fileName}
+                    </label>
+                    <label for="files" className="btn btn-success">
+                      Upload File{" "}
+                    </label>
+                    <input
+                      id="files"
+                      type="file"
+                      accept=".csv"
+                      style={{ visibility: "hidden" }}
+                      onChange={handleFileChange}
+                    />
+                  </span>
+                </>
+              ) : (
+                <>
+                  <span>
+                    <input
+                      id="files"
+                      type="file"
+                      accept=".csv"
+                      style={{ visibility: "hidden" }}
+                      onChange={handleFileChange}
+                    />{" "}
+                  </span>
+                </>
+              )}
+              {error ? (
+                <span>
+                  <label
+                    style={{
+                      marginLeft: "10px",
+                      marginRight: "20px",
+                      color: "red",
+                    }}
+                  >
+                    {error}
+                  </label>
+                </span>
+              ) : (
+                ""
+              )}
+
+              {fileUploaded && (
+                <>
+                  <span>
+                    <label
+                      style={{
+                        marginLeft: "10px",
+                        marginRight: "20px",
+                        color: "black",
+                      }}
+                    >
+                      Total Records :{" "}
+                      {newRecords.length +
+                        dupRecords.length +
+                        invalidRecords.length}
+                    </label>
+                  </span>
+                  <span>
+                    <label
+                      style={{
+                        marginLeft: "10px",
+                        marginRight: "20px",
+                        color: "green",
+                      }}
+                    >
+                      New Records : {newRecords.length}
+                    </label>
+                  </span>
+                  <span>
+                    <label style={{ marginRight: "20px", color: "red" }}>
+                      Duplicate Records : {dupRecords.length}
+                    </label>
+                  </span>
+                  <span>
+                    <label
+                      style={{
+                        marginLeft: "10px",
+                        marginRight: "20px",
+                        color: "blue",
+                      }}
+                    >
+                      Invalid Records : {invalidRecords.length}
+                    </label>
+                  </span>
+                </>
+              )}
+            </div>
+            <div className="col-md-12 label-line-height">
+              {fileUploaded && (
+                <center>
+                  <span>List of records</span>
+                </center>
+              )}
+
+              <table style={{ width: "100%" }} className="table table-stripped">
+                <thead>
+                  {fileUploaded && (
+                    <tr>
+                      <th className="table-head">Name</th>
+                      <th className="table-head">Mobile</th>
+                      <th className="table-head">Email Id</th>
+                      <th className="table-head">Pan</th>
+                      <th className="table-head">Loan purpose</th>
+                      <th className="table-head">Sub loan purpose</th>
+                      <th className="table-head">Loan Amount</th>
+                      <th className="table-head">Business Type</th>
+                      <th className="table-head">GST</th>
+                    </tr>
+                  )}
+                </thead>
+                <tbody>
+                  {totalNoOfRecord.map((row, index) => (
+                    <tr
+                      key={index}
+                      style={{
+                        borderBottom: "1px solid #ddd",
+                        backgroundColor: row?.recordExists
+                          ? "#ff000014"
+                          : row?.validRecords
+                          ? "#00ff0421"
+                          : "",
+                      }}
+                    >
+                      <td className="table-body">{row.name}</td>
+                      <td className="table-body">
+                        {row?.phoneInvalid ? (
+                          <span style={{ color: "red" }}>
+                            {row.mobile_number}
+                          </span>
+                        ) : (
+                          row.mobile_number
+                        )}
+                      </td>
+                      <td className="table-body">
+                        {row?.emailInvalid ? (
+                          <span style={{ color: "red" }}>{row.email_id}</span>
+                        ) : (
+                          row.email_id
+                        )}
+                      </td>
+                      <td className="table-body">
+                        {row?.panInvalid ? (
+                          <span style={{ color: "red" }}>{row.pan_number}</span>
+                        ) : (
+                          row.pan_number
+                        )}
+                      </td>
+                      <td className="table-body">
+                        {row?.loanPurposeInvalid ? (
+                          <span style={{ color: "red" }}>
+                            {row.loan_purpose}
+                          </span>
+                        ) : (
+                          row.loan_purpose
+                        )}
+                      </td>
+                      <td className="table-body">{row.sub_loan_purpose}</td>
+                      <td className="table-body">
+                        {row?.amountInvalid ? (
+                          <span style={{ color: "red" }}>
+                            {row.loan_amount}
+                          </span>
+                        ) : (
+                          row.loan_amount
+                        )}
+                      </td>
+                      <td className="table-body">{row.business_type}</td>
+                      <td className="table-body">{row.gst_number}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              {/* pegination */}
+              <div>
+                <Paginator
+                  totalRecords={dupNoOfRecord}
+                  pageLimit={DUPLIMIT}
+                  pageNeighbours={2}
+                  setOffset={setDupOffset}
+                  currentPage={dupCurrentPage}
+                  setCurrentPage={setDupCurrentPage}
+                />
+              </div>
+            </div>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseDetails}>
+            Close
+          </Button>
+          {fileUploaded ? (
+            <Button
+              variant="primary"
+              className="submit-btn-modal"
+              onClick={handelNewRecords}
+              disabled={newRecordsNo ? false : true}
+            >
+              Proceed with {newRecordsNo}{" "}
+              {newRecordsNo > 1 ? "new Records" : "new Record"}
+            </Button>
+          ) : (
+            <></>
+          )}
+        </Modal.Footer>
+      </Modal>
       <ToastContainer />
     </>
   );

@@ -80,8 +80,8 @@ const LeadCase = ({ menuAccess }) => {
     const jsonData = {
       limit: LIMIT,
       offset: page,
-      loanType: "Personal Loan",
-      loanStatus: "leads",
+      loanType: "Business Loan",
+      loanStatus: "incomplete",
       created_by_id: localStorage.getItem("partner_id"),
     };
 
@@ -142,7 +142,7 @@ const LeadCase = ({ menuAccess }) => {
   };
 
   const getIndividualData = (caseId) => {
-    navigate("/partners-admin/personal/case-detail/" + caseId + "/0/0");
+    navigate("/partners-admin/view-partner-case-detail/" + caseId + "/0/0");
   };
 
   useEffect(() => {
@@ -402,7 +402,7 @@ const LeadCase = ({ menuAccess }) => {
             {/* The main Code */}
             <div className="mainContent">
               <div className="topHeadings">
-                <h3>Lead cases</h3>
+                <h3>Incomplete cases</h3>
               </div>
 
               {loader ? (
