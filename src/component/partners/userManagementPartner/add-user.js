@@ -104,6 +104,24 @@ export default function AddUser() {
                                 </div>
                               </div>
                             </div>
+                            <div className="row">
+                              <div className="col-lg-2 col-md-2 col-sx-2">
+                                <div className="form-group">
+                                  <label htmlFor="">
+                                    Employee Id<span className="error">*</span>
+                                  </label>
+                                </div>
+                              </div>
+                              <div className="col-lg-4 col-md-4 col-sx-4">
+                                <div className="form-group">
+                                  <input
+                                    className="form-control"
+                                    type="text"
+                                    placeholder="Employee Id"
+                                  />
+                                </div>
+                              </div>
+                            </div>
 							<div className="row">
                               <div className="col-lg-2 col-md-2 col-sx-2">
                                 <div className="form-group">

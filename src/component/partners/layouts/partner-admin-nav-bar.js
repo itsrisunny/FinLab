@@ -119,7 +119,9 @@ export default function AdminNavBar(props) {
                     window.location.pathname ==
                       "/partners-admin/userManagementPartner/add-user" ||
                     window.location.pathname ==
-                      "/partners-admin/userManagementPartner/assign-role"
+                      "/partners-admin/userManagementPartner/assign-role" ||
+                      window.location.pathname ==
+                      "/partners-admin/userManagementPartner/partnerAdminUserList"  
                       ? "active"
                       : ""
                   }
@@ -142,7 +144,9 @@ export default function AdminNavBar(props) {
                     window.location.pathname ==
                       "/partners-admin/userManagementPartner/add-user" ||
                     window.location.pathname ==
-                      "/partners-admin/userManagementPartner/assign-role"
+                      "/partners-admin/userManagementPartner/assign-role" ||
+                      window.location.pathname ==
+                      "/partners-admin/userManagementPartner/partnerAdminUserList" 
                       ? "submenu collapse show"
                       : "submenu collapse"
                   }
@@ -162,6 +166,14 @@ export default function AdminNavBar(props) {
                         to="/partners-admin/userManagementPartner/assign-role"
                       >
                         Assign role to user
+                      </NavLink>
+                    </li>
+                    <li className="nav-item pad">
+                      <NavLink
+                        className="nav-link"
+                        to="/partners-admin/userManagementPartner/partnerAdminUserList"
+                      >
+                        User List
                       </NavLink>
                     </li>
                   </ul>

@@ -56,6 +56,7 @@ import PartnerViewPersIndividualCases from "./component/partners/personalCases/v
 
 import PartnerAddUserManage from "./component/partners/userManagementPartner/add-user.js";
 import PartnerAssignRole from "./component/partners/userManagementPartner/assign-role.js";
+import PartnerAdminUserList from "./component/partners/userManagementPartner/partnerAdminUserList.js";
 
 import PerosnalIncLeadCase from './component/admin/personalLoan/incompleteLeadCase';
 import PerosnalLeadCase from './component/admin/personalLoan/leadCase';
@@ -130,6 +131,7 @@ function App() {
 
             <Route path="/partners-admin/userManagementPartner/add-user" element={<PartnerAddUserManage />} exact={true} />
             <Route path="/partners-admin/userManagementPartner/assign-role" element={<PartnerAssignRole />} exact={true} />
+            <Route path="/partners-admin/userManagementPartner/partnerAdminUserList" element={<PartnerAdminUserList />} exact={true} />
         </Routes> 
     </BrowserRouter>
     );
