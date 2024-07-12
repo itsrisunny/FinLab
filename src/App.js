@@ -437,17 +437,29 @@ function App() {
         />
         <Route
           path="/partners-admin/userManagementPartner/add-user"
-          element={<PartnerAddUserManage />}
+          element={
+            <RoleWrapper role="Partner" setMenuAccess={setMenuAccess}>
+              <PartnerAddUserManage menuAccess={menuAccess} />
+            </RoleWrapper>
+          }
           exact={true}
         />
         <Route
           path="/partners-admin/userManagementPartner/assign-role"
-          element={<PartnerAssignRole />}
+          element={
+            <RoleWrapper role="Partner" setMenuAccess={setMenuAccess}>
+              <PartnerAssignRole menuAccess={menuAccess} />
+            </RoleWrapper>
+          }
           exact={true}
         />
         <Route
           path="/partners-admin/userManagementPartner/partnerAdminUserList"
-          element={<PartnerAdminUserList />}
+          element={
+            <RoleWrapper role="Partner" setMenuAccess={setMenuAccess}>
+              <PartnerAdminUserList menuAccess={menuAccess} />
+            </RoleWrapper>
+          }
           exact={true}
         />
       </Routes>

@@ -335,74 +335,71 @@ export default function AdminNavBar({ menuAccess }) {
                         Personal Loan Cases
                       </NavLink>
                     </li>
-                    <li className="nav-item dropdownitem">
-                      <Link
-                        className={
-                          window.location.pathname ==
-                            "/partners-admin/userManagementPartner/add-user" ||
-                          window.location.pathname ==
-                            "/partners-admin/userManagementPartner/assign-role" ||
-                          window.location.pathname ==
-                            "/partners-admin/userManagementPartner/partnerAdminUserList"
-                            ? "active"
-                            : ""
-                        }
-                        to="#"
-                        data-toggle="collapse"
-                        aria-expanded="true"
-                        data-target="#submenu-10"
-                        aria-controls="submenu-10"
+                  </ul>
+                </div>
+              </li>
+              <li className="nav-item dropdownitem">
+                <Link
+                  className={
+                    window.location.pathname ==
+                      "/partners-admin/userManagementPartner/add-user" ||
+                    window.location.pathname ==
+                      "/partners-admin/userManagementPartner/assign-role" ||
+                    window.location.pathname ==
+                      "/partners-admin/userManagementPartner/partnerAdminUserList"
+                      ? "active"
+                      : ""
+                  }
+                  to="#"
+                  data-toggle="collapse"
+                  aria-expanded="true"
+                  data-target="#submenu-10"
+                  aria-controls="submenu-10"
+                >
+                  <i className="fa fa-futbol-o nav-icon" aria-hidden="true"></i>
+                  User Management
+                  <i
+                    className="fa fa-caret-down pull-right"
+                    aria-hidden="true"
+                  ></i>
+                </Link>
+                <div
+                  id="submenu-10"
+                  className={
+                    window.location.pathname ==
+                      "/partners-admin/userManagementPartner/add-user" ||
+                    window.location.pathname ==
+                      "/partners-admin/userManagementPartner/assign-role" ||
+                    window.location.pathname ==
+                      "/partners-admin/userManagementPartner/partnerAdminUserList"
+                      ? "submenu collapse show"
+                      : "submenu collapse"
+                  }
+                >
+                  <ul className="nav flex-column">
+                    <li className="nav-item pad">
+                      <NavLink
+                        className="nav-link"
+                        to="/partners-admin/userManagementPartner/add-user"
                       >
-                        <i
-                          className="fa fa-futbol-o nav-icon"
-                          aria-hidden="true"
-                        ></i>
-                        User Management
-                        <i
-                          className="fa fa-caret-down pull-right"
-                          aria-hidden="true"
-                        ></i>
-                      </Link>
-                      <div
-                        id="submenu-10"
-                        className={
-                          window.location.pathname ==
-                            "/partners-admin/userManagementPartner/add-user" ||
-                          window.location.pathname ==
-                            "/partners-admin/userManagementPartner/assign-role" ||
-                          window.location.pathname ==
-                            "/partners-admin/userManagementPartner/partnerAdminUserList"
-                            ? "submenu collapse show"
-                            : "submenu collapse"
-                        }
+                        Add User
+                      </NavLink>
+                    </li>
+                    <li className="nav-item pad">
+                      <NavLink
+                        className="nav-link"
+                        to="/partners-admin/userManagementPartner/assign-role"
                       >
-                        <ul className="nav flex-column">
-                          <li className="nav-item pad">
-                            <NavLink
-                              className="nav-link"
-                              to="/partners-admin/userManagementPartner/add-user"
-                            >
-                              Add User
-                            </NavLink>
-                          </li>
-                          <li className="nav-item pad">
-                            <NavLink
-                              className="nav-link"
-                              to="/partners-admin/userManagementPartner/assign-role"
-                            >
-                              Assign role to user
-                            </NavLink>
-                          </li>
-                          <li className="nav-item pad">
-                            <NavLink
-                              className="nav-link"
-                              to="/partners-admin/userManagementPartner/partnerAdminUserList"
-                            >
-                              User List
-                            </NavLink>
-                          </li>
-                        </ul>
-                      </div>
+                        Assign role to user
+                      </NavLink>
+                    </li>
+                    <li className="nav-item pad">
+                      <NavLink
+                        className="nav-link"
+                        to="/partners-admin/userManagementPartner/partnerAdminUserList"
+                      >
+                        User List
+                      </NavLink>
                     </li>
                   </ul>
                 </div>

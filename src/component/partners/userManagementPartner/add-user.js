@@ -5,7 +5,7 @@ import AdminNavBar from "../layouts/partner-admin-nav-bar";
 import InputMask from "react-input-mask";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-export default function AddUser() {
+export default function AddUser({ menuAccess }) {
   const [name, setName] = useState("");
   const [mobileNumber, setMobileNumber] = useState("");
   const [email, setEmail] = useState("");
@@ -54,7 +54,7 @@ export default function AddUser() {
     <>
       <div className="layout-wrapper">
         <div className="layout-container">
-          <AdminNavBar />
+          <AdminNavBar menuAccess={menuAccess} />
           <div className="adminMain-wrapper">
             <AdminHeader />
             <div className="mainContent">
@@ -86,7 +86,7 @@ export default function AddUser() {
                                 </div>
                               </div>
                             </div>
-							<div className="row">
+                            <div className="row">
                               <div className="col-lg-2 col-md-2 col-sx-2">
                                 <div className="form-group">
                                   <label htmlFor="">
@@ -122,7 +122,7 @@ export default function AddUser() {
                                 </div>
                               </div>
                             </div>
-							<div className="row">
+                            <div className="row">
                               <div className="col-lg-2 col-md-2 col-sx-2">
                                 <div className="form-group">
                                   <label htmlFor="">
@@ -197,7 +197,7 @@ export default function AddUser() {
                               </div>
                             </div>
                             <div className="row">
-                            <div className="col-lg-6 col-md-6 col-sx-6"></div>
+                              <div className="col-lg-6 col-md-6 col-sx-6"></div>
                               <div className="col-lg-6 col-md-6 col-sx-6">
                                 <button
                                   type="close"

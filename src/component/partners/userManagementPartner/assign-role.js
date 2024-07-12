@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import AdminHeader from "../layouts/partner-admin-header";
 import AdminFooter from "../layouts/partner-admin-footer";
 import AdminNavBar from "../layouts/partner-admin-nav-bar";
-import { Row, Col, Form, Table } from 'react-bootstrap';
+import { Row, Col, Form, Table } from "react-bootstrap";
 
-export default function AssignRole() {
+export default function AssignRole({ menuAccess }) {
   const [emailId, setEmailId] = useState();
   const [isAdmin, setIsAdmin] = useState(false);
   const [isMaster, setIsMaster] = useState(false);
@@ -17,7 +17,7 @@ export default function AssignRole() {
       lead: false,
       offeredLead: false,
       closedLead: false,
-      declinedLead: false
+      declinedLead: false,
     },
     personalLoan: {
       selectAll: false,
@@ -26,20 +26,20 @@ export default function AssignRole() {
       lead: false,
       offeredLead: false,
       closedLead: false,
-      declinedLead: false
+      declinedLead: false,
     },
   });
 
   const togglePermission = (category, permission) => {
-    setPermissions(prev => {
+    setPermissions((prev) => {
       const newPermissions = {
         ...prev[category],
-        [permission]: !prev[category][permission]
+        [permission]: !prev[category][permission],
       };
 
       if (permission !== "selectAll") {
         newPermissions.selectAll = Object.keys(newPermissions).every(
-          key => key === "selectAll" || newPermissions[key]
+          (key) => key === "selectAll" || newPermissions[key]
         );
       } else {
         for (let key in newPermissions) {
@@ -51,7 +51,7 @@ export default function AssignRole() {
 
       return {
         ...prev,
-        [category]: newPermissions
+        [category]: newPermissions,
       };
     });
   };
@@ -65,7 +65,7 @@ export default function AssignRole() {
         lead: false,
         offeredLead: false,
         closedLead: false,
-        declinedLead: false
+        declinedLead: false,
       },
       personalLoan: {
         selectAll: false,
@@ -74,7 +74,7 @@ export default function AssignRole() {
         lead: false,
         offeredLead: false,
         closedLead: false,
-        declinedLead: false
+        declinedLead: false,
       },
     });
     setIsAdmin(false);
@@ -87,7 +87,7 @@ export default function AssignRole() {
   return (
     <div className="layout-wrapper">
       <div className="layout-container">
-        <AdminNavBar />
+        <AdminNavBar menuAccess={menuAccess} />
         <div className="adminMain-wrapper">
           <AdminHeader />
           <div className="mainContent text-center">
@@ -95,7 +95,11 @@ export default function AssignRole() {
               <h3>User Role Management</h3>
             </div>
             <Form className="d-flex flex-column align-items-center">
-              <Form.Group as={Row} className="mb-4 w-100" controlId="formPartnerId">
+              <Form.Group
+                as={Row}
+                className="mb-4 w-100"
+                controlId="formPartnerId"
+              >
                 <Form.Label column sm={2} className="text-center">
                   Email Id
                 </Form.Label>
@@ -108,12 +112,22 @@ export default function AssignRole() {
                   />
                 </Col>
                 <Col sm={2}>
-                  <button type="button" className="btn btn-primary" onClick={handleFormSubmit}>Search</button>
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={handleFormSubmit}
+                  >
+                    Search
+                  </button>
                 </Col>
               </Form.Group>
-             
-              <Form.Group as={Row} className="mb-4 w-100" controlId="formAdminCheckbox">
-              <Form.Label column sm={2} className="text-center">
+
+              <Form.Group
+                as={Row}
+                className="mb-4 w-100"
+                controlId="formAdminCheckbox"
+              >
+                <Form.Label column sm={2} className="text-center">
                   Assign as Agent
                 </Form.Label>
                 {/* <Col sm={1} className="d-flex justify-content-center"> */}
@@ -140,15 +154,19 @@ export default function AssignRole() {
                   </tr>
                 </thead>
                 <tbody>
-                  {Object.keys(permissions).map(category => (
+                  {Object.keys(permissions).map((category) => (
                     <tr key={category}>
-                      <td>{category.charAt(0).toUpperCase() + category.slice(1)}</td>
-                      {Object.keys(permissions[category]).map(permission => (
+                      <td>
+                        {category.charAt(0).toUpperCase() + category.slice(1)}
+                      </td>
+                      {Object.keys(permissions[category]).map((permission) => (
                         <td key={permission}>
                           <Form.Check
                             type="checkbox"
                             checked={permissions[category][permission]}
-                            onChange={() => togglePermission(category, permission)}
+                            onChange={() =>
+                              togglePermission(category, permission)
+                            }
                             className="custom-checkbox"
                           />
                         </td>
@@ -158,8 +176,21 @@ export default function AssignRole() {
                 </tbody>
               </Table>
               <div className="text-center mt-4">
-                <button type="button" className="btn btn-secondary" onClick={handleResetFunc}>Reset</button>&nbsp;
-                <button type="button" className="btn btn-primary" onClick={handleFormSubmit}>Assign</button>
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={handleResetFunc}
+                >
+                  Reset
+                </button>
+                &nbsp;
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={handleFormSubmit}
+                >
+                  Assign
+                </button>
               </div>
             </Form>
           </div>
