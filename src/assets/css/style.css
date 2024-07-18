@@ -101,7 +101,11 @@ li.nav-item.pad {
   margin-bottom: 20px;
 }
 
-
+.error-msg{
+  position: absolute;
+    color: red;
+    font-size: 11px;
+}
 .progress-bar-head{
   text-align: center;
   margin-top: 15px;

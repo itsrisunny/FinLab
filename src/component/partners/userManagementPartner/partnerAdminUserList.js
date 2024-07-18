@@ -56,7 +56,7 @@ const PartnerAdminUserList = ({ menuAccess }) => {
     },
   ];
 
-  const [data, setData] = useState(initialData);
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     setData((prevData) => prevData.map((row) => ({ ...row, status: true })));
@@ -78,11 +78,21 @@ const PartnerAdminUserList = ({ menuAccess }) => {
     const jsonData = {
       limit: LIMIT,
       offset: page,
+      partnerID: localStorage.getItem("partner_id"),
     };
 
-    if (searchTxt != "") {
+    if (searchTxt !== "") {
       jsonData["searchText"] = searchTxt;
     }
+    axios
+      .post(`${API_URL}partner-user/get-agent-list`, jsonData)
+      .then((res) => {
+        const { data } = res;
+        setData(data?.result);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   };
 
   useEffect(() => {
@@ -129,6 +139,7 @@ const PartnerAdminUserList = ({ menuAccess }) => {
                               <thead>
                                 <tr>
                                   <th className="table-head">S.No.</th>
+                                  <th className="table-head">Agent Id</th>
                                   <th className="table-head">Employee Id</th>
                                   <th className="table-head">Name</th>
                                   <th className="table-head">Email Id</th>
@@ -142,13 +153,16 @@ const PartnerAdminUserList = ({ menuAccess }) => {
                                     key={index}
                                     style={{ borderBottom: "1px solid #ddd" }}
                                   >
-                                    <td className="table-body">{row.sno}</td>
+                                    <td className="table-body">{index + 1}</td>
                                     <td className="table-body">
-                                      {row.employeeid}
+                                      {row.agent_id}
+                                    </td>
+                                    <td className="table-body">
+                                      {row.employee_id}
                                     </td>
                                     <td className="table-body">{row.name}</td>
                                     <td className="table-body">
-                                      {row.emailid}
+                                      {row.email_id}
                                     </td>
                                     <td className="table-body">
                                       {Array.isArray(row.role) ? (
@@ -163,7 +177,7 @@ const PartnerAdminUserList = ({ menuAccess }) => {
                                           ))}
                                         </ul>
                                       ) : (
-                                        row.role
+                                        " -"
                                       )}
                                     </td>
                                     <td className="table-body">
