@@ -118,7 +118,6 @@ export default function AssignRole() {
               },
             });
           }
-          console.log(data?.data?.permissions);
         } else {
           setPartnerName("");
         }
