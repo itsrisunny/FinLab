@@ -62,10 +62,22 @@ const PartnerAdminUserList = ({ menuAccess }) => {
     setData((prevData) => prevData.map((row) => ({ ...row, status: true })));
   }, []);
 
-  const handleActionClick = (index) => {
+  const handleActionClick = (index, agentId, status) => {
+    axios
+      .post(`${API_URL}partner-user/manage-agent-status`, {
+        agentID: agentId,
+        status: status === 0 ? 1 : 0,
+      })
+      .then((res) => {
+        const { data } = res;
+        console.log(data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
     setData((prevData) => {
       const newData = [...prevData];
-      newData[index] = { ...newData[index], status: !newData[index].status };
+      newData[index] = { ...newData[index], status: status === 0 ? 1 : 0 };
       return newData;
     });
   };
@@ -188,7 +200,13 @@ const PartnerAdminUserList = ({ menuAccess }) => {
                                             : "btn btn-delete"
                                         }
                                         value={action}
-                                        onClick={() => handleActionClick(index)}
+                                        onClick={() =>
+                                          handleActionClick(
+                                            index,
+                                            row.agent_id,
+                                            row.status
+                                          )
+                                        }
                                       >
                                         {row.status ? "✔" : "✘"}
                                       </button>

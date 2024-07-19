@@ -439,7 +439,11 @@ function App() {
           path="/partners-admin/userManagementPartner/add-user"
           element={
             <RoleWrapper role="Partner" setMenuAccess={setMenuAccess}>
-              <PartnerAddUserManage menuAccess={menuAccess} />
+              {menuAccess?.isAdmin ? (
+                <PartnerAddUserManage menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorized menuAccess={menuAccess} />
+              )}
             </RoleWrapper>
           }
           exact={true}
@@ -448,7 +452,11 @@ function App() {
           path="/partners-admin/userManagementPartner/assign-role"
           element={
             <RoleWrapper role="Partner" setMenuAccess={setMenuAccess}>
-              <PartnerAssignRole menuAccess={menuAccess} />
+              {menuAccess?.isAdmin ? (
+                <PartnerAssignRole menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorized menuAccess={menuAccess} />
+              )}
             </RoleWrapper>
           }
           exact={true}
@@ -457,7 +465,11 @@ function App() {
           path="/partners-admin/userManagementPartner/partnerAdminUserList"
           element={
             <RoleWrapper role="Partner" setMenuAccess={setMenuAccess}>
-              <PartnerAdminUserList menuAccess={menuAccess} />
+              {menuAccess?.isAdmin ? (
+                <PartnerAdminUserList menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorized menuAccess={menuAccess} />
+              )}
             </RoleWrapper>
           }
           exact={true}
