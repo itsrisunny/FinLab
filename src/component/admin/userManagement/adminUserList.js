@@ -9,6 +9,7 @@ import moment from 'moment';
 import CurrencyFormat from 'react-currency-format';
 import Paginator from 'react-hooks-paginator';
 import { ToastContainer, toast } from 'react-toastify';
+import Swal from "sweetalert2";
 import 'react-toastify/dist/ReactToastify.css';
 
 const LIMIT = 10;
@@ -35,7 +36,25 @@ const AdminUserList = () => {
       })
       .then((res) => {
         const { data } = res;
-        console.log(data);
+        if(res?.data?.status === 200) {
+          Swal.fire({
+            title: "Success!",
+            text: res?.data?.message,
+            showDenyButton: false,
+            showCancelButton: false,
+            confirmButtonText: "OK",
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            
+          })
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: res?.data?.message,
+          });
+        }
+        
       })
       .catch((e) => {
         console.log(e);
