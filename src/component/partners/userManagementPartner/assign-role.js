@@ -3,7 +3,10 @@ import AdminHeader from "../layouts/partner-admin-header";
 import AdminFooter from "../layouts/partner-admin-footer";
 import AdminNavBar from "../layouts/partner-admin-nav-bar";
 import { Row, Col, Form, Table } from "react-bootstrap";
-
+import axios from "axios";
+import { API_URL } from "../../../config/constant";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 export default function AssignRole({ menuAccess }) {
   const [emailId, setEmailId] = useState();
   const [isAdmin, setIsAdmin] = useState(false);
@@ -57,6 +60,7 @@ export default function AssignRole({ menuAccess }) {
   };
 
   const handleResetFunc = () => {
+    setEmailId("");
     setPermissions({
       businessLoan: {
         selectAll: false,
@@ -79,11 +83,80 @@ export default function AssignRole({ menuAccess }) {
     });
     setIsAdmin(false);
   };
-
-  const handleFormSubmit = () => {
+  const [agentId, setAgentId] = useState("");
+  const handleSearchRecords = () => {
     // Handle form submit logic here
+    if (emailId) {
+      axios
+        .post(`${API_URL}partner-user/partner-permission-detail`, {
+          email: emailId,
+        })
+        .then((res) => {
+          const { data } = res;
+          if (data?.status === 200) {
+            setAgentId(data?.data?.partner_id);
+            const permissions = data?.data?.permissions;
+            if (permissions) {
+              setIsAdmin(permissions?.isAdmin);
+              setPermissions(permissions?.permissions);
+            } else {
+              setIsAdmin(false);
+              setPermissions({
+                businessLoan: {
+                  selectAll: false,
+                  addCase: false,
+                  incompleteLead: false,
+                  lead: false,
+                  offeredLead: false,
+                  closedLead: false,
+                  declinedLead: false,
+                },
+                personalLoan: {
+                  selectAll: false,
+                  addCase: false,
+                  incompleteLead: false,
+                  lead: false,
+                  offeredLead: false,
+                  closedLead: false,
+                  declinedLead: false,
+                },
+              });
+            }
+          } else {
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
   };
-
+  const handleSavePermission = () => {
+    if (agentId) {
+      const jsonFormData = {
+        partnerId: agentId,
+        permissions: JSON.stringify({
+          isAdmin: isAdmin,
+          permissions,
+        }),
+      };
+      axios
+        .post(API_URL + "user-agent/save-permission", jsonFormData)
+        .then((res) => {
+          const { data } = res;
+          if (data?.status === 200) {
+            toast.success(data?.message);
+            handleResetFunc();
+          } else {
+            toast.error(data?.message);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      toast.error("Please enter valid partner ID!");
+    }
+  };
   return (
     <div className="layout-wrapper">
       <div className="layout-container">
@@ -115,7 +188,7 @@ export default function AssignRole({ menuAccess }) {
                   <button
                     type="button"
                     className="btn btn-primary"
-                    onClick={handleFormSubmit}
+                    onClick={handleSearchRecords}
                   >
                     Search
                   </button>
@@ -187,7 +260,7 @@ export default function AssignRole({ menuAccess }) {
                 <button
                   type="button"
                   className="btn btn-primary"
-                  onClick={handleFormSubmit}
+                  onClick={handleSavePermission}
                 >
                   Assign
                 </button>
@@ -197,6 +270,7 @@ export default function AssignRole({ menuAccess }) {
           <AdminFooter />
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 }
