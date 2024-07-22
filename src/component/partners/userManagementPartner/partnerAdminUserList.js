@@ -114,6 +114,69 @@ const PartnerAdminUserList = ({ menuAccess }) => {
   const handelSearch = (e) => {
     setSearchTxt(e.target.value);
   };
+  function printRoles(permissions) {
+    let roles = [];
+
+    if (permissions.isAdmin) {
+      roles.push("Super Admin");
+    }
+
+    if (permissions.isAdmin && permissions.permissions.businessLoan.selectAll) {
+      roles.push("Business Loan");
+    } else {
+      let businessLoanRoles = [];
+      if (permissions.permissions.businessLoan.addCase) {
+        businessLoanRoles.push("Add");
+      }
+      if (permissions.permissions.businessLoan.incompleteLead) {
+        businessLoanRoles.push("Incomplete");
+      }
+      if (permissions.permissions.businessLoan.lead) {
+        businessLoanRoles.push("Lead");
+      }
+      if (permissions.permissions.businessLoan.offeredLead) {
+        businessLoanRoles.push("Offered");
+      }
+      if (permissions.permissions.businessLoan.closedLead) {
+        businessLoanRoles.push("Closed");
+      }
+      if (permissions.permissions.businessLoan.declinedLead) {
+        businessLoanRoles.push("Declined");
+      }
+      if (businessLoanRoles.length > 0) {
+        roles.push(`Business Loan (${businessLoanRoles.join(", ")})`);
+      }
+    }
+
+    if (permissions.permissions.personalLoan.selectAll) {
+      roles.push("Personal Loan");
+    } else {
+      let personalLoanRoles = [];
+      if (permissions.permissions.personalLoan.addCase) {
+        personalLoanRoles.push("Add");
+      }
+      if (permissions.permissions.personalLoan.incompleteLead) {
+        personalLoanRoles.push("Incomplete");
+      }
+      if (permissions.permissions.personalLoan.lead) {
+        personalLoanRoles.push("Lead");
+      }
+      if (permissions.permissions.personalLoan.offeredLead) {
+        personalLoanRoles.push("Offered");
+      }
+      if (permissions.permissions.personalLoan.closedLead) {
+        personalLoanRoles.push("Closed");
+      }
+      if (permissions.permissions.personalLoan.declinedLead) {
+        personalLoanRoles.push("Declined");
+      }
+      if (personalLoanRoles.length > 0) {
+        roles.push(`Personal Loan (${personalLoanRoles.join(", ")})`);
+      }
+    }
+
+    return roles.join(", ");
+  }
 
   return (
     <>
@@ -155,7 +218,12 @@ const PartnerAdminUserList = ({ menuAccess }) => {
                                   <th className="table-head">Employee Id</th>
                                   <th className="table-head">Name</th>
                                   <th className="table-head">Email Id</th>
-                                  <th className="table-head">Role</th>
+                                  <th
+                                    className="table-head"
+                                    style={{ width: "25%" }}
+                                  >
+                                    Role
+                                  </th>
                                   <th className="table-head">Action</th>
                                 </tr>
                               </thead>
@@ -177,20 +245,9 @@ const PartnerAdminUserList = ({ menuAccess }) => {
                                       {row.email_id}
                                     </td>
                                     <td className="table-body">
-                                      {Array.isArray(row.role) ? (
-                                        <ul
-                                          style={{
-                                            listStyleType: "none",
-                                            padding: 0,
-                                          }}
-                                        >
-                                          {row.role.map((item, idx) => (
-                                            <li key={idx}>{item}</li>
-                                          ))}
-                                        </ul>
-                                      ) : (
-                                        " -"
-                                      )}
+                                      {row?.permissions
+                                        ? printRoles(row?.permissions)
+                                        : "-"}
                                     </td>
                                     <td className="table-body">
                                       <button
@@ -200,12 +257,16 @@ const PartnerAdminUserList = ({ menuAccess }) => {
                                             : "btn btn-delete"
                                         }
                                         value={action}
-                                        onClick={() =>
-                                          handleActionClick(
-                                            index,
-                                            row.agent_id,
-                                            row.status
-                                          )
+                                        onClick={(e) =>
+                                          row?.permissions
+                                            ? handleActionClick(
+                                                index,
+                                                row.agent_id,
+                                                row.status
+                                              )
+                                            : alert(
+                                                "Before activating the account. Please assign role and permissions."
+                                              )
                                         }
                                       >
                                         {row.status ? "✔" : "✘"}

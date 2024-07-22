@@ -94,7 +94,7 @@ export default function AssignRole({ menuAccess }) {
         .then((res) => {
           const { data } = res;
           if (data?.status === 200) {
-            setAgentId(data?.data?.agent_id);
+            setAgentId(data?.data?.partner_id);
             const permissions = data?.data?.permissions;
             if (permissions) {
               setIsAdmin(permissions?.isAdmin);
@@ -122,6 +122,7 @@ export default function AssignRole({ menuAccess }) {
                 },
               });
             }
+          } else {
           }
         })
         .catch((e) => {
