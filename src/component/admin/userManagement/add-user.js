@@ -5,13 +5,20 @@ import AdminNavBar from "../../layouts/admin-nav-bar";
 import InputMask from "react-input-mask";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Axios from "axios";
+import { API_URL } from "../../../config/constant";
+import Loader from "../../loader";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+
 export default function AddUser() {
   const [name, setName] = useState("");
   const [mobileNumber, setMobileNumber] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const [loader, setLoader] = useState(false);
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
   const validate = () => {
     const errors = {};
@@ -22,7 +29,7 @@ export default function AddUser() {
 
     if (!mobileNumber) {
       errors.mobileNumber = "Mobile Number is required";
-    } else if (!/^\d{10}$/.test(mobileNumber)) {
+    } else if (!/^\d{10}$/.test(mobileNumber.replace(/\s/g, ""))) {
       errors.mobileNumber = "Mobile Number must be 10 digits";
     }
 
@@ -45,9 +52,68 @@ export default function AddUser() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validate()) {
-      const formData = { name, mobileNumber, email, password };
-      console.log("Form submitted successfully:", formData);
-    }
+      const formData = { name, mobileNumber, email, password, crmId, employeeId };    
+    
+    setLoader(true);
+    Axios.post(`${API_URL}admin-user/save-admin-user`, formData)
+    .then((res) => {
+      if(res?.data?.status === 200) {
+        Swal.fire({
+          icon: "success",
+          title: "Success!",
+          text: res?.data?.message,
+          showDenyButton: false,
+          showCancelButton: false,
+          confirmButtonText: "OK",
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+        }).then((result) => {
+          if(result.isConfirmed){
+            return navigate(
+              "/admin/userManagement/adminUserList"
+            );
+          }
+        })
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: res?.data?.message,
+        });
+      }
+      setLoader(false);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+    console.log("Form submitted successfully:", formData);
+  }
+  };
+
+  const [crmId, setCrmId] = useState("")
+  const handleCrmIdFunction = (e) => {
+    setCrmId(e.target.value);
+  };
+
+  const [employeeId, setEmployeeId] = useState("");
+  const handleEmployeeIdFunction = (e) => {
+    setEmployeeId(e.target.value);
+  };
+  const handleNameFunction = (e) => {
+    errors.name = "";
+    setName(e.target.value);
+  };
+  const handleEmailFunction = (e) => {
+    errors.email = "";
+    setEmail(e.target.value);
+  };
+  const handleMobileFunction = (e) => {
+    errors.mobileNumber = "";
+    setMobileNumber(e.target.value);
+  };
+  const handlePasswordFunction = (e) => {
+    errors.password = "";
+    setPassword(e.target.value);
   };
 
   return (
@@ -82,6 +148,8 @@ export default function AddUser() {
                                     className="form-control"
                                     type="text"
                                     placeholder="Employee Id"
+                                    value={employeeId}
+                                    onChange={handleEmployeeIdFunction}
                                   />
                                 </div>
                               </div>
@@ -100,6 +168,8 @@ export default function AddUser() {
                                     className="form-control"
                                     type="text"
                                     placeholder="CRM Id"
+                                    value={crmId}
+                                    onChange={handleCrmIdFunction}
                                   />
                                 </div>
                               </div>
@@ -118,7 +188,12 @@ export default function AddUser() {
                                     className="form-control"
                                     type="text"
                                     placeholder="Name"
+                                    value={name}
+                                    onChange={handleNameFunction}
                                   />
+                                  <div className="error-msg">
+                                    {errors?.name}
+                                  </div>
                                 </div>
                               </div>
                             </div>
@@ -138,7 +213,12 @@ export default function AddUser() {
                                     maskChar=""
                                     className="form-control"
                                     placeholder="Mobile Number(999 999 9999)"
+                                    value={mobileNumber}
+                                    onChange={handleMobileFunction}
                                   />
+                                  <div className="error-msg">
+                                    {errors?.mobileNumber}
+                                  </div>
                                 </div>
                               </div>
                             </div>
@@ -156,7 +236,12 @@ export default function AddUser() {
                                     className="form-control"
                                     type="text"
                                     placeholder="Email ID"
+                                    value={email}
+                                    onChange={handleEmailFunction}
                                   />
+                                  <div className="error-msg">
+                                    {errors?.email}
+                                  </div>
                                 </div>
                               </div>
                             </div>
@@ -174,7 +259,12 @@ export default function AddUser() {
                                     className="form-control"
                                     type="text"
                                     placeholder="Password"
+                                    value={password}
+                                    onChange={handlePasswordFunction}
                                   />
+                                  <div className="error-msg">
+                                    {errors?.password}
+                                  </div>
                                 </div>
                               </div>
                             </div>

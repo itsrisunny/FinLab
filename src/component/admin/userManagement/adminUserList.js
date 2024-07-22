@@ -21,53 +21,30 @@ const AdminUserList = () => {
     const [noOfRecord,setNoOfRecord] = useState(0);
     const [searchTxt,setSearchTxt] = useState("");
 
-    const initialData = [
-      {
-        "sno": 1,
-        "employeeid": "FL-E001",
-        "name": "John Doe",
-        "emailid": "john.doe@example.com",
-        "role": "Super Admin",
-        "status": false 
-      },
-      {
-        "sno": 2,
-        "employeeid": "FL-E002",
-        "name": "Jane Smith",
-        "emailid": "jane.smith@example.com",
-        "role": ["Business Loan" , "Partner Management", "Master Management"],
-        "status": false 
-      },
-      {
-        "sno": 3,
-        "employeeid": "FL-E003",
-        "name": "Michael Johnson",
-        "emailid": "michael.johnson@example.com",
-        "role": "Partner Management",
-        "status": false
-      },
-      {
-        "sno": 4,
-        "employeeid": "FL-E004",
-        "name": "Chander Mohan",
-        "emailid": "chander@apisod.ai",
-        "role": ["Personal Loan" , "Partner List", "Master List"],
-        "status": false
-      }
-    ];
-  
-    const [data, setData] = useState(initialData);
+    const [data,setData] = useState([]);
 
     useEffect(() => {
-      setData(prevData => prevData.map(row => ({ ...row, status: true })));
+      setData(prevData => prevData.map((row) => ({ ...row, status: true })));
     }, []);
   
-    const handleActionClick = (index) => {
-      setData(prevData => {
-        const newData = [...prevData];
-        newData[index] = { ...newData[index], status: !newData[index].status };
-        return newData;
+    const handleActionClick = (index, id, status) => {
+      axios
+      .post(`${API_URL}admin-user/manage-admin-user-status`, {
+        id: id ,
+        status: status === 0 ? 1 : 0,
+      })
+      .then((res) => {
+        const { data } = res;
+        console.log(data);
+      })
+      .catch((e) => {
+        console.log(e);
       });
+    setData((prevData) => {
+      const newData = [...prevData];
+      newData[index] = { ...newData[index], status: status === 0 ? 1 : 0 };
+      return newData;
+    });
     };
 
     useEffect(() => {
@@ -80,15 +57,25 @@ const AdminUserList = () => {
        const  jsonData = {
         "limit":LIMIT,
         "offset":page,
+        "searchText":"",
       } 
       
      if(searchTxt !=""){
       jsonData['searchText']=searchTxt
      }
+     axios
+      .post(`${API_URL}admin-user/list-admin-user`, jsonData)
+      .then((res) => {
+        const { data } = res;
+        console.log(data)
+        setData(data?.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
 
     }
  
-
    useEffect(() =>{
     getAllPartnersData(0);
    },[searchTxt])
@@ -131,6 +118,7 @@ const AdminUserList = () => {
                                           <th className="table-head">S.No.</th>
                                           <th className="table-head">Employee Id</th>
                                           <th className="table-head">Name</th>
+                                          <th className="table-head">CRM Id</th>
                                           <th className="table-head">Email Id</th>
                                           <th className="table-head">Role</th>
                                           <th className="table-head">Action</th>
@@ -140,26 +128,31 @@ const AdminUserList = () => {
                                       
                                           {data.map((row, index) => (
                                           <tr key={index} style={{ borderBottom: '1px solid #ddd' }}>
-                                            <td className="table-body">{row.sno}</td>
-                                              <td className="table-body">{row.employeeid}</td>
+                                            <td className="table-body">{index + 1}</td>
+                                              <td className="table-body">{row.emp_id}</td>
                                               <td className="table-body">{row.name}</td>
-                                              <td className="table-body">{row.emailid}</td>
+                                              <td className="table-body">{row.crm_id}</td>
+                                              <td className="table-body">{row.email}</td>
                                               <td className="table-body" >
-                                              {Array.isArray(row.role) ? (
+                                                {/*Role is user_type*/ }
+                                              {Array.isArray(row.user_type) ? (
                                                   <ul style={{ listStyleType: 'none', padding: 0 }}>
-                                                    {row.role.map((item, idx) => (
+                                                    {row.user_type.map((item, idx) => (
                                                       <li key={idx}>{item}</li>
                                                     ))}
                                                   </ul>
                                                 ) : (
-                                                  row.role
+                                                  row.user_type
                                                 )}
                                               </td>
                                               <td className="table-body"> 
                                                 <button
                                                  className={(row.status)?"btn btn-active":"btn btn-delete"}
                                                  value={action}
-                                                 onClick={() => handleActionClick(index)} 
+                                                 onClick={() => handleActionClick(index,
+                                                  row.id,
+                                                  row.status
+                                                 )} 
                                                  >
                                                   {(row.status)?"✔":"✘"}</button>
                                               </td>
