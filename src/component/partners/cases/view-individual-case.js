@@ -419,6 +419,8 @@ const CaseNumberInLead = ({ menuAccess }) => {
               offerData: resp?.offers ? resp?.offers : [],
               directorData: resp?.director_data ? resp?.director_data : [],
               bankDetails: resp?.bank_details ? newBankDetailArray : [],
+              agent_name: resp?.loan_requirement?.agent_name,
+              source: resp?.loan_requirement?.created_by,
             },
           ]);
 
@@ -2418,7 +2420,7 @@ const CaseNumberInLead = ({ menuAccess }) => {
                                   </div>
                                   <div className="col-sm-8 text-secondary">
                                     {" "}
-                                    {v.source}
+                                    {v?.source}
                                   </div>
                                 </div>
                               </div>
@@ -2449,7 +2451,7 @@ const CaseNumberInLead = ({ menuAccess }) => {
                                     <h6>Agent Name:</h6>
                                   </div>
                                   <div className="col-sm-6 text-secondary">
-                                    ---
+                                    {v.agent_name}
                                   </div>
                                 </div>
                               </div>
