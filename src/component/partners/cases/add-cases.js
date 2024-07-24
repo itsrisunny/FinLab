@@ -534,7 +534,7 @@ const LeadCase = ({ menuAccess }) => {
                                         {row.offerAdded}
                                       </td>
                                       <td className="table-body">
-                                        {row.source}
+                                        {row.created_by_name}
                                       </td>
                                       <td className="table-body">
                                         <button
