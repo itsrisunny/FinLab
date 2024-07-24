@@ -9,7 +9,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { json } from "react-router-dom";
 
-export default function AssignRole() {
+export default function AssignRole({menuAccess}) {
   const [emailId, setEmailId] = useState();
   const [superAdmin, setSuperAdmin] = useState(false);
   const [partnerManagement, setPartnerManagement] = useState(false);
@@ -100,7 +100,7 @@ export default function AssignRole() {
           const { data } = res;
           console.log(data.data)
           if (data?.status === 200) {
-            setAdminId(data.data.id)
+            setAdminId(data?.data?.id)
             const permissions = data?.data?.permissions;
             if (permissions) {
               setSuperAdmin(permissions?.superAdmin);
@@ -156,7 +156,7 @@ export default function AssignRole() {
           superAdmin:superAdmin,
           partnerManagement:partnerManagement,
           masterManagement:masterManagement,
-          permissions 
+          permissions, 
           }),        
       };
       axios
@@ -183,7 +183,7 @@ export default function AssignRole() {
     <>
     <div className="layout-wrapper">
       <div className="layout-container">
-        <AdminNavBar />
+        <AdminNavBar menuAccess={menuAccess} />
         <div className="adminMain-wrapper">
           <AdminHeader />
           <div className="mainContent text-center">

@@ -201,7 +201,7 @@ export default function AssignRole({ menuAccess }) {
                 controlId="formAdminCheckbox"
               >
                 <Form.Label column sm={2} className="text-center">
-                  Assign as Agent
+                  Assign as Admin
                 </Form.Label>
                 {/* <Col sm={1} className="d-flex justify-content-center"> */}
                 <Col sm={1} className="text-center">
