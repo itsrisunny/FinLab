@@ -3,12 +3,17 @@ import AdminHeader from "../../layouts/admin-header";
 import AdminFooter from "../../layouts/admin-footer";
 import AdminNavBar from "../../layouts/admin-nav-bar";
 import { Row, Col, Form, Table } from "react-bootstrap";
+import axios from "axios";
+import { API_URL } from "../../../config/constant";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { json } from "react-router-dom";
 
 export default function AssignRole() {
   const [emailId, setEmailId] = useState();
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [isMaster, setIsMaster] = useState(false);
-  const [isPartnerList, setIsPartnerList] = useState(false);
+  const [superAdmin, setSuperAdmin] = useState(false);
+  const [partnerManagement, setPartnerManagement] = useState(false);
+  const [masterManagement, setMasterManagement] = useState(false);
   const [permissions, setPermissions] = useState({
     businessLoan: {
       selectAll: false,
@@ -77,14 +82,105 @@ export default function AssignRole() {
         declinedLead: false,
       },
     });
-    setIsAdmin(false);
+    setSuperAdmin(false);
+    setPartnerManagement(false);
+    setMasterManagement(false);
   };
 
-  const handleFormSubmit = () => {
+  const [adminId,setAdminId] = useState("")
+
+  const handleSearchRecords = () => {
     // Handle form submit logic here
+    if (emailId) {
+      axios
+        .post(`${API_URL}admin/get-user-data`, {
+          emailId: emailId,
+        })
+        .then((res) => {
+          const { data } = res;
+          console.log(data.data)
+          if (data?.status === 200) {
+            setAdminId(data.data.id)
+            const permissions = data?.data?.permissions;
+            if (permissions) {
+              setSuperAdmin(permissions?.superAdmin);
+              setPartnerManagement(permissions?.partnerManagement);
+              setMasterManagement(permissions?.masterManagement);
+              setPermissions(permissions?.permissions);  
+            } else {
+              setSuperAdmin(false);
+              setPartnerManagement(false);
+              setMasterManagement(false);
+              setPermissions({
+                businessLoan: {
+                  selectAll: false,
+                  addCase: false,
+                  incompleteLead: false,
+                  lead: false,
+                  offeredLead: false,
+                  closedLead: false,
+                  declinedLead: false,
+                },
+                personalLoan: {
+                  selectAll: false,
+                  addCase: false,
+                  incompleteLead: false,
+                  lead: false,
+                  offeredLead: false,
+                  closedLead: false,
+                  declinedLead: false,
+                },
+              });              
+            }
+            
+          } else {
+            console.log("status not 200",data )
+          }
+        })
+        .catch((e) => {
+          console.log("data not coming",e);
+        });
+    } else {
+      console.log("email id is not there")
+    }
+  };
+
+  
+  
+  
+  const handleSavePermission = () => {
+    if (emailId) {
+      const jsonFormData = {
+        adminId:adminId,  
+        permissions:  JSON.stringify({
+          superAdmin:superAdmin,
+          partnerManagement:partnerManagement,
+          masterManagement:masterManagement,
+          permissions 
+          }),        
+      };
+      axios
+        .post(API_URL + "admin/save-permission", jsonFormData)
+        .then((res) => {
+          const { data } = res;
+          if (data?.status === 200) {
+            toast.success(data?.message);
+            handleResetFunc();
+          } else {
+            toast.error(data?.message);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      toast.error("Please enter valid ID!");
+      
+    }
   };
 
   return (
+    <>
     <div className="layout-wrapper">
       <div className="layout-container">
         <AdminNavBar />
@@ -115,7 +211,7 @@ export default function AssignRole() {
                   <button
                     type="button"
                     className="btn btn-primary"
-                    onClick={handleFormSubmit}
+                    onClick={handleSearchRecords}
                   >
                     Search
                   </button>
@@ -134,8 +230,8 @@ export default function AssignRole() {
                 <Col sm={1} className="text-center">
                   <Form.Check
                     type="checkbox"
-                    checked={isAdmin}
-                    onChange={() => setIsAdmin(!isAdmin)}
+                    checked={superAdmin}
+                    onChange={() => setSuperAdmin(!superAdmin)}
                     className="custom-checkbox"
                   />
                 </Col>
@@ -147,8 +243,8 @@ export default function AssignRole() {
                 <Col sm={1} className="text-center">
                   <Form.Check
                     type="checkbox"
-                    checked={isPartnerList}
-                    onChange={() => setIsPartnerList(!isPartnerList)}
+                    checked={partnerManagement}
+                    onChange={() => setPartnerManagement(!partnerManagement)}
                     className="custom-checkbox"
                   />
                 </Col>
@@ -160,8 +256,8 @@ export default function AssignRole() {
                 <Col sm={1} className="text-center">
                   <Form.Check
                     type="checkbox"
-                    checked={isMaster}
-                    onChange={() => setIsMaster(!isMaster)}
+                    checked={masterManagement}
+                    onChange={() => setMasterManagement(!masterManagement)}
                     className="custom-checkbox"
                   />
                 </Col>
@@ -213,7 +309,7 @@ export default function AssignRole() {
                 <button
                   type="button"
                   className="btn btn-primary"
-                  onClick={handleFormSubmit}
+                  onClick={handleSavePermission}
                 >
                   Assign
                 </button>
@@ -224,5 +320,7 @@ export default function AssignRole() {
         </div>
       </div>
     </div>
+    <ToastContainer />
+    </>
   );
 }

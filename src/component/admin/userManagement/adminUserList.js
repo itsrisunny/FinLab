@@ -86,7 +86,7 @@ const AdminUserList = () => {
       .post(`${API_URL}admin-user/list-admin-user`, jsonData)
       .then((res) => {
         const { data } = res;
-        console.log(data)
+        // console.log(data)
         setData(data?.data);
       })
       .catch((e) => {
