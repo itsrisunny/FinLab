@@ -60,6 +60,8 @@ export default function AddUser({ menuAccess }) {
         employeeId,
       };
       setLoader(true);
+
+      //Axios.post(`${API_URL}partner-user/save-partner-agent`, formData)
       Axios.post(`${API_URL}partner-user/save-partner-agent`, formData)
         .then((res) => {
           if (res?.data?.status === 200) {
