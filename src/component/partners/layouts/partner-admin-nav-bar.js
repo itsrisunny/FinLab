@@ -5,7 +5,6 @@ import { API_URL } from "../../../config/constant";
 
 export default function AdminNavBar({ menuAccess }) {
   const { permissions, isAdmin } = menuAccess;
-  console.log(isAdmin);
   return (
     <>
       <aside>

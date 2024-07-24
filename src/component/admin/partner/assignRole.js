@@ -8,7 +8,7 @@ import { Row, Col, Form, Table } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export default function AssignRole() {
+export default function AssignRole({ menuAccess }) {
   const [partnerId, setPartnerId] = useState("");
   const [partnerName, setPartnerName] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
@@ -166,7 +166,7 @@ export default function AssignRole() {
   return (
     <div className="layout-wrapper">
       <div className="layout-container">
-        <AdminNavBar />
+        <AdminNavBar menuAccess={menuAccess} />
         <div className="adminMain-wrapper">
           <AdminHeader />
           <div className="mainContent text-center">

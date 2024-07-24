@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
-const assignCases = () => {
-  return (
-    <div>Assign Cases page</div>
-  )
-}
+const assignCases = ({ menuAccess }) => {
+  return <div>Assign Cases page</div>;
+};
 
-export default assignCases
+export default assignCases;
