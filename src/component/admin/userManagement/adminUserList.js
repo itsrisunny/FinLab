@@ -93,13 +93,11 @@ const AdminUserList = ({ menuAccess }) => {
   useEffect(() => {
     getAllPartnersData(0);
   }, [searchTxt]);
-  }, [searchTxt]);
 
-  const handelSearch = (e) => {
   const handelSearch = (e) => {
     setSearchTxt(e.target.value);
   };
-  
+
   function printRoles(permissions) {
     let roles = [];
     // console.log(permissions)
@@ -109,11 +107,11 @@ const AdminUserList = ({ menuAccess }) => {
     }
 
     if (permissions.partnerManagement) {
-      roles.push("Partner Management")
+      roles.push("Partner Management");
     }
 
-    if(permissions.masterManagement) {
-      roles.push("Master Management")
+    if (permissions.masterManagement) {
+      roles.push("Master Management");
     }
 
     if (permissions.permissions.businessLoan.selectAll) {
@@ -171,12 +169,12 @@ const AdminUserList = ({ menuAccess }) => {
     }
 
     return (
-      <ul style={{ listStyleType: 'none', padding: 0 }}>
-          {roles.map((role, index) => (
-              <li key={index}>{role}</li>
-          ))}
+      <ul style={{ listStyleType: "none", padding: 0 }}>
+        {roles.map((role, index) => (
+          <li key={index}>{role}</li>
+        ))}
       </ul>
-  );
+    );
   }
 
   return (
@@ -235,21 +233,9 @@ const AdminUserList = ({ menuAccess }) => {
                                     <td className="table-body">{row.crm_id}</td>
                                     <td className="table-body">{row.email}</td>
                                     <td className="table-body">
-                                      {/*Role is user_type*/}
-                                      {Array.isArray(row.user_type) ? (
-                                        <ul
-                                          style={{
-                                            listStyleType: "none",
-                                            padding: 0,
-                                          }}
-                                        >
-                                          {row.user_type.map((item, idx) => (
-                                            <li key={idx}>{item}</li>
-                                          ))}
-                                        </ul>
-                                      ) : (
-                                        row.user_type
-                                      )}
+                                    {row?.permissions
+                                        ? printRoles(row?.permissions)
+                                        : "-"}
                                     </td>
                                     <td className="table-body">
                                       <button
