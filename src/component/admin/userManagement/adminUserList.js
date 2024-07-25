@@ -97,10 +97,10 @@ const AdminUserList = ({ menuAccess }) => {
   const handelSearch = (e) => {
     setSearchTxt(e.target.value);
   };
-
+  
   function printRoles(permissions) {
     let roles = [];
-    console.log(permissions)
+    // console.log(permissions)
 
     if (permissions.superAdmin) {
       roles.push("Super Admin");
@@ -114,7 +114,7 @@ const AdminUserList = ({ menuAccess }) => {
       roles.push("Master Management")
     }
 
-    if (permissions.isAdmin && permissions.permissions.businessLoan.selectAll) {
+    if (permissions.permissions.businessLoan.selectAll) {
       roles.push("Business Loan");
     } else {
       let businessLoanRoles = [];
