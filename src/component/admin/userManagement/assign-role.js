@@ -87,7 +87,7 @@ export default function AssignRole({menuAccess}) {
     setMasterManagement(false);
   };
 
-  const [adminId,setAdminId] = useState("")
+  const [adminId, setAdminId] = useState("");
 
   const handleSearchRecords = () => {
     // Handle form submit logic here
@@ -98,7 +98,7 @@ export default function AssignRole({menuAccess}) {
         })
         .then((res) => {
           const { data } = res;
-          console.log(data.data)
+          console.log(data.data);
           if (data?.status === 200) {
             setAdminId(data?.data?.id)
             const permissions = data?.data?.permissions;
@@ -106,7 +106,7 @@ export default function AssignRole({menuAccess}) {
               setSuperAdmin(permissions?.superAdmin);
               setPartnerManagement(permissions?.partnerManagement);
               setMasterManagement(permissions?.masterManagement);
-              setPermissions(permissions?.permissions);  
+              setPermissions(permissions?.permissions);
             } else {
               setSuperAdmin(false);
               setPartnerManagement(false);
@@ -130,24 +130,20 @@ export default function AssignRole({menuAccess}) {
                   closedLead: false,
                   declinedLead: false,
                 },
-              });              
+              });
             }
-            
           } else {
-            console.log("status not 200",data )
+            console.log("status not 200", data);
           }
         })
         .catch((e) => {
-          console.log("data not coming",e);
+          console.log("data not coming", e);
         });
     } else {
-      console.log("email id is not there")
+      console.log("email id is not there");
     }
   };
 
-  
-  
-  
   const handleSavePermission = () => {
     if (emailId) {
       const jsonFormData = {
@@ -175,7 +171,6 @@ export default function AssignRole({menuAccess}) {
         });
     } else {
       toast.error("Please enter valid ID!");
-      
     }
   };
 
@@ -218,109 +213,111 @@ export default function AssignRole({menuAccess}) {
                 </Col>
               </Form.Group>
 
-              <Form.Group
-                as={Row}
-                className="mb-4 w-100"
-                controlId="formAdminCheckbox"
-              >
-                <Form.Label column sm={2} className="text-center">
-                  Super Admin
-                </Form.Label>
-                {/* <Col sm={1} className="d-flex justify-content-center"> */}
-                <Col sm={1} className="text-center">
-                  <Form.Check
-                    type="checkbox"
-                    checked={superAdmin}
-                    onChange={() => setSuperAdmin(!superAdmin)}
-                    className="custom-checkbox"
-                  />
-                </Col>
+                <Form.Group
+                  as={Row}
+                  className="mb-4 w-100"
+                  controlId="formAdminCheckbox"
+                >
+                  <Form.Label column sm={2} className="text-center">
+                    Super Admin
+                  </Form.Label>
+                  {/* <Col sm={1} className="d-flex justify-content-center"> */}
+                  <Col sm={1} className="text-center">
+                    <Form.Check
+                      type="checkbox"
+                      checked={superAdmin}
+                      onChange={() => setSuperAdmin(!superAdmin)}
+                      className="custom-checkbox"
+                    />
+                  </Col>
 
-                <Form.Label column sm={2} className="text-center">
-                  Partner Management
-                </Form.Label>
-                {/* <Col sm={1} className="d-flex justify-content-center"> */}
-                <Col sm={1} className="text-center">
-                  <Form.Check
-                    type="checkbox"
-                    checked={partnerManagement}
-                    onChange={() => setPartnerManagement(!partnerManagement)}
-                    className="custom-checkbox"
-                  />
-                </Col>
+                  <Form.Label column sm={2} className="text-center">
+                    Partner Management
+                  </Form.Label>
+                  {/* <Col sm={1} className="d-flex justify-content-center"> */}
+                  <Col sm={1} className="text-center">
+                    <Form.Check
+                      type="checkbox"
+                      checked={partnerManagement}
+                      onChange={() => setPartnerManagement(!partnerManagement)}
+                      className="custom-checkbox"
+                    />
+                  </Col>
 
-                <Form.Label column sm={2} className="text-center">
-                  Master Management
-                </Form.Label>
-                {/* <Col sm={1} className="d-flex justify-content-center"> */}
-                <Col sm={1} className="text-center">
-                  <Form.Check
-                    type="checkbox"
-                    checked={masterManagement}
-                    onChange={() => setMasterManagement(!masterManagement)}
-                    className="custom-checkbox"
-                  />
-                </Col>
-              </Form.Group>
-              <Table bordered className="text-center w-100">
-                <thead>
-                  <tr>
-                    <th></th>
-                    <th>Select All</th>
-                    <th>Add case</th>
-                    <th>Incomplete Lead</th>
-                    <th>Lead</th>
-                    <th>Offered Lead</th>
-                    <th>Closed Lead</th>
-                    <th>Declined Lead</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {Object.keys(permissions).map((category) => (
-                    <tr key={category}>
-                      <td>
-                        {category.charAt(0).toUpperCase() + category.slice(1)}
-                      </td>
-                      {Object.keys(permissions[category]).map((permission) => (
-                        <td key={permission}>
-                          <Form.Check
-                            type="checkbox"
-                            checked={permissions[category][permission]}
-                            onChange={() =>
-                              togglePermission(category, permission)
-                            }
-                            className="custom-checkbox"
-                          />
-                        </td>
-                      ))}
+                  <Form.Label column sm={2} className="text-center">
+                    Master Management
+                  </Form.Label>
+                  {/* <Col sm={1} className="d-flex justify-content-center"> */}
+                  <Col sm={1} className="text-center">
+                    <Form.Check
+                      type="checkbox"
+                      checked={masterManagement}
+                      onChange={() => setMasterManagement(!masterManagement)}
+                      className="custom-checkbox"
+                    />
+                  </Col>
+                </Form.Group>
+                <Table bordered className="text-center w-100">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>Select All</th>
+                      <th>Add case</th>
+                      <th>Incomplete Lead</th>
+                      <th>Lead</th>
+                      <th>Offered Lead</th>
+                      <th>Closed Lead</th>
+                      <th>Declined Lead</th>
                     </tr>
-                  ))}
-                </tbody>
-              </Table>
-              <div className="text-center mt-4">
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  onClick={handleResetFunc}
-                >
-                  Reset
-                </button>
-                &nbsp;
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  onClick={handleSavePermission}
-                >
-                  Assign
-                </button>
-              </div>
-            </Form>
+                  </thead>
+                  <tbody>
+                    {Object.keys(permissions).map((category) => (
+                      <tr key={category}>
+                        <td>
+                          {category.charAt(0).toUpperCase() + category.slice(1)}
+                        </td>
+                        {Object.keys(permissions[category]).map(
+                          (permission) => (
+                            <td key={permission}>
+                              <Form.Check
+                                type="checkbox"
+                                checked={permissions[category][permission]}
+                                onChange={() =>
+                                  togglePermission(category, permission)
+                                }
+                                className="custom-checkbox"
+                              />
+                            </td>
+                          )
+                        )}
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+                <div className="text-center mt-4">
+                  <button
+                    type="button"
+                    className="btn btn-secondary"
+                    onClick={handleResetFunc}
+                  >
+                    Reset
+                  </button>
+                  &nbsp;
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={handleSavePermission}
+                  >
+                    Assign
+                  </button>
+                </div>
+              </Form>
+            </div>
+            <AdminFooter />
           </div>
-          <AdminFooter />
         </div>
       </div>
-    </div>
-    <ToastContainer />
+      <ToastContainer />
     </>
   );
 }

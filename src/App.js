@@ -68,7 +68,7 @@ import IncompleteBusinessLeadCase from "./component/partners/cases/incomplete-ca
 import PartnerBusinessOfferedCases from "./component/partners/cases/offered-cases.js";
 import PartnerBusinessClosedCases from "./component/partners/cases/closed-cases.js";
 import PartnerBusinessDeclinedCases from "./component/partners/cases/declined-cases.js";
-
+import UnAuthorizedAdmin from "./component/unAuthorisedAdmin.js";
 import AssignCases from "./component/admin/userManagement/assignCases.js";
 import AddUserManage from "./component/admin/userManagement/add-user.js";
 import AssignRole from "./component/admin/userManagement/assign-role.js";
@@ -113,90 +113,254 @@ function App() {
         <Route path="/admin/login" element={<AdminLogin />} exact={true} />
         <Route
           path="/admin/dashboard"
-          element={<AdminDashboard />}
+          element={
+            <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
+              <AdminDashboard menuAccess={menuAccess} />
+            </RoleWrapper>
+          }
           exact={true}
         />
         <Route
           path="/admin/lead-case"
-          element={<AdminLeadCase />}
+          element={
+            <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
+              {menuAccess?.permissions?.businessLoan?.lead ? (
+                <AdminLeadCase menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorizedAdmin menuAccess={menuAccess} />
+              )}
+            </RoleWrapper>
+          }
           exact={true}
         />
-        <Route path="/admin/add-bank" element={<AddBank />} exact={true} />
+        <Route
+          path="/admin/add-bank"
+          element={
+            <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
+              {menuAccess?.masterManagement ? (
+                <AddBank menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorizedAdmin menuAccess={menuAccess} />
+              )}
+            </RoleWrapper>
+          }
+          exact={true}
+        />
         <Route
           path="/admin/case-detail/:caseID/:type/:offerId"
-          element={<CaseDetail />}
+          element={
+            <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
+              {menuAccess?.permissions?.businessLoan?.closedLead ||
+              menuAccess?.permissions?.businessLoan?.declinedLead ||
+              menuAccess?.permissions?.businessLoan?.incompleteLead ||
+              menuAccess?.permissions?.businessLoan?.lead ||
+              menuAccess?.permissions?.businessLoan?.offeredLead ? (
+                <CaseDetail menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorizedAdmin menuAccess={menuAccess} />
+              )}
+            </RoleWrapper>
+          }
           exact={true}
         />
         <Route
           path="/admin/offered-case"
-          element={<AdminOfferedCase />}
+          element={
+            <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
+              {menuAccess?.permissions?.businessLoan?.offeredLead ? (
+                <AdminOfferedCase menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorizedAdmin menuAccess={menuAccess} />
+              )}
+            </RoleWrapper>
+          }
           exact={true}
         />
         <Route
           path="/admin/incomplete-lead-case"
-          element={<AdminIncompleteLeadCase />}
+          element={
+            <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
+              {menuAccess?.permissions?.businessLoan?.incompleteLead ? (
+                <AdminIncompleteLeadCase menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorizedAdmin menuAccess={menuAccess} />
+              )}
+            </RoleWrapper>
+          }
           exact={true}
         />
         <Route
           path="/admin/declined-cases"
-          element={<AdminDeclinedLeadCases />}
+          element={
+            <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
+              {menuAccess?.permissions?.businessLoan?.declinedLead ? (
+                <AdminDeclinedLeadCases menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorizedAdmin menuAccess={menuAccess} />
+              )}
+            </RoleWrapper>
+          }
           exact={true}
         />
         <Route
           path="/admin/partner/index"
-          element={<AdminPartnerList />}
+          element={
+            <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
+              {menuAccess?.partnerManagement ? (
+                <AdminPartnerList menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorizedAdmin menuAccess={menuAccess} />
+              )}
+            </RoleWrapper>
+          }
           exact={true}
         />
         <Route
           path="/admin/partner/assignRole"
-          element={<AdminPartnerAssignRole />}
+          element={
+            <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
+              {menuAccess?.partnerManagement ? (
+                <AdminPartnerAssignRole menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorizedAdmin menuAccess={menuAccess} />
+              )}
+            </RoleWrapper>
+          }
           exact={true}
         />
         <Route
           path="/admin/partner-detail/:Id"
-          element={<AdminPartnerView />}
+          element={
+            <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
+              {menuAccess?.partnerManagement ? (
+                <AdminPartnerView menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorizedAdmin menuAccess={menuAccess} />
+              )}
+            </RoleWrapper>
+          }
           exact={true}
         />
         <Route
           path="/admin/welcomed-cases"
-          element={<AdminWecomedUserList />}
+          element={
+            <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
+              {menuAccess?.permissions?.businessLoan?.closedLead ? (
+                <AdminWecomedUserList menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorizedAdmin menuAccess={menuAccess} />
+              )}
+            </RoleWrapper>
+          }
           exact={true}
         />
-        <Route path="/admin/add/case" element={<AdminAddCase />} exact={true} />
+        <Route
+          path="/admin/add/case"
+          element={
+            <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
+              {menuAccess?.permissions?.businessLoan?.addCase ? (
+                <AdminAddCase menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorizedAdmin menuAccess={menuAccess} />
+              )}
+            </RoleWrapper>
+          }
+          exact={true}
+        />
 
         <Route
           path="/admin/personal/add/case"
-          element={<AdminPersonalAddCase />}
+          element={
+            <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
+              {menuAccess?.permissions?.personalLoan?.addCase ? (
+                <AdminPersonalAddCase menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorizedAdmin menuAccess={menuAccess} />
+              )}
+            </RoleWrapper>
+          }
           exact={true}
         />
         <Route
           path="/admin/personal/incomplete-lead-case"
-          element={<PerosnalIncLeadCase />}
+          element={
+            <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
+              {menuAccess?.permissions?.personalLoan?.incompleteLead ? (
+                <PerosnalIncLeadCase menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorizedAdmin menuAccess={menuAccess} />
+              )}
+            </RoleWrapper>
+          }
           exact={true}
         />
         <Route
           path="/admin/personal/lead-case"
-          element={<PerosnalLeadCase />}
+          element={
+            <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
+              {menuAccess?.permissions?.personalLoan?.lead ? (
+                <PerosnalLeadCase menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorizedAdmin menuAccess={menuAccess} />
+              )}
+            </RoleWrapper>
+          }
           exact={true}
         />
         <Route
           path="/admin/personal/offered-case"
-          element={<PerosnalOfferCase />}
+          element={
+            <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
+              {menuAccess?.permissions?.personalLoan?.offeredLead ? (
+                <PerosnalOfferCase menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorizedAdmin menuAccess={menuAccess} />
+              )}
+            </RoleWrapper>
+          }
           exact={true}
         />
         <Route
           path="/admin/personal/welcomed-cases"
-          element={<PerosnalWelcomeCase />}
+          element={
+            <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
+              {menuAccess?.permissions?.personalLoan?.closedLead ? (
+                <PerosnalWelcomeCase menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorizedAdmin menuAccess={menuAccess} />
+              )}
+            </RoleWrapper>
+          }
           exact={true}
         />
         <Route
           path="/admin/personal/declined-cases"
-          element={<PerosnalDeclinedCase />}
+          element={
+            <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
+              {menuAccess?.permissions?.personalLoan?.declinedLead ? (
+                <PerosnalDeclinedCase menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorizedAdmin menuAccess={menuAccess} />
+              )}
+            </RoleWrapper>
+          }
           exact={true}
         />
         <Route
           path="/admin/personal/case-detail/:caseID/:type/:offerId"
-          element={<PerosnalCaseDetail />}
+          element={
+            <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
+              {menuAccess?.permissions?.personalLoan?.closedLead ||
+              menuAccess?.permissions?.personalLoan?.declinedLead ||
+              menuAccess?.permissions?.personalLoan?.incompleteLead ||
+              menuAccess?.permissions?.personalLoan?.lead ||
+              menuAccess?.permissions?.personalLoan?.offeredLead ? (
+                <PerosnalCaseDetail menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorizedAdmin menuAccess={menuAccess} />
+              )}
+            </RoleWrapper>
+          }
           exact={true}
         />
 
@@ -417,22 +581,50 @@ function App() {
         />
         <Route
           path="/admin/userManagement/assignCases"
-          element={<AssignCases />}
+          element={
+            <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
+              <AssignCases menuAccess={menuAccess} />
+            </RoleWrapper>
+          }
           exact={true}
         />
         <Route
           path="/admin/userManagement/add-user"
-          element={<AddUserManage />}
+          element={
+            <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
+              {menuAccess?.superAdmin ? (
+                <AddUserManage menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorizedAdmin menuAccess={menuAccess} />
+              )}
+            </RoleWrapper>
+          }
           exact={true}
         />
         <Route
           path="/admin/userManagement/assign-role"
-          element={<AssignRole />}
+          element={
+            <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
+              {menuAccess?.superAdmin ? (
+                <AssignRole menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorizedAdmin menuAccess={menuAccess} />
+              )}
+            </RoleWrapper>
+          }
           exact={true}
         />
         <Route
           path="/admin/userManagement/adminUserList"
-          element={<AdminUserList />}
+          element={
+            <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
+              {menuAccess?.superAdmin ? (
+                <AdminUserList menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorizedAdmin menuAccess={menuAccess} />
+              )}
+            </RoleWrapper>
+          }
           exact={true}
         />
         <Route

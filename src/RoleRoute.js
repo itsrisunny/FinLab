@@ -7,7 +7,7 @@ const RoleWrapper = ({ role, children, setMenuAccess }) => {
   const [redirect, setRedirect] = useState(false);
 
   useEffect(() => {
-    authenticationService.getCurrentUser().then((userRole) => {
+    authenticationService.getCurrentUser(role).then((userRole) => {
       setCurrentUserRole(userRole?.role);
       setMenuAccess(userRole);
       if (userRole?.role !== role) {

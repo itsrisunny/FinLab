@@ -93,7 +93,9 @@ const AdminUserList = ({ menuAccess }) => {
   useEffect(() => {
     getAllPartnersData(0);
   }, [searchTxt]);
+  }, [searchTxt]);
 
+  const handelSearch = (e) => {
   const handelSearch = (e) => {
     setSearchTxt(e.target.value);
   };
@@ -233,9 +235,21 @@ const AdminUserList = ({ menuAccess }) => {
                                     <td className="table-body">{row.crm_id}</td>
                                     <td className="table-body">{row.email}</td>
                                     <td className="table-body">
-                                      {row?.permissions
-                                        ? printRoles(row?.permissions)
-                                        : "-"}
+                                      {/*Role is user_type*/}
+                                      {Array.isArray(row.user_type) ? (
+                                        <ul
+                                          style={{
+                                            listStyleType: "none",
+                                            padding: 0,
+                                          }}
+                                        >
+                                          {row.user_type.map((item, idx) => (
+                                            <li key={idx}>{item}</li>
+                                          ))}
+                                        </ul>
+                                      ) : (
+                                        row.user_type
+                                      )}
                                     </td>
                                     <td className="table-body">
                                       <button
@@ -245,13 +259,11 @@ const AdminUserList = ({ menuAccess }) => {
                                             : "btn btn-delete"
                                         }
                                         value={action}
-                                        onClick={(e) => row?.permissions ?
+                                        onClick={() =>
                                           handleActionClick(
                                             index,
                                             row.id,
                                             row.status
-                                          ) : alert(
-                                            "Before activating the account. Please assign role and permissions."
                                           )
                                         }
                                       >

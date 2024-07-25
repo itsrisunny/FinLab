@@ -11,7 +11,7 @@ import Loader from "../../loader";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
-export default function AddUser() {
+export default function AddUser({ menuAccess }) {
   const [name, setName] = useState("");
   const [mobileNumber, setMobileNumber] = useState("");
   const [email, setEmail] = useState("");
@@ -52,45 +52,50 @@ export default function AddUser() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validate()) {
-      const formData = { name, mobileNumber, email, password, crmId, employeeId };    
-    
-    setLoader(true);
-    Axios.post(`${API_URL}admin-user/save-admin-user`, formData)
-    .then((res) => {
-      if(res?.data?.status === 200) {
-        Swal.fire({
-          icon: "success",
-          title: "Success!",
-          text: res?.data?.message,
-          showDenyButton: false,
-          showCancelButton: false,
-          confirmButtonText: "OK",
-          allowOutsideClick: false,
-          allowEscapeKey: false,
-        }).then((result) => {
-          if(result.isConfirmed){
-            return navigate(
-              "/admin/userManagement/adminUserList"
-            );
+      const formData = {
+        name,
+        mobileNumber,
+        email,
+        password,
+        crmId,
+        employeeId,
+      };
+
+      setLoader(true);
+      Axios.post(`${API_URL}admin-user/save-admin-user`, formData)
+        .then((res) => {
+          if (res?.data?.status === 200) {
+            Swal.fire({
+              icon: "success",
+              title: "Success!",
+              text: res?.data?.message,
+              showDenyButton: false,
+              showCancelButton: false,
+              confirmButtonText: "OK",
+              allowOutsideClick: false,
+              allowEscapeKey: false,
+            }).then((result) => {
+              if (result.isConfirmed) {
+                return navigate("/admin/userManagement/adminUserList");
+              }
+            });
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: res?.data?.message,
+            });
           }
+          setLoader(false);
         })
-      } else {
-        Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: res?.data?.message,
+        .catch((error) => {
+          console.log(error);
         });
-      }
-      setLoader(false);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-    console.log("Form submitted successfully:", formData);
-  }
+      console.log("Form submitted successfully:", formData);
+    }
   };
 
-  const [crmId, setCrmId] = useState("")
+  const [crmId, setCrmId] = useState("");
   const handleCrmIdFunction = (e) => {
     setCrmId(e.target.value);
   };
@@ -120,7 +125,7 @@ export default function AddUser() {
     <>
       <div className="layout-wrapper">
         <div className="layout-container">
-          <AdminNavBar />
+          <AdminNavBar menuAccess={menuAccess} />
           <div className="adminMain-wrapper">
             <AdminHeader />
             <div className="mainContent">
@@ -154,7 +159,7 @@ export default function AddUser() {
                                 </div>
                               </div>
                             </div>
-							<div className="row">
+                            <div className="row">
                               <div className="col-lg-2 col-md-2 col-sx-2">
                                 <div className="form-group">
                                   <label htmlFor="">
@@ -174,7 +179,7 @@ export default function AddUser() {
                                 </div>
                               </div>
                             </div>
-							<div className="row">
+                            <div className="row">
                               <div className="col-lg-2 col-md-2 col-sx-2">
                                 <div className="form-group">
                                   <label htmlFor="">
@@ -269,7 +274,7 @@ export default function AddUser() {
                               </div>
                             </div>
                             <div className="row">
-                            <div className="col-lg-6 col-md-6 col-sx-6"></div>
+                              <div className="col-lg-6 col-md-6 col-sx-6"></div>
                               <div className="col-lg-6 col-md-6 col-sx-6">
                                 <button
                                   type="close"
