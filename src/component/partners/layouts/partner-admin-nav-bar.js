@@ -56,7 +56,7 @@ export default function AdminNavBar({ menuAccess }) {
                       className="fa fa-futbol-o nav-icon"
                       aria-hidden="true"
                     ></i>
-                    Bssiness Loan Cases
+                    Business Loan Cases
                     <i
                       className="fa fa-caret-down pull-right"
                       aria-hidden="true"

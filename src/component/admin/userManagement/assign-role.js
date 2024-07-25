@@ -10,7 +10,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { json } from "react-router-dom";
 
 export default function AssignRole({ menuAccess }) {
-  const [emailId, setEmailId] = useState();
+  const [emailId, setEmailId] = useState("");
+  const [name, setName] = useState("");
   const [superAdmin, setSuperAdmin] = useState(false);
   const [partnerManagement, setPartnerManagement] = useState(false);
   const [masterManagement, setMasterManagement] = useState(false);
@@ -98,9 +99,9 @@ export default function AssignRole({ menuAccess }) {
         })
         .then((res) => {
           const { data } = res;
-          console.log(data.data);
           if (data?.status === 200) {
             setAdminId(data.data.id);
+            setName(data.data.name);
             const permissions = data?.data?.permissions;
             if (permissions) {
               setSuperAdmin(permissions?.superAdmin);
@@ -210,6 +211,23 @@ export default function AssignRole({ menuAccess }) {
                     >
                       Search
                     </button>
+                  </Col>
+                </Form.Group>
+                <Form.Group
+                  as={Row}
+                  className="mb-4 w-100"
+                  controlId="formPartnerId"
+                >
+                  <Form.Label column sm={2} className="text-center">
+                    Name
+                  </Form.Label>
+                  <Col sm={4}>
+                    <Form.Control
+                      type="string"
+                      value={name}
+                      className="text-center"
+                      disabled={true}
+                    />
                   </Col>
                 </Form.Group>
 
