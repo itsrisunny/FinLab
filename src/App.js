@@ -68,7 +68,7 @@ import IncompleteBusinessLeadCase from "./component/partners/cases/incomplete-ca
 import PartnerBusinessOfferedCases from "./component/partners/cases/offered-cases.js";
 import PartnerBusinessClosedCases from "./component/partners/cases/closed-cases.js";
 import PartnerBusinessDeclinedCases from "./component/partners/cases/declined-cases.js";
-
+import UnAuthorizedAdmin from "./component/unAuthorisedAdmin.js";
 import AssignCases from "./component/admin/userManagement/assignCases.js";
 import AddUserManage from "./component/admin/userManagement/add-user.js";
 import AssignRole from "./component/admin/userManagement/assign-role.js";
@@ -124,7 +124,11 @@ function App() {
           path="/admin/lead-case"
           element={
             <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
-              <AdminLeadCase menuAccess={menuAccess} />
+              {menuAccess?.permissions?.businessLoan?.lead ? (
+                <AdminLeadCase menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorizedAdmin menuAccess={menuAccess} />
+              )}
             </RoleWrapper>
           }
           exact={true}
@@ -133,7 +137,11 @@ function App() {
           path="/admin/add-bank"
           element={
             <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
-              <AddBank menuAccess={menuAccess} />
+              {menuAccess?.masterManagement ? (
+                <AddBank menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorizedAdmin menuAccess={menuAccess} />
+              )}
             </RoleWrapper>
           }
           exact={true}
@@ -142,7 +150,15 @@ function App() {
           path="/admin/case-detail/:caseID/:type/:offerId"
           element={
             <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
-              <CaseDetail menuAccess={menuAccess} />
+              {menuAccess?.permissions?.businessLoan?.closedLead ||
+              menuAccess?.permissions?.businessLoan?.declinedLead ||
+              menuAccess?.permissions?.businessLoan?.incompleteLead ||
+              menuAccess?.permissions?.businessLoan?.lead ||
+              menuAccess?.permissions?.businessLoan?.offeredLead ? (
+                <CaseDetail menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorizedAdmin menuAccess={menuAccess} />
+              )}
             </RoleWrapper>
           }
           exact={true}
@@ -151,7 +167,11 @@ function App() {
           path="/admin/offered-case"
           element={
             <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
-              <AdminOfferedCase menuAccess={menuAccess} />
+              {menuAccess?.permissions?.businessLoan?.offeredLead ? (
+                <AdminOfferedCase menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorizedAdmin menuAccess={menuAccess} />
+              )}
             </RoleWrapper>
           }
           exact={true}
@@ -160,7 +180,11 @@ function App() {
           path="/admin/incomplete-lead-case"
           element={
             <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
-              <AdminIncompleteLeadCase menuAccess={menuAccess} />
+              {menuAccess?.permissions?.businessLoan?.incompleteLead ? (
+                <AdminIncompleteLeadCase menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorizedAdmin menuAccess={menuAccess} />
+              )}
             </RoleWrapper>
           }
           exact={true}
@@ -169,7 +193,11 @@ function App() {
           path="/admin/declined-cases"
           element={
             <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
-              <AdminDeclinedLeadCases menuAccess={menuAccess} />
+              {menuAccess?.permissions?.businessLoan?.declinedLead ? (
+                <AdminDeclinedLeadCases menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorizedAdmin menuAccess={menuAccess} />
+              )}
             </RoleWrapper>
           }
           exact={true}
@@ -178,7 +206,11 @@ function App() {
           path="/admin/partner/index"
           element={
             <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
-              <AdminPartnerList menuAccess={menuAccess} />
+              {menuAccess?.partnerManagement ? (
+                <AdminPartnerList menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorizedAdmin menuAccess={menuAccess} />
+              )}
             </RoleWrapper>
           }
           exact={true}
@@ -187,7 +219,11 @@ function App() {
           path="/admin/partner/assignRole"
           element={
             <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
-              <AdminPartnerAssignRole menuAccess={menuAccess} />
+              {menuAccess?.partnerManagement ? (
+                <AdminPartnerAssignRole menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorizedAdmin menuAccess={menuAccess} />
+              )}
             </RoleWrapper>
           }
           exact={true}
@@ -196,7 +232,11 @@ function App() {
           path="/admin/partner-detail/:Id"
           element={
             <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
-              <AdminPartnerView menuAccess={menuAccess} />
+              {menuAccess?.partnerManagement ? (
+                <AdminPartnerView menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorizedAdmin menuAccess={menuAccess} />
+              )}
             </RoleWrapper>
           }
           exact={true}
@@ -205,7 +245,11 @@ function App() {
           path="/admin/welcomed-cases"
           element={
             <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
-              <AdminWecomedUserList menuAccess={menuAccess} />
+              {menuAccess?.permissions?.businessLoan?.closedLead ? (
+                <AdminWecomedUserList menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorizedAdmin menuAccess={menuAccess} />
+              )}
             </RoleWrapper>
           }
           exact={true}
@@ -214,7 +258,11 @@ function App() {
           path="/admin/add/case"
           element={
             <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
-              <AdminAddCase menuAccess={menuAccess} />
+              {menuAccess?.permissions?.businessLoan?.addCase ? (
+                <AdminAddCase menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorizedAdmin menuAccess={menuAccess} />
+              )}
             </RoleWrapper>
           }
           exact={true}
@@ -224,7 +272,11 @@ function App() {
           path="/admin/personal/add/case"
           element={
             <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
-              <AdminPersonalAddCase menuAccess={menuAccess} />
+              {menuAccess?.permissions?.personalLoan?.addCase ? (
+                <AdminPersonalAddCase menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorizedAdmin menuAccess={menuAccess} />
+              )}
             </RoleWrapper>
           }
           exact={true}
@@ -233,7 +285,11 @@ function App() {
           path="/admin/personal/incomplete-lead-case"
           element={
             <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
-              <PerosnalIncLeadCase menuAccess={menuAccess} />
+              {menuAccess?.permissions?.personalLoan?.incompleteLead ? (
+                <PerosnalIncLeadCase menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorizedAdmin menuAccess={menuAccess} />
+              )}
             </RoleWrapper>
           }
           exact={true}
@@ -242,7 +298,11 @@ function App() {
           path="/admin/personal/lead-case"
           element={
             <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
-              <PerosnalLeadCase menuAccess={menuAccess} />
+              {menuAccess?.permissions?.personalLoan?.lead ? (
+                <PerosnalLeadCase menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorizedAdmin menuAccess={menuAccess} />
+              )}
             </RoleWrapper>
           }
           exact={true}
@@ -251,7 +311,11 @@ function App() {
           path="/admin/personal/offered-case"
           element={
             <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
-              <PerosnalOfferCase menuAccess={menuAccess} />
+              {menuAccess?.permissions?.personalLoan?.offeredLead ? (
+                <PerosnalOfferCase menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorizedAdmin menuAccess={menuAccess} />
+              )}
             </RoleWrapper>
           }
           exact={true}
@@ -260,7 +324,11 @@ function App() {
           path="/admin/personal/welcomed-cases"
           element={
             <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
-              <PerosnalWelcomeCase menuAccess={menuAccess} />
+              {menuAccess?.permissions?.personalLoan?.closedLead ? (
+                <PerosnalWelcomeCase menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorizedAdmin menuAccess={menuAccess} />
+              )}
             </RoleWrapper>
           }
           exact={true}
@@ -269,7 +337,11 @@ function App() {
           path="/admin/personal/declined-cases"
           element={
             <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
-              <PerosnalDeclinedCase menuAccess={menuAccess} />
+              {menuAccess?.permissions?.personalLoan?.declinedLead ? (
+                <PerosnalDeclinedCase menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorizedAdmin menuAccess={menuAccess} />
+              )}
             </RoleWrapper>
           }
           exact={true}
@@ -278,7 +350,15 @@ function App() {
           path="/admin/personal/case-detail/:caseID/:type/:offerId"
           element={
             <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
-              <PerosnalCaseDetail menuAccess={menuAccess} />
+              {menuAccess?.permissions?.personalLoan?.closedLead ||
+              menuAccess?.permissions?.personalLoan?.declinedLead ||
+              menuAccess?.permissions?.personalLoan?.incompleteLead ||
+              menuAccess?.permissions?.personalLoan?.lead ||
+              menuAccess?.permissions?.personalLoan?.offeredLead ? (
+                <PerosnalCaseDetail menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorizedAdmin menuAccess={menuAccess} />
+              )}
             </RoleWrapper>
           }
           exact={true}
@@ -512,7 +592,11 @@ function App() {
           path="/admin/userManagement/add-user"
           element={
             <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
-              <AddUserManage menuAccess={menuAccess} />
+              {menuAccess?.superAdmin ? (
+                <AddUserManage menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorizedAdmin menuAccess={menuAccess} />
+              )}
             </RoleWrapper>
           }
           exact={true}
@@ -521,7 +605,11 @@ function App() {
           path="/admin/userManagement/assign-role"
           element={
             <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
-              <AssignRole menuAccess={menuAccess} />
+              {menuAccess?.superAdmin ? (
+                <AssignRole menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorizedAdmin menuAccess={menuAccess} />
+              )}
             </RoleWrapper>
           }
           exact={true}
@@ -530,7 +618,11 @@ function App() {
           path="/admin/userManagement/adminUserList"
           element={
             <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
-              <AdminUserList menuAccess={menuAccess} />
+              {menuAccess?.superAdmin ? (
+                <AdminUserList menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorizedAdmin menuAccess={menuAccess} />
+              )}
             </RoleWrapper>
           }
           exact={true}

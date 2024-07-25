@@ -23,12 +23,12 @@ export default function AdminNavBar({ menuAccess }) {
                   Dashboard
                 </NavLink>
               </li>
-              {permissions?.personalLoan?.addCase ||
-              permissions?.personalLoan?.closedLead ||
-              permissions?.personalLoan?.declinedLead ||
-              permissions?.personalLoan?.incompleteLead ||
-              permissions?.personalLoan?.lead ||
-              permissions?.personalLoan?.offeredLead ? (
+              {permissions?.businessLoan?.addCase ||
+              permissions?.businessLoan?.closedLead ||
+              permissions?.businessLoan?.declinedLead ||
+              permissions?.businessLoan?.incompleteLead ||
+              permissions?.businessLoan?.lead ||
+              permissions?.businessLoan?.offeredLead ? (
                 <li className="nav-item dropdownitem">
                   <Link
                     className={
@@ -79,7 +79,7 @@ export default function AdminNavBar({ menuAccess }) {
                     }
                   >
                     <ul className="nav flex-column">
-                      {permissions?.personalLoan?.addCase ? (
+                      {permissions?.businessLoan?.addCase ? (
                         <li className="nav-item pad">
                           <NavLink className="nav-link" to="/admin/add/case">
                             Add Case
@@ -88,7 +88,7 @@ export default function AdminNavBar({ menuAccess }) {
                       ) : (
                         ""
                       )}
-                      {permissions?.personalLoan?.incompleteLead ? (
+                      {permissions?.businessLoan?.incompleteLead ? (
                         <li className="nav-item pad">
                           <NavLink
                             className="nav-link"
@@ -100,7 +100,7 @@ export default function AdminNavBar({ menuAccess }) {
                       ) : (
                         ""
                       )}
-                      {permissions?.personalLoan?.lead ? (
+                      {permissions?.businessLoan?.lead ? (
                         <li className="nav-item pad">
                           <NavLink className="nav-link" to="/admin/lead-case">
                             Leads
@@ -109,7 +109,7 @@ export default function AdminNavBar({ menuAccess }) {
                       ) : (
                         ""
                       )}
-                      {permissions?.personalLoan?.offeredLead ? (
+                      {permissions?.businessLoan?.offeredLead ? (
                         <li className="nav-item pad">
                           <NavLink
                             className="nav-link"
@@ -121,7 +121,7 @@ export default function AdminNavBar({ menuAccess }) {
                       ) : (
                         ""
                       )}
-                      {permissions?.personalLoan?.closedLead ? (
+                      {permissions?.businessLoan?.closedLead ? (
                         <li className="nav-item pad">
                           <NavLink
                             className="nav-link"
@@ -133,7 +133,7 @@ export default function AdminNavBar({ menuAccess }) {
                       ) : (
                         ""
                       )}
-                      {permissions?.personalLoan?.declinedLead ? (
+                      {permissions?.businessLoan?.declinedLead ? (
                         <li className="nav-item pad">
                           <NavLink
                             className="nav-link"
@@ -151,12 +151,12 @@ export default function AdminNavBar({ menuAccess }) {
               ) : (
                 ""
               )}
-              {permissions?.businessLoan?.addCase ||
-              permissions?.businessLoan?.closedLead ||
-              permissions?.businessLoan?.declinedLead ||
-              permissions?.businessLoan?.incompleteLead ||
-              permissions?.businessLoan?.lead ||
-              permissions?.businessLoan?.offeredLead ? (
+              {permissions?.personalLoan?.addCase ||
+              permissions?.personalLoan?.closedLead ||
+              permissions?.personalLoan?.declinedLead ||
+              permissions?.personalLoan?.incompleteLead ||
+              permissions?.personalLoan?.lead ||
+              permissions?.personalLoan?.offeredLead ? (
                 <li className="nav-item dropdownitem">
                   <Link
                     className={
@@ -213,7 +213,7 @@ export default function AdminNavBar({ menuAccess }) {
                     }
                   >
                     <ul className="nav flex-column">
-                      {permissions?.businessLoan?.addCase ? (
+                      {permissions?.personalLoan?.addCase ? (
                         <li className="nav-item pad">
                           <NavLink
                             className="nav-link"
@@ -225,7 +225,7 @@ export default function AdminNavBar({ menuAccess }) {
                       ) : (
                         ""
                       )}
-                      {permissions?.businessLoan?.incompleteLead ? (
+                      {permissions?.personalLoan?.incompleteLead ? (
                         <li className="nav-item pad">
                           <NavLink
                             className="nav-link"
@@ -237,7 +237,7 @@ export default function AdminNavBar({ menuAccess }) {
                       ) : (
                         ""
                       )}
-                      {permissions?.businessLoan?.lead ? (
+                      {permissions?.personalLoan?.lead ? (
                         <li className="nav-item pad">
                           <NavLink
                             className="nav-link"
@@ -249,7 +249,7 @@ export default function AdminNavBar({ menuAccess }) {
                       ) : (
                         ""
                       )}
-                      {permissions?.businessLoan?.offeredLead ? (
+                      {permissions?.personalLoan?.offeredLead ? (
                         <li className="nav-item pad">
                           <NavLink
                             className="nav-link"
@@ -261,7 +261,7 @@ export default function AdminNavBar({ menuAccess }) {
                       ) : (
                         ""
                       )}
-                      {permissions?.businessLoan?.closedLead ? (
+                      {permissions?.personalLoan?.closedLead ? (
                         <li className="nav-item pad">
                           <NavLink
                             className="nav-link"
@@ -273,7 +273,7 @@ export default function AdminNavBar({ menuAccess }) {
                       ) : (
                         ""
                       )}
-                      {permissions?.businessLoan?.declinedLead ? (
+                      {permissions?.personalLoan?.declinedLead ? (
                         <li className="nav-item pad">
                           <NavLink
                             className="nav-link"
