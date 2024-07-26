@@ -5,6 +5,7 @@ import AdminFooter from "../../layouts/admin-footer";
 import AdminNavBar from "../../layouts/admin-nav-bar";
 import axios from "axios";
 import { API_URL } from "../../../config/constant";
+import Loader from "../../loader";
 import moment from "moment";
 import CurrencyFormat from "react-currency-format";
 import Paginator from "react-hooks-paginator";
@@ -22,12 +23,14 @@ const LeadCase = ({ menuAccess }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [noOfRecord, setNoOfRecord] = useState(0);
   const [searchTxt, setSearchTxt] = useState("");
+  const [loader, setLoader] = useState(false);
 
   useEffect(() => {
     getAllPartnersData(offset);
   }, [offset]);
 
   const getAllPartnersData = (page) => {
+    setLoader(true);
     const jsonData = {
       limit: LIMIT,
       offset: page,
@@ -61,10 +64,12 @@ const LeadCase = ({ menuAccess }) => {
 
           setData(response?.data?.partner_detail);
           setNoOfRecord(response?.data?.records);
+          setLoader(false);
         }
       })
       .catch((e) => {
         console.log(e);
+        setLoader(false);
       });
   };
 
@@ -101,6 +106,7 @@ const LeadCase = ({ menuAccess }) => {
 
   return (
     <>
+    {loader && <Loader />}
       <div className="layout-wrapper">
         <div className="layout-container">
           <AdminNavBar menuAccess={menuAccess} />

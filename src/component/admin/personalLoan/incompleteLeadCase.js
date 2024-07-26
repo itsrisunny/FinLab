@@ -8,6 +8,7 @@ import { API_URL } from "../../../config/constant";
 import moment from "moment";
 import CurrencyFormat from "react-currency-format";
 import Paginator from "react-hooks-paginator";
+import Loader from "../../loader";
 
 const LIMIT = 10;
 
@@ -24,12 +25,14 @@ const IncompleteLeadCase = ({ menuAccess }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [noOfRecord, setNoOfRecord] = useState(0);
   const [searchTxt, setSearchTxt] = useState("");
+  const [loader, setLoader] = useState(false);
 
   useEffect(() => {
     getLoanData(offset);
   }, [offset]);
 
   const getLoanData = (page) => {
+    setLoader(true);
     const jsonData = {
       limit: LIMIT,
       offset: page,
@@ -88,9 +91,11 @@ const IncompleteLeadCase = ({ menuAccess }) => {
           setNoOfRecord(response?.data?.records);
           // console.log(response?.data?.user_loan_detail);
         }
+        setLoader(false);
       })
       .catch((e) => {
         console.log(e);
+        setLoader(false);
       });
   };
 
@@ -108,6 +113,7 @@ const IncompleteLeadCase = ({ menuAccess }) => {
 
   return (
     <>
+      {loader && <Loader />}
       <div className="layout-wrapper">
         <div className="layout-container">
           <AdminNavBar menuAccess={menuAccess} />

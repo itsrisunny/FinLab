@@ -5,11 +5,13 @@ import AdminNavBar from "../../layouts/admin-nav-bar";
 import { Row, Col, Form, Table } from "react-bootstrap";
 import axios from "axios";
 import { API_URL } from "../../../config/constant";
+import Loader from "../../loader";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { json } from "react-router-dom";
 
 export default function AssignRole({ menuAccess }) {
+  const [loader, setLoader] = useState(false);
   const [emailId, setEmailId] = useState();
   const [name, setName] = useState("");
   const [superAdmin, setSuperAdmin] = useState(false);
@@ -92,6 +94,7 @@ export default function AssignRole({ menuAccess }) {
 
   const handleSearchRecords = () => {
     // Handle form submit logic here
+    setLoader(true);
     if (emailId) {
       axios
         .post(`${API_URL}admin/get-user-data`, {
@@ -133,8 +136,10 @@ export default function AssignRole({ menuAccess }) {
                 },
               });
             }
+            setLoader(false);
           } else {
             console.log("status not 200", data);
+            setLoader(false);
           }
         })
         .catch((e) => {
@@ -177,6 +182,7 @@ export default function AssignRole({ menuAccess }) {
 
   return (
     <>
+      {loader && <Loader />}
       <div className="layout-wrapper">
         <div className="layout-container">
           <AdminNavBar menuAccess={menuAccess} />

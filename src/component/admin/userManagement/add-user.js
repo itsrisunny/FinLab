@@ -111,6 +111,7 @@ export default function AddUser({ menuAccess }) {
 
   return (
     <>
+      {loader && <Loader />}
       <div className="layout-wrapper">
         <div className="layout-container">
           <AdminNavBar menuAccess={menuAccess} />
