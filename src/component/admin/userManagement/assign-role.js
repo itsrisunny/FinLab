@@ -9,7 +9,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { json } from "react-router-dom";
 
-export default function AssignRole({menuAccess}) {
+export default function AssignRole({ menuAccess }) {
   const [emailId, setEmailId] = useState();
   const [superAdmin, setSuperAdmin] = useState(false);
   const [partnerManagement, setPartnerManagement] = useState(false);
@@ -98,9 +98,9 @@ export default function AssignRole({menuAccess}) {
         })
         .then((res) => {
           const { data } = res;
-          console.log(data.data);
           if (data?.status === 200) {
-            setAdminId(data?.data?.id)
+            setAdminId(data?.data?.id);
+            setName(data.data.name);
             const permissions = data?.data?.permissions;
             if (permissions) {
               setSuperAdmin(permissions?.superAdmin);
@@ -147,13 +147,13 @@ export default function AssignRole({menuAccess}) {
   const handleSavePermission = () => {
     if (emailId) {
       const jsonFormData = {
-        adminId:adminId,  
-        permissions:  JSON.stringify({
-          superAdmin:superAdmin,
-          partnerManagement:partnerManagement,
-          masterManagement:masterManagement,
-          permissions, 
-          }),        
+        adminId: adminId,
+        permissions: JSON.stringify({
+          superAdmin: superAdmin,
+          partnerManagement: partnerManagement,
+          masterManagement: masterManagement,
+          permissions,
+        }),
       };
       axios
         .post(API_URL + "admin/save-permission", jsonFormData)
@@ -176,42 +176,59 @@ export default function AssignRole({menuAccess}) {
 
   return (
     <>
-    <div className="layout-wrapper">
-      <div className="layout-container">
-        <AdminNavBar menuAccess={menuAccess} />
-        <div className="adminMain-wrapper">
-          <AdminHeader />
-          <div className="mainContent text-center">
-            <div className="topHeadings mb-4">
-              <h3>User Role Management</h3>
-            </div>
-            <Form className="d-flex flex-column align-items-center">
-              <Form.Group
-                as={Row}
-                className="mb-4 w-100"
-                controlId="formPartnerId"
-              >
-                <Form.Label column sm={2} className="text-center">
-                  Email Id
-                </Form.Label>
-                <Col sm={4}>
-                  <Form.Control
-                    type="string"
-                    value={emailId}
-                    onChange={(e) => setEmailId(e.target.value)}
-                    className="text-center"
-                  />
-                </Col>
-                <Col sm={2}>
-                  <button
-                    type="button"
-                    className="btn btn-primary"
-                    onClick={handleSearchRecords}
-                  >
-                    Search
-                  </button>
-                </Col>
-              </Form.Group>
+      <div className="layout-wrapper">
+        <div className="layout-container">
+          <AdminNavBar menuAccess={menuAccess} />
+          <div className="adminMain-wrapper">
+            <AdminHeader />
+            <div className="mainContent text-center">
+              <div className="topHeadings mb-4">
+                <h3>User Role Management</h3>
+              </div>
+              <Form className="d-flex flex-column align-items-center">
+                <Form.Group
+                  as={Row}
+                  className="mb-4 w-100"
+                  controlId="formPartnerId"
+                >
+                  <Form.Label column sm={2} className="text-center">
+                    Email Id
+                  </Form.Label>
+                  <Col sm={4}>
+                    <Form.Control
+                      type="string"
+                      value={emailId}
+                      onChange={(e) => setEmailId(e.target.value)}
+                      className="text-center"
+                    />
+                  </Col>
+                  <Col sm={2}>
+                    <button
+                      type="button"
+                      className="btn btn-primary"
+                      onClick={handleSearchRecords}
+                    >
+                      Search
+                    </button>
+                  </Col>
+                </Form.Group>
+                <Form.Group
+                  as={Row}
+                  className="mb-4 w-100"
+                  controlId="formPartnerId"
+                >
+                  <Form.Label column sm={2} className="text-center">
+                    Name
+                  </Form.Label>
+                  <Col sm={4}>
+                    <Form.Control
+                      type="string"
+                      value={name}
+                      className="text-center"
+                      disabled={true}
+                    />
+                  </Col>
+                </Form.Group>
 
                 <Form.Group
                   as={Row}

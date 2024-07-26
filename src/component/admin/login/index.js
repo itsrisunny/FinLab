@@ -145,19 +145,6 @@ export default function Index() {
                             onChange={handelPassword}
                           />
                         </div>
-                        <div className="form-group form-check">
-                          <input
-                            type="checkbox"
-                            className="form-check-input"
-                            id="exampleCheck1"
-                          />
-                          <label
-                            className="form-check-label"
-                            for="exampleCheck1"
-                          >
-                            Remember Me
-                          </label>
-                        </div>
                         <div className="form-group loginBtns">
                           <button
                             className="btn btn-adminLogin"

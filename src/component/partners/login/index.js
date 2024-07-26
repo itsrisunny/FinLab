@@ -147,18 +147,6 @@ export default function Index() {
                           />
                         </div>
                         <div className="form-group form-check">
-                          <input
-                            type="checkbox"
-                            className="form-check-input"
-                            id="exampleCheck1"
-                          />
-                          <label
-                            className="form-check-label"
-                            for="exampleCheck1"
-                          >
-                            Remember Me
-                          </label>
-
                           <label
                             className="form-check-label"
                             style={{ float: "right" }}
