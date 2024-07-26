@@ -15,7 +15,6 @@ export default function AddUser({ menuAccess }) {
   const [name, setName] = useState("");
   const [mobileNumber, setMobileNumber] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [loader, setLoader] = useState(false);
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
@@ -39,12 +38,6 @@ export default function AddUser({ menuAccess }) {
       errors.email = "Email Id is invalid";
     }
 
-    if (!password) {
-      errors.password = "Password is required";
-    } else if (password.length < 8) {
-      errors.password = "Password must be at least 8 characters long";
-    }
-
     setErrors(errors);
     return Object.keys(errors).length === 0;
   };
@@ -56,7 +49,6 @@ export default function AddUser({ menuAccess }) {
         name,
         mobileNumber,
         email,
-        password,
         crmId,
         employeeId,
       };
@@ -115,10 +107,6 @@ export default function AddUser({ menuAccess }) {
   const handleMobileFunction = (e) => {
     errors.mobileNumber = "";
     setMobileNumber(e.target.value);
-  };
-  const handlePasswordFunction = (e) => {
-    errors.password = "";
-    setPassword(e.target.value);
   };
 
   return (
@@ -246,29 +234,6 @@ export default function AddUser({ menuAccess }) {
                                   />
                                   <div className="error-msg">
                                     {errors?.email}
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div className="row">
-                              <div className="col-lg-2 col-md-2 col-sx-2">
-                                <div className="form-group">
-                                  <label htmlFor="">
-                                    Password<span className="error">*</span>
-                                  </label>
-                                </div>
-                              </div>
-                              <div className="col-lg-4 col-md-4 col-sx-4">
-                                <div className="form-group">
-                                  <input
-                                    className="form-control"
-                                    type="text"
-                                    placeholder="Password"
-                                    value={password}
-                                    onChange={handlePasswordFunction}
-                                  />
-                                  <div className="error-msg">
-                                    {errors?.password}
                                   </div>
                                 </div>
                               </div>
