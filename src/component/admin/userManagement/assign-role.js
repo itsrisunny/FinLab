@@ -11,6 +11,7 @@ import { json } from "react-router-dom";
 
 export default function AssignRole({ menuAccess }) {
   const [emailId, setEmailId] = useState();
+  const [name, setName] = useState("");
   const [superAdmin, setSuperAdmin] = useState(false);
   const [partnerManagement, setPartnerManagement] = useState(false);
   const [masterManagement, setMasterManagement] = useState(false);
