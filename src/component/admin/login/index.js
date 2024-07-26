@@ -145,6 +145,16 @@ export default function Index() {
                             onChange={handelPassword}
                           />
                         </div>
+                        <div className="form-group form-check">
+                          <label
+                            className="form-check-label"
+                            style={{ float: "right" }}
+                          >
+                            <Link to="/admin/reset-password">
+                              Forgot Password?
+                            </Link>
+                          </label>
+                        </div>
                         <div className="form-group loginBtns">
                           <button
                             className="btn btn-adminLogin"
