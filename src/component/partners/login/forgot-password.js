@@ -130,9 +130,7 @@ export default function Index({ type }) {
 
                       <div className="login-fields">
                         <div className="form-group">
-                          <label for="exampleInputEmail1">
-                            Email or Username
-                          </label>
+                          <label for="exampleInputEmail1">Enter Email</label>
                           <input
                             type="text"
                             className={
