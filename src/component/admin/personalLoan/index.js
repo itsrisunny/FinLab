@@ -201,6 +201,7 @@ const CaseNumberInLead = ({ menuAccess }) => {
   };
 
   const getUserData = () => {
+    setLoader(true);
     let formData = {
       caseId: caseID,
     };
@@ -564,8 +565,10 @@ const CaseNumberInLead = ({ menuAccess }) => {
             : ["x"];
           setOfferedBank(offered_bank);
         }
+        setLoader(false);
       })
       .catch((e) => {
+        setLoader(false);
         console.log(e);
       });
   };
