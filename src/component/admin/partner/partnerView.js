@@ -8,6 +8,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
 import { API_URL } from "../../../config/constant";
+import Loader from "../../loader";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -25,6 +26,7 @@ import Form from "react-bootstrap/Form";
 const CaseNumberInLead = ({ menuAccess }) => {
   let { Id } = useParams();
   const navigate = useNavigate();
+  const [loader, setLoader] = useState(false);
   const [data, setData] = useState([]);
   const [showPersonalDetails, setPersonalDetails] = useState(false);
   const [name, setName] = useState("");
@@ -73,6 +75,7 @@ const CaseNumberInLead = ({ menuAccess }) => {
   const [ph, setPh] = useState("000000000");
 
   const getUserData = () => {
+    setLoader(true);
     let formData = {
       id: Id,
     };
@@ -138,10 +141,12 @@ const CaseNumberInLead = ({ menuAccess }) => {
               id: resp?.id ? resp?.id : "",
             },
           ]);
+          setLoader(false);
         }
       })
       .catch((e) => {
         console.log(e);
+        setLoader(false);
       });
   };
 
@@ -565,6 +570,7 @@ const CaseNumberInLead = ({ menuAccess }) => {
 
   return (
     <>
+      {loader && <Loader />}
       <div className="layout-wrapper">
         <div className="layout-container">
           <AdminNavBar menuAccess={menuAccess} />

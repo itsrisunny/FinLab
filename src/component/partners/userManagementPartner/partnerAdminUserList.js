@@ -5,6 +5,7 @@ import AdminFooter from "../layouts/partner-admin-footer";
 import AdminNavBar from "../layouts/partner-admin-nav-bar";
 import axios from "axios";
 import { API_URL } from "../../../config/constant";
+import Loader from "../../loader";
 import moment from "moment";
 import CurrencyFormat from "react-currency-format";
 import Paginator from "react-hooks-paginator";
@@ -20,41 +21,7 @@ const PartnerAdminUserList = ({ menuAccess }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [noOfRecord, setNoOfRecord] = useState(0);
   const [searchTxt, setSearchTxt] = useState("");
-
-  const initialData = [
-    {
-      sno: 1,
-      employeeid: "FL-E001",
-      name: "John Doe",
-      emailid: "john.doe@example.com",
-      role: "Super Admin",
-      status: false,
-    },
-    {
-      sno: 2,
-      employeeid: "FL-E002",
-      name: "Jane Smith",
-      emailid: "jane.smith@example.com",
-      role: ["Business Loan", "Partner Management", "Master Management"],
-      status: false,
-    },
-    {
-      sno: 3,
-      employeeid: "FL-E003",
-      name: "Michael Johnson",
-      emailid: "michael.johnson@example.com",
-      role: "Partner Management",
-      status: false,
-    },
-    {
-      sno: 4,
-      employeeid: "FL-E004",
-      name: "Chander Mohan",
-      emailid: "chander@apisod.ai",
-      role: ["Personal Loan", "Partner List", "Master List"],
-      status: false,
-    },
-  ];
+  const [loader, setLoader] = useState(false);
 
   const [data, setData] = useState([]);
 
@@ -87,6 +54,7 @@ const PartnerAdminUserList = ({ menuAccess }) => {
   }, [offset]);
 
   const getAllPartnersData = (page) => {
+    setLoader(true);
     const jsonData = {
       limit: LIMIT,
       offset: page,
@@ -101,9 +69,11 @@ const PartnerAdminUserList = ({ menuAccess }) => {
       .then((res) => {
         const { data } = res;
         setData(data?.result);
+        setLoader(false);
       })
       .catch((e) => {
         console.log(e);
+        setLoader(false);
       });
   };
 
@@ -180,6 +150,7 @@ const PartnerAdminUserList = ({ menuAccess }) => {
 
   return (
     <>
+      {loader && <Loader />}
       <div className="layout-wrapper">
         <div className="layout-container">
           <AdminNavBar menuAccess={menuAccess} />

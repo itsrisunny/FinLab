@@ -5,16 +5,20 @@ import AdminNavBar from "../../layouts/admin-nav-bar";
 import { Row, Col, Form, Table } from "react-bootstrap";
 import axios from "axios";
 import { API_URL } from "../../../config/constant";
+import Loader from "../../loader";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { json } from "react-router-dom";
 
 export default function AssignRole({ menuAccess }) {
+  const [loader, setLoader] = useState(false);
   const [emailId, setEmailId] = useState();
   const [name, setName] = useState("");
   const [superAdmin, setSuperAdmin] = useState(false);
   const [partnerManagement, setPartnerManagement] = useState(false);
   const [masterManagement, setMasterManagement] = useState(false);
+  const [emaiIdMask, setEmailIdMask] = useState(false);
+  const [mobileNumberMask, setMobileNumberMask] = useState(false);
   const [permissions, setPermissions] = useState({
     businessLoan: {
       selectAll: false,
@@ -86,12 +90,15 @@ export default function AssignRole({ menuAccess }) {
     setSuperAdmin(false);
     setPartnerManagement(false);
     setMasterManagement(false);
+    setEmailIdMask(false);
+    setMobileNumberMask(false);
   };
 
   const [adminId, setAdminId] = useState("");
 
   const handleSearchRecords = () => {
     // Handle form submit logic here
+    setLoader(true);
     if (emailId) {
       axios
         .post(`${API_URL}admin/get-user-data`, {
@@ -107,11 +114,15 @@ export default function AssignRole({ menuAccess }) {
               setSuperAdmin(permissions?.superAdmin);
               setPartnerManagement(permissions?.partnerManagement);
               setMasterManagement(permissions?.masterManagement);
+              setEmailIdMask(permissions?.emaiIdMask);
+              setMobileNumberMask(permissions?.mobileNumberMask);
               setPermissions(permissions?.permissions);
             } else {
               setSuperAdmin(false);
               setPartnerManagement(false);
               setMasterManagement(false);
+              setEmailIdMask(false);
+              setMobileNumberMask(false);
               setPermissions({
                 businessLoan: {
                   selectAll: false,
@@ -133,19 +144,24 @@ export default function AssignRole({ menuAccess }) {
                 },
               });
             }
+            setLoader(false);
           } else {
-            console.log("status not 200", data);
+            setLoader(false);
+            toast.error("Please enter Valid ID!");
           }
         })
         .catch((e) => {
           console.log("data not coming", e);
+          setLoader(false);
         });
     } else {
-      console.log("email id is not there");
+      toast.error("Please enter ID!");
+      setLoader(false);
     }
   };
 
   const handleSavePermission = () => {
+    setLoader(true);
     if (emailId) {
       const jsonFormData = {
         adminId: adminId,
@@ -153,6 +169,8 @@ export default function AssignRole({ menuAccess }) {
           superAdmin: superAdmin,
           partnerManagement: partnerManagement,
           masterManagement: masterManagement,
+          emaiIdMask: emaiIdMask,
+          mobileNumberMask: mobileNumberMask,
           permissions,
         }),
       };
@@ -163,12 +181,16 @@ export default function AssignRole({ menuAccess }) {
           if (data?.status === 200) {
             toast.success(data?.message);
             handleResetFunc();
+            setEmailId("");
+            setName("");
           } else {
             toast.error(data?.message);
           }
+          setLoader(false);
         })
         .catch((err) => {
           console.log(err);
+          setLoader(false);
         });
     } else {
       toast.error("Please enter valid ID!");
@@ -177,6 +199,7 @@ export default function AssignRole({ menuAccess }) {
 
   return (
     <>
+      {loader && <Loader />}
       <div className="layout-wrapper">
         <div className="layout-container">
           <AdminNavBar menuAccess={menuAccess} />
@@ -239,7 +262,6 @@ export default function AssignRole({ menuAccess }) {
                   <Form.Label column sm={2} className="text-center">
                     Super Admin
                   </Form.Label>
-                  {/* <Col sm={1} className="d-flex justify-content-center"> */}
                   <Col sm={1} className="text-center">
                     <Form.Check
                       type="checkbox"
@@ -252,7 +274,6 @@ export default function AssignRole({ menuAccess }) {
                   <Form.Label column sm={2} className="text-center">
                     Partner Management
                   </Form.Label>
-                  {/* <Col sm={1} className="d-flex justify-content-center"> */}
                   <Col sm={1} className="text-center">
                     <Form.Check
                       type="checkbox"
@@ -271,6 +292,35 @@ export default function AssignRole({ menuAccess }) {
                       type="checkbox"
                       checked={masterManagement}
                       onChange={() => setMasterManagement(!masterManagement)}
+                      className="custom-checkbox"
+                    />
+                  </Col>
+                </Form.Group>
+                <Form.Group
+                  as={Row}
+                  className="mb-4 w-100"
+                  controlId="formAdminCheckbox"
+                >
+                  <Form.Label column sm={2} className="text-center">
+                    Email Id Mask
+                  </Form.Label>
+                  <Col sm={1} className="text-center">
+                    <Form.Check
+                      type="checkbox"
+                      checked={emaiIdMask}
+                      onChange={() => setEmailIdMask(!emaiIdMask)}
+                      className="custom-checkbox"
+                    />
+                  </Col>
+
+                  <Form.Label column sm={2} className="text-center">
+                    Mobile No Mask
+                  </Form.Label>
+                  <Col sm={1} className="text-center">
+                    <Form.Check
+                      type="checkbox"
+                      checked={mobileNumberMask}
+                      onChange={() => setMobileNumberMask(!mobileNumberMask)}
                       className="custom-checkbox"
                     />
                   </Col>

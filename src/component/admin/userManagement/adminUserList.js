@@ -5,6 +5,7 @@ import AdminFooter from "../../layouts/admin-footer";
 import AdminNavBar from "../../layouts/admin-nav-bar";
 import axios from "axios";
 import { API_URL } from "../../../config/constant";
+import Loader from "../../loader";
 import moment from "moment";
 import CurrencyFormat from "react-currency-format";
 import Paginator from "react-hooks-paginator";
@@ -21,6 +22,7 @@ const AdminUserList = ({ menuAccess }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [noOfRecord, setNoOfRecord] = useState(0);
   const [searchTxt, setSearchTxt] = useState("");
+  const [loader, setLoader] = useState(false);
 
   const [data, setData] = useState([]);
 
@@ -69,6 +71,7 @@ const AdminUserList = ({ menuAccess }) => {
   }, [offset]);
 
   const getAllPartnersData = (page) => {
+    setLoader(true);
     const jsonData = {
       limit: LIMIT,
       offset: page,
@@ -84,9 +87,11 @@ const AdminUserList = ({ menuAccess }) => {
         const { data } = res;
         // console.log(data)
         setData(data?.data);
+        setLoader(false);
       })
       .catch((e) => {
         console.log(e);
+        setLoader(false);
       });
   };
 
@@ -179,6 +184,7 @@ const AdminUserList = ({ menuAccess }) => {
 
   return (
     <>
+      {loader && <Loader />}
       <div className="layout-wrapper">
         <div className="layout-container">
           <AdminNavBar menuAccess={menuAccess} />
@@ -233,7 +239,7 @@ const AdminUserList = ({ menuAccess }) => {
                                     <td className="table-body">{row.crm_id}</td>
                                     <td className="table-body">{row.email}</td>
                                     <td className="table-body">
-                                    {row?.permissions
+                                      {row?.permissions
                                         ? printRoles(row?.permissions)
                                         : "-"}
                                     </td>
