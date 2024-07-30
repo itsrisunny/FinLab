@@ -13,6 +13,7 @@ import GroupedBarGraph from "./groupedBarGraph";
 import axios from "axios";
 import moment from "moment";
 import { API_URL } from "../../../config/constant";
+import Loader from "../../loader";
 export default function Index({ menuAccess }) {
   const [incompLead, setIncCompLead] = useState(0);
   const [lead, setLead] = useState(0);
@@ -20,6 +21,8 @@ export default function Index({ menuAccess }) {
   const [offered, setOffered] = useState(0);
   const [rejected, setRejected] = useState(0);
   const [allLeads, setAllLeads] = useState(0);
+
+  const [loader, setLoader] = useState(false);
 
   const [appliedAmount, setAppliedAmount] = useState(0);
   const [totalApprovedLoan, setTotalApprovedLoan] = useState(0);
@@ -89,6 +92,7 @@ export default function Index({ menuAccess }) {
     );
   }
   const getLoanDataDateWise = () => {
+    setLoader(true);
     axios
       .post(API_URL + `admin/dashboard-loan-amt-date-wise`, {
         partnerId: localStorage.getItem("partner_id"),
@@ -99,9 +103,11 @@ export default function Index({ menuAccess }) {
           (response?.data).sort(custom_sort);
           setData(response?.data);
         }
+        setLoader(false);
       })
       .catch((e) => {
         console.log(e);
+        setLoader(false);
       });
   };
   const getLoanDataPartner = () => {
@@ -138,6 +144,7 @@ export default function Index({ menuAccess }) {
   };
   return (
     <>
+      {loader && <Loader />}
       <div className="layout-wrapper">
         <div className="layout-container">
           <AdminNavBar menuAccess={menuAccess} />

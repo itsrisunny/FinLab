@@ -3244,6 +3244,7 @@ const CaseNumberInLead = ({ menuAccess }) => {
                               <tr>
                                 <th className="table-head">Remarks</th>
                                 <th className="table-head">Created DateTime</th>
+                                <th className="table-head">Created By</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -3269,6 +3270,9 @@ const CaseNumberInLead = ({ menuAccess }) => {
                                                 .local()
                                                 .format("DD/MM/YYYY hh:mm:ss A")
                                             : ""}
+                                        </td>
+                                        <td className="table-body">
+                                          {row.created_by_name}/{row.created_by}
                                         </td>
                                       </tr>
                                     );

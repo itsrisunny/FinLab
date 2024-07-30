@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, NavLink } from "react-router-dom";
 import JohnDoe from "../../assets/images/admin-dashboard/john.jpg";
 export default function AdminHeader(props) {
   const navigate = useNavigate();
@@ -20,6 +20,8 @@ export default function AdminHeader(props) {
     localStorage.removeItem("adminId");
     return navigate("/admin/login");
   };
+
+  const userName = localStorage.getItem("user_name");
 
   return (
     <>
@@ -42,13 +44,13 @@ export default function AdminHeader(props) {
                 aria-expanded="false"
               >
                 <img src={JohnDoe} />
-                John Doe
+                {userName}
               </Link>
               <div
                 className="dropdown-menu dropdown-usermenu pull-right"
                 aria-labelledby="navbarDropdown"
               >
-                <Link className="dropdown-item" to="#">
+                <Link className="dropdown-item" to="/admin/profile">
                   {" "}
                   Profile
                 </Link>

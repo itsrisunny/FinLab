@@ -76,6 +76,7 @@ import AdminUserList from "./component/admin/userManagement/adminUserList.js";
 import PartnerAddUserManage from "./component/partners/userManagementPartner/add-user.js";
 import PartnerAssignRole from "./component/partners/userManagementPartner/assign-role.js";
 import PartnerAdminUserList from "./component/partners/userManagementPartner/partnerAdminUserList.js";
+import Profile from "./component/admin/Profile/profile.js";
 
 function App() {
   const [menuAccess, setMenuAccess] = React.useState({});
@@ -111,6 +112,14 @@ function App() {
         <Route path="/privacypolicy" element={<PrivacyPolicy />} exact={true} />
 
         <Route path="/admin/login" element={<AdminLogin />} exact={true} />
+        <Route 
+          path="/admin/profile" 
+          element={
+            <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
+              <Profile menuAccess={menuAccess} />
+            </RoleWrapper>
+          } 
+          exact={true} />
         <Route
           path="/admin/dashboard"
           element={

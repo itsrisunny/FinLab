@@ -10,6 +10,7 @@ import AdminNavBar from "../../layouts/admin-nav-bar";
 import moment from "moment";
 import axios from "axios";
 import { API_URL } from "../../../config/constant";
+import Loader from "../../loader";
 import CurrencyFormat from "react-currency-format";
 import AppPieChart from "./appPieChart";
 import GroupedBarGraph from "./groupedBarGraph";
@@ -34,6 +35,8 @@ export default function Index({ menuAccess }) {
 
   const [partnerId, setPartnerId] = useState("");
 
+  const [loader, setLoader] = useState(false);
+
   /*** AM followup Chart */
   const [amChartApp, setAmChartApp] = useState([]);
 
@@ -53,6 +56,7 @@ export default function Index({ menuAccess }) {
   }, [dateRangeFilter]);
 
   const getApplicationData = () => {
+    setLoader(true);
     const jsonData = {};
 
     if (
@@ -99,9 +103,11 @@ export default function Index({ menuAccess }) {
             { category: "Rejected", val: response?.data?.rejectLeads },
           ]);
         }
+        setLoader(false);
       })
       .catch((e) => {
         console.log(e);
+        setLoader(false);
       });
   };
 
@@ -425,6 +431,7 @@ export default function Index({ menuAccess }) {
   }, [allData]);
   return (
     <>
+      {loader && <Loader />}
       <div className="layout-wrapper">
         <div className="layout-container">
           <AdminNavBar menuAccess={menuAccess} />
