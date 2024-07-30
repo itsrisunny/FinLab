@@ -1806,6 +1806,8 @@ const CaseNumberInLead = ({ menuAccess }) => {
       const jsonData = {
         case_id: caseID,
         remark: remark,
+        created_by: localStorage.getItem("partner_id"),
+        created_by_type: "partner",
       };
 
       axios
