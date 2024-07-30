@@ -37,6 +37,7 @@ const LeadCase = ({ menuAccess }) => {
       limit: LIMIT,
       offset: page,
       loanType: "Personal Loan",
+      adminId: localStorage.getItem("adminId"),
     };
 
     /*if(loanTypeFilter !=""){
@@ -156,17 +157,6 @@ const LeadCase = ({ menuAccess }) => {
                         <div className="card tableLead">
                           <div className="tableLeadCase">
                             <div className="table-label">
-                              {/*<label>
-                                         Loan Type:
-                                          <select value={loanTypeFilter} onChange={(e) =>  setLoanTypeFilter(e.target.value)}>                                        
-                                          <option value="Business Loan">Business Loan</option>
-                                          <option value="Personal Loan">Personal Loan</option>
-                                          <option value="Home Loan">Home Loan</option>
-                                          <option value="Car Loan">Car Loan</option>
-                                          <option value="Two Wheeler Loan">Two Wheeler Loan</option>
-                                          <option value="">All</option>
-                                          </select>
-                                        </label>*/}
                               <label>
                                 From:
                                 <input
@@ -206,14 +196,6 @@ const LeadCase = ({ menuAccess }) => {
                                   <option value="">All</option>
                                 </select>
                               </label>
-                              {/*<label>
-                                        Offer:
-                                          <select value={offerFilter} onChange={(e) => setOfferFilter(e.target.value)}>                                        
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
-                                            <option value="">All</option>
-                                          </select>
-                                      </label>*/}
                               <label>
                                 Search(Case No. Or Email Or Ph No.):
                                 <input
@@ -254,15 +236,7 @@ const LeadCase = ({ menuAccess }) => {
                                       {row.emailId}
                                     </td>
                                     <td className="table-body">
-                                      {row.phoneNumber ? (
-                                        <CurrencyFormat
-                                          value={row.phoneNumber}
-                                          displayType={"text"}
-                                          format="### ### ####"
-                                        />
-                                      ) : (
-                                        ""
-                                      )}
+                                      {row.phoneNumber ? row.phoneNumber : ""}
                                     </td>
                                     <td className="table-body">
                                       {row.loanAmountRequired ? (

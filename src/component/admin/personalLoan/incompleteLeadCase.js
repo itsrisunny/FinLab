@@ -37,6 +37,7 @@ const IncompleteLeadCase = ({ menuAccess }) => {
       limit: LIMIT,
       offset: page,
       loanType: "Personal Loan",
+      adminId: localStorage.getItem("adminId"),
     };
 
     if (loanTypeFilter != "") {
@@ -221,15 +222,7 @@ const IncompleteLeadCase = ({ menuAccess }) => {
                                       {row.emailId}
                                     </td>
                                     <td className="table-body">
-                                      {row.phoneNumber ? (
-                                        <CurrencyFormat
-                                          value={row.phoneNumber}
-                                          displayType={"text"}
-                                          format="### ### ####"
-                                        />
-                                      ) : (
-                                        ""
-                                      )}
+                                      {row.phoneNumber ? row.phoneNumber : ""}
                                     </td>
                                     <td className="table-body">
                                       {row.loanAmountRequired ? (

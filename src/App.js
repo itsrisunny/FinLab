@@ -371,7 +371,12 @@ function App() {
         />
         <Route
           path="/partners/reset-password"
-          element={<PartnerResetPassword />}
+          element={<PartnerResetPassword type="partner" />}
+          exact={true}
+        />
+        <Route
+          path="/admin/reset-password"
+          element={<PartnerResetPassword type="admin" />}
           exact={true}
         />
         <Route

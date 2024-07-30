@@ -190,6 +190,7 @@ const CaseNumberInLead = ({ menuAccess }) => {
     setLoader(true);
     let formData = {
       caseId: caseID,
+      adminId: localStorage.getItem("adminId"),
     };
     axios
       .post(API_URL + "admin/get-user-loan-appication", formData)
@@ -1623,6 +1624,8 @@ const CaseNumberInLead = ({ menuAccess }) => {
       const jsonData = {
         case_id: caseID,
         remark: remark,
+        created_by: localStorage.getItem("adminId"),
+        created_by_type: "admin",
       };
 
       axios
@@ -2740,15 +2743,7 @@ const CaseNumberInLead = ({ menuAccess }) => {
                                   </div>
                                   <div className="col-sm-8 text-secondary">
                                     {" "}
-                                    {v.phoneNumber ? (
-                                      <CurrencyFormat
-                                        value={v.phoneNumber}
-                                        displayType={"text"}
-                                        format="### ### ####"
-                                      />
-                                    ) : (
-                                      ""
-                                    )}
+                                    {v.phoneNumber ? v.phoneNumber : ""}
                                   </div>
                                 </div>
                               </div>

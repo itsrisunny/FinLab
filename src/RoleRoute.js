@@ -8,16 +8,37 @@ const RoleWrapper = ({ role, children, setMenuAccess }) => {
 
   useEffect(() => {
     authenticationService.getCurrentUser(role).then((userRole) => {
+      console.log(userRole);
       setCurrentUserRole(userRole?.role);
       setMenuAccess(userRole);
-      if (userRole?.role !== role) {
+      if (
+        userRole?.role !== role ||
+        ((localStorage.getItem("isLogin") === "true" ||
+          localStorage.getItem("isPartnerLogin") === "true") &&
+          userRole?.status === 0)
+      ) {
         setRedirect(true);
       }
     });
   }, []);
 
   if (redirect) {
-    return <Navigate to="/" replace />;
+    if (role === "Admin") {
+      localStorage.removeItem("isLogin");
+      localStorage.removeItem("user_name");
+      localStorage.removeItem("user_email");
+      localStorage.removeItem("userLoginType");
+      localStorage.removeItem("adminId");
+      return <Navigate to="/admin/login" replace />;
+    }
+    if (role === "Partner") {
+      localStorage.removeItem("isPartnerLogin");
+      localStorage.removeItem("partner_name");
+      localStorage.removeItem("partner_email");
+      localStorage.removeItem("partner_id");
+      localStorage.removeItem("id");
+      return <Navigate to="/partners/login" replace />;
+    }
   }
 
   if (currentUserRole === role) {

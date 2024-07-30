@@ -112,15 +112,13 @@ export default function Index() {
                   <div className="card">
                     <div className="card-body">
                       <div className="appbrandnig">
-                        <img src={FinlabLogo} />
+                        <img src={FinlabLogo} alt="" />
                       </div>
                       <h4 className="welcomeHeading">Welcome to Finlab! 👋</h4>
 
                       <div className="login-fields">
                         <div className="form-group">
-                          <label for="exampleInputEmail1">
-                            Email or Username
-                          </label>
+                          <label for="exampleInputEmail1">Enter Email</label>
                           <input
                             type="text"
                             className={
@@ -133,7 +131,7 @@ export default function Index() {
                           />
                         </div>
                         <div className="form-group form-password-toggle">
-                          <label for="password">Password</label>
+                          <label for="password">Enter Password</label>
                           <input
                             type="password"
                             className={
@@ -144,6 +142,16 @@ export default function Index() {
                             value={password}
                             onChange={handelPassword}
                           />
+                        </div>
+                        <div className="form-group form-check">
+                          <label
+                            className="form-check-label"
+                            style={{ float: "right" }}
+                          >
+                            <Link to="/admin/reset-password">
+                              Forgot Password?
+                            </Link>
+                          </label>
                         </div>
                         <div className="form-group loginBtns">
                           <button
