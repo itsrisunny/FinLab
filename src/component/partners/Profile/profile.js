@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import AdminHeader from "../../layouts/admin-header";
-import AdminFooter from "../../layouts/admin-footer";
-import AdminNavBar from "../../layouts/admin-nav-bar";
+import AdminHeader from "../layouts/partner-admin-header";
+import AdminFooter from "../layouts/partner-admin-footer";
+import AdminNavBar from "../layouts/partner-admin-nav-bar";
 import InputMask from "react-input-mask";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -10,30 +10,32 @@ import { API_URL } from "../../../config/constant";
 import Loader from "../../loader";
 import { useNavigate } from "react-router-dom";
 
-export default function Profile({ menuAccess }) {
+export default function ProfilePartner({ menuAccess }) {
   const [offset, setOffset] = useState(0);
 
   const [loader, setLoader] = useState(false);
   const navigate = useNavigate();
 
   const [data, setData] = useState([]);
-  const adminId = localStorage.getItem("adminId");
-  const filteredData = data.filter((item) => item.id == adminId);
+  const indexId = localStorage.getItem("id");
+
+  const filteredData = data.filter((item) => item.id == indexId);
 
   useEffect(() => {
-    getAllProfileData(offset);
+    getAllProfilePartnerData(offset);
   }, [offset]);
 
-  const getAllProfileData = (page) => {
+  const getAllProfilePartnerData = (page) => {
     setLoader(true);
     const jsonData = {
       offset: page,
+      partnerID: localStorage.getItem("partner_id"),
     };
     axios
-      .post(`${API_URL}admin-user/list-admin-user`, jsonData)
+      .post(`${API_URL}partner-user/get-agent-list`, jsonData)
       .then((res) => {
         const { data } = res;
-        setData(data?.data);
+        setData(data?.result);
         setLoader(false);
       })
       .catch((e) => {
@@ -43,7 +45,7 @@ export default function Profile({ menuAccess }) {
   };
 
   useEffect(() => {
-    getAllProfileData();
+    getAllProfilePartnerData();
   }, []);
 
   function getRolePermissions(filteredData) {
@@ -51,11 +53,7 @@ export default function Profile({ menuAccess }) {
 
     filteredData.forEach((value) => {
       const { permissions } = value;
-      if (permissions.superAdmin) permissionsArray.push("Super Admin");
-      if (permissions.partnerManagement)
-        permissionsArray.push("Partner Management");
-      if (permissions.masterManagement)
-        permissionsArray.push("Master Management");
+      if (permissions.isAdmin) permissionsArray.push("Admin");
 
       const { businessLoan, personalLoan } = permissions.permissions;
 
@@ -76,7 +74,7 @@ export default function Profile({ menuAccess }) {
             <AdminHeader />
             <div className="mainContent">
               <div className="topHeadings">
-                <h3>Profile</h3>
+                <h3>Partner Profile</h3>
               </div>
               <div className="contentBlocks">
                 <div className="sectionTable">
@@ -100,7 +98,9 @@ export default function Profile({ menuAccess }) {
                                         type="text"
                                         placeholder="Employee Id"
                                         value={
-                                          profile.emp_id ? profile.emp_id : "-"
+                                          profile.employee_id
+                                            ? profile.employee_id
+                                            : "-"
                                         }
                                         readOnly
                                       />
@@ -110,7 +110,7 @@ export default function Profile({ menuAccess }) {
                                 <div className="row">
                                   <div className="col-lg-2 col-md-2 col-sx-2">
                                     <div className="form-group">
-                                      <label htmlFor="">CRM Id</label>
+                                      <label htmlFor="">Agent Id</label>
                                     </div>
                                   </div>
                                   <div className="col-lg-4 col-md-4 col-sx-4">
@@ -118,9 +118,11 @@ export default function Profile({ menuAccess }) {
                                       <input
                                         className="form-control"
                                         type="text"
-                                        placeholder="CRM Id"
+                                        placeholder="Agent Id"
                                         value={
-                                          profile.crm_id ? profile.crm_id : "-"
+                                          profile.agent_id
+                                            ? profile.agent_id
+                                            : "-"
                                         }
                                         readOnly
                                       />
@@ -181,7 +183,9 @@ export default function Profile({ menuAccess }) {
                                         type="text"
                                         placeholder="Email ID"
                                         value={
-                                          profile.email ? profile.email : "-"
+                                          profile.email_id
+                                            ? profile.email_id
+                                            : "-"
                                         }
                                         readOnly
                                       />
