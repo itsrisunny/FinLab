@@ -542,6 +542,8 @@ const CaseNumberInLead = ({ menuAccess }) => {
                 salaryRecievedVia: resp?.salaried_detail?.salary_recieved_via
                   ? resp?.salaried_detail?.salary_recieved_via
                   : "-",
+                agent_name: resp?.loan_requirement?.agent_name,
+                source: resp?.loan_requirement?.created_by,
               },
             },
           ]);
@@ -2947,7 +2949,7 @@ const CaseNumberInLead = ({ menuAccess }) => {
                                     <h6>Agent Name:</h6>
                                   </div>
                                   <div className="col-sm-6 text-secondary">
-                                    ---
+                                    {v.agent_name}
                                   </div>
                                 </div>
                               </div>
