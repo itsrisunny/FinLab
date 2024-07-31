@@ -41,6 +41,7 @@ import PartnersLogin from "./component/partners/login";
 import PartnerResetPassword from "./component/partners/login/forgot-password";
 import PartnersDashboards from "./component/partners/dashboard/index.js";
 import PartnerAddCases from "./component/partners/cases/add-cases.js";
+import ProfilePartner from "./component/partners/Profile/profile.js";
 
 import PartnerViewIndividualCases from "./component/partners/cases/view-individual-case.js";
 
@@ -112,14 +113,15 @@ function App() {
         <Route path="/privacypolicy" element={<PrivacyPolicy />} exact={true} />
 
         <Route path="/admin/login" element={<AdminLogin />} exact={true} />
-        <Route 
-          path="/admin/profile" 
+        <Route
+          path="/admin/profile"
           element={
             <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
               <Profile menuAccess={menuAccess} />
             </RoleWrapper>
-          } 
-          exact={true} />
+          }
+          exact={true}
+        />
         <Route
           path="/admin/dashboard"
           element={
@@ -393,6 +395,15 @@ function App() {
           element={
             <RoleWrapper role="Partner" setMenuAccess={setMenuAccess}>
               <PartnersDashboards menuAccess={menuAccess} />
+            </RoleWrapper>
+          }
+          exact={true}
+        />
+        <Route
+          path="/partners-admin/profile"
+          element={
+            <RoleWrapper role="Partner" setMenuAccess={setMenuAccess}>
+              <ProfilePartner menuAccess={menuAccess} />
             </RoleWrapper>
           }
           exact={true}

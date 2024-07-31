@@ -66,7 +66,7 @@ export default function AdminHeader(props) {
                 className="dropdown-menu dropdown-usermenu pull-right"
                 aria-labelledby="navbarDropdown"
               >
-                <Link className="dropdown-item" to="#">
+                <Link className="dropdown-item" to="/partners-admin/profile">
                   {" "}
                   Profile
                 </Link>
