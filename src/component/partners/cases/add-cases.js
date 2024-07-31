@@ -138,7 +138,7 @@ const LeadCase = ({ menuAccess }) => {
   };
 
   const getIndividualData = (caseId) => {
-    navigate("/partners-admin/view-partner-case-detail/" + caseId + "/0/0");
+    navigate("/partners-admin/view-partner-case-detail/" + caseId + "/1/0");
   };
 
   useEffect(() => {

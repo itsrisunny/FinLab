@@ -2778,21 +2778,6 @@ const CaseNumberInLead = ({ menuAccess }) => {
                     >
                       <i className="fa fa-arrow-left" aria-hidden="true"></i>
                     </button>
-                    {isVerified == 0 && type == 1 ? (
-                      <>
-                        <span>
-                          {" "}
-                          <button
-                            className="btn btn-warning"
-                            onClick={handleVerifyPanGstin}
-                          >
-                            Verify PAN
-                          </button>
-                        </span>
-                      </>
-                    ) : (
-                      ""
-                    )}
 
                     <span>
                       {" "}
@@ -2813,76 +2798,6 @@ const CaseNumberInLead = ({ menuAccess }) => {
                         Add Remarks
                       </button>
                     </span>
-
-                    {type == 1 ? (
-                      <>
-                        <span>
-                          {" "}
-                          <button
-                            onClick={(e) => {
-                              generateData(data);
-                            }}
-                            className="btn btn-primary"
-                            disabled={!isVerified ? "disabled" : ""}
-                          >
-                            <i
-                              className="fa fa-download"
-                              aria-hidden="true"
-                            ></i>{" "}
-                            Application
-                          </button>
-                        </span>
-                        <span>
-                          {" "}
-                          <button
-                            onClick={convertIntoZip}
-                            className="btn btn-primary"
-                            disabled={!isVerified ? "disabled" : ""}
-                          >
-                            <i
-                              className="fa fa-download"
-                              aria-hidden="true"
-                            ></i>{" "}
-                            Documents
-                          </button>{" "}
-                        </span>
-                        <span>
-                          {" "}
-                          <button
-                            className="btn btn-primary"
-                            onClick={handleShow}
-                            disabled={!isVerified ? "disabled" : ""}
-                          >
-                            Add Offer
-                          </button>
-                        </span>
-                        <span>
-                          {" "}
-                          <button
-                            className="btn btn-warning"
-                            onClick={handleDecline}
-                          >
-                            Declined
-                          </button>
-                        </span>
-                      </>
-                    ) : (
-                      ""
-                    )}
-                    {type == 2 || type == 4 ? (
-                      <span>
-                        {" "}
-                        <button
-                          className="btn btn-warning"
-                          disabled={isWelcomeData}
-                          onClick={handleShowOffer}
-                        >
-                          Welcome Letter
-                        </button>
-                      </span>
-                    ) : (
-                      ""
-                    )}
                   </div>
 
                   {data.map((v, i) => (
@@ -2907,8 +2822,17 @@ const CaseNumberInLead = ({ menuAccess }) => {
                                     <h6>Status:</h6>
                                   </div>
                                   <div className="col-sm-8 text-secondary">
-                                    {" "}
-                                    ---
+                                    {type == "0"
+                                      ? "Incomplete"
+                                      : type == "1"
+                                      ? "Lead"
+                                      : type == "2"
+                                      ? "Offered"
+                                      : type == "4"
+                                      ? "Closed"
+                                      : type == "3"
+                                      ? "Declined"
+                                      : "-"}
                                   </div>
                                 </div>
                                 <div className="row ">

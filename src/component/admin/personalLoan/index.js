@@ -2908,8 +2908,17 @@ const CaseNumberInLead = ({ menuAccess }) => {
                                     <h6>Status:</h6>
                                   </div>
                                   <div className="col-sm-8 text-secondary">
-                                    {" "}
-                                    ---
+                                    {type == "0"
+                                      ? "Incomplete"
+                                      : type == "1"
+                                      ? "Lead"
+                                      : type == "2"
+                                      ? "Offered"
+                                      : type == "4"
+                                      ? "Closed"
+                                      : type == "3"
+                                      ? "Declined"
+                                      : "-"}
                                   </div>
                                 </div>
                                 <div className="row ">

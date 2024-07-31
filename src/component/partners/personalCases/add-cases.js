@@ -142,7 +142,7 @@ const LeadCase = ({ menuAccess }) => {
   };
 
   const getIndividualData = (caseId) => {
-    navigate("/partners-admin/personal/case-detail/" + caseId + "/0/0");
+    navigate("/partners-admin/personal/case-detail/" + caseId + "/1/0");
   };
 
   useEffect(() => {

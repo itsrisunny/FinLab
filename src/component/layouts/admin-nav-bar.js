@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link, useNavigate, NavLink } from "react-router-dom";
+import { Link, useNavigate, NavLink, useParams } from "react-router-dom";
 import FinlabLogo from "../../assets/images/admin-dashboard/logofront.svg";
 console.log(window.location.pathname);
 export default function AdminNavBar({ menuAccess }) {
   const { permissions, masterManagement, partnerManagement, superAdmin } =
     menuAccess;
+  let { caseID, type, offerId } = useParams();
   return (
     <>
       <aside>
@@ -91,7 +92,14 @@ export default function AdminNavBar({ menuAccess }) {
                       {permissions?.businessLoan?.incompleteLead ? (
                         <li className="nav-item pad">
                           <NavLink
-                            className="nav-link"
+                            className={
+                              type == "0" &&
+                              window.location.pathname
+                                .toLowerCase()
+                                .includes("admin/case-detail")
+                                ? "nav-link active"
+                                : "nav-link"
+                            }
                             to="/admin/incomplete-lead-case"
                           >
                             Incomplete Leads
@@ -102,7 +110,17 @@ export default function AdminNavBar({ menuAccess }) {
                       )}
                       {permissions?.businessLoan?.lead ? (
                         <li className="nav-item pad">
-                          <NavLink className="nav-link" to="/admin/lead-case">
+                          <NavLink
+                            className={
+                              type == "1" &&
+                              window.location.pathname
+                                .toLowerCase()
+                                .includes("admin/case-detail")
+                                ? "nav-link active"
+                                : "nav-link"
+                            }
+                            to="/admin/lead-case"
+                          >
                             Leads
                           </NavLink>
                         </li>
@@ -112,7 +130,14 @@ export default function AdminNavBar({ menuAccess }) {
                       {permissions?.businessLoan?.offeredLead ? (
                         <li className="nav-item pad">
                           <NavLink
-                            className="nav-link"
+                            className={
+                              type == "2" &&
+                              window.location.pathname
+                                .toLowerCase()
+                                .includes("admin/case-detail")
+                                ? "nav-link active"
+                                : "nav-link"
+                            }
                             to="/admin/offered-case"
                           >
                             Offered Cases
@@ -124,7 +149,14 @@ export default function AdminNavBar({ menuAccess }) {
                       {permissions?.businessLoan?.closedLead ? (
                         <li className="nav-item pad">
                           <NavLink
-                            className="nav-link"
+                            className={
+                              type == "4" &&
+                              window.location.pathname
+                                .toLowerCase()
+                                .includes("admin/case-detail")
+                                ? "nav-link active"
+                                : "nav-link"
+                            }
                             to="/admin/welcomed-cases"
                           >
                             Closed Cases
@@ -136,7 +168,14 @@ export default function AdminNavBar({ menuAccess }) {
                       {permissions?.businessLoan?.declinedLead ? (
                         <li className="nav-item pad">
                           <NavLink
-                            className="nav-link"
+                            className={
+                              type == "3" &&
+                              window.location.pathname
+                                .toLowerCase()
+                                .includes("admin/case-detail")
+                                ? "nav-link active"
+                                : "nav-link"
+                            }
                             to="/admin/declined-cases"
                           >
                             Declined Cases
@@ -228,7 +267,14 @@ export default function AdminNavBar({ menuAccess }) {
                       {permissions?.personalLoan?.incompleteLead ? (
                         <li className="nav-item pad">
                           <NavLink
-                            className="nav-link"
+                            className={
+                              type == "0" &&
+                              window.location.pathname
+                                .toLowerCase()
+                                .includes("admin/personal/case-detail")
+                                ? "nav-link active"
+                                : "nav-link"
+                            }
                             to="/admin/personal/incomplete-lead-case"
                           >
                             Incomplete Leads
@@ -240,7 +286,14 @@ export default function AdminNavBar({ menuAccess }) {
                       {permissions?.personalLoan?.lead ? (
                         <li className="nav-item pad">
                           <NavLink
-                            className="nav-link"
+                            className={
+                              type == "1" &&
+                              window.location.pathname
+                                .toLowerCase()
+                                .includes("admin/personal/case-detail")
+                                ? "nav-link active"
+                                : "nav-link"
+                            }
                             to="/admin/personal/lead-case"
                           >
                             Leads
@@ -252,7 +305,14 @@ export default function AdminNavBar({ menuAccess }) {
                       {permissions?.personalLoan?.offeredLead ? (
                         <li className="nav-item pad">
                           <NavLink
-                            className="nav-link"
+                            className={
+                              type == "2" &&
+                              window.location.pathname
+                                .toLowerCase()
+                                .includes("admin/personal/case-detail")
+                                ? "nav-link active"
+                                : "nav-link"
+                            }
                             to="/admin/personal/offered-case"
                           >
                             Offered Cases
@@ -264,7 +324,14 @@ export default function AdminNavBar({ menuAccess }) {
                       {permissions?.personalLoan?.closedLead ? (
                         <li className="nav-item pad">
                           <NavLink
-                            className="nav-link"
+                            className={
+                              type == "4" &&
+                              window.location.pathname
+                                .toLowerCase()
+                                .includes("admin/personal/case-detail")
+                                ? "nav-link active"
+                                : "nav-link"
+                            }
                             to="/admin/personal/welcomed-cases"
                           >
                             Closed Cases
@@ -276,7 +343,14 @@ export default function AdminNavBar({ menuAccess }) {
                       {permissions?.personalLoan?.declinedLead ? (
                         <li className="nav-item pad">
                           <NavLink
-                            className="nav-link"
+                            className={
+                              type == "3" &&
+                              window.location.pathname
+                                .toLowerCase()
+                                .includes("admin/personal/case-detail")
+                                ? "nav-link active"
+                                : "nav-link"
+                            }
                             to="/admin/personal/declined-cases"
                           >
                             Declined Cases
