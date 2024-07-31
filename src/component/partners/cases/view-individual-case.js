@@ -2321,7 +2321,17 @@ const CaseNumberInLead = ({ menuAccess }) => {
   const handleBackButton = () => {
     navigate(-1);
   };
-
+  function renameString(originalString) {
+    const maxLength = 20;
+    if (originalString.length > maxLength) {
+      const truncatedString = originalString.substring(0, maxLength - 6);
+      const lastThreeCharacters = originalString.substring(
+        originalString.length - 3
+      );
+      return truncatedString + "..." + lastThreeCharacters;
+    }
+    return originalString;
+  }
   return (
     <>
       <div className="layout-wrapper">
@@ -3271,8 +3281,19 @@ const CaseNumberInLead = ({ menuAccess }) => {
                                                 .format("DD/MM/YYYY hh:mm:ss A")
                                             : ""}
                                         </td>
-                                        <td className="table-body">
-                                          {row.created_by_name}/{row.created_by}
+                                        <td
+                                          className="table-body"
+                                          title={
+                                            row.created_by_name
+                                              ? `${row.created_by_name}/${row.created_by}`
+                                              : ""
+                                          }
+                                        >
+                                          {row.created_by_name
+                                            ? `${renameString(
+                                                row.created_by_name
+                                              )}/${row.created_by}`
+                                            : "-"}
                                         </td>
                                       </tr>
                                     );

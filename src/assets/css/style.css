@@ -3458,12 +3458,13 @@ padding: 10px 0;
   font-size: 12px;
 }
 .moveRight{
-  margin-bottom:24px;
+  /* margin-bottom:24px; */
   float:right;
   text-align: right;
 }
 .main-body .moveRight{
   margin-top: 4px ;
+  margin-bottom:24px;
 }
  /* toggle css start */
  .navHeade span{

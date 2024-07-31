@@ -37,9 +37,21 @@ export default function AdminHeader(props) {
           </Link>
         </div>
 
-        <nav className="nav navbar-nav moveRight">
+        <nav
+          className="nav navbar-nav moveRight"
+          style={{ marginBotton: "0px" }}
+        >
           <ul className=" navbar-right">
             <li className="nav-item dropdown open">
+              <i
+                className="fa fa-user-circle-o"
+                style={{
+                  fontSize: "30px",
+                  position: "absolute",
+                  left: "-40px",
+                  top: "-5px",
+                }}
+              ></i>
               <Link
                 to="#"
                 className="user-profile dropdown-toggle"
@@ -48,7 +60,6 @@ export default function AdminHeader(props) {
                 data-toggle="dropdown"
                 aria-expanded="false"
               >
-                <img src={JohnDoe} />
                 {userName}
               </Link>
               <div
