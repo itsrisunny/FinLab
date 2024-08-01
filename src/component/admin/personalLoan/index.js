@@ -213,6 +213,7 @@ const CaseNumberInLead = ({ menuAccess }) => {
         if (response?.status === 200) {
           // console.log(response?.respData)
           let resp = response?.respData;
+          console.log(resp?.loan_requirement);
           let pancardFile = "";
           let businessregDatas = "";
           let bankStatementFile = "";
@@ -542,10 +543,10 @@ const CaseNumberInLead = ({ menuAccess }) => {
                 salaryRecievedVia: resp?.salaried_detail?.salary_recieved_via
                   ? resp?.salaried_detail?.salary_recieved_via
                   : "-",
-                agent_name: resp?.loan_requirement?.agent_name,
-                source: resp?.loan_requirement?.created_by,
-                lastUpdatedAt: resp?.user_detail?.lastUpdatedAt,
               },
+              agent_name: resp?.loan_requirement?.agent_name,
+              source: resp?.loan_requirement?.created_by,
+              lastUpdatedAt: resp?.user_detail?.lastUpdatedAt,
             },
           ]);
 
@@ -1811,7 +1812,7 @@ const CaseNumberInLead = ({ menuAccess }) => {
       const jsonData = {
         case_id: caseID,
         remark: remark,
-        reated_by: localStorage.getItem("adminId"),
+        created_by: localStorage.getItem("adminId"),
         created_by_type: "admin",
       };
 

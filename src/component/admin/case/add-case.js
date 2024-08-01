@@ -462,7 +462,7 @@ export default function AddCase({ menuAccess }) {
     if (handleValidation()) {
       setLoader(true);
       let jsonFormData = {
-        id: partner ? partner : "admin",
+        id: partner ? partner : "admin-" + localStorage.getItem("adminId"),
         loan_purpose: loanPurpose,
         sub_loan_purpose: subLoanPurpose,
         loan_amount: loanAmount,

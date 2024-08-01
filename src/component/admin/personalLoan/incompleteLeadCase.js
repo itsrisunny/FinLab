@@ -242,7 +242,9 @@ const IncompleteLeadCase = ({ menuAccess }) => {
                                       {row.appliedDate}
                                     </td>
                                     {/*<td className="table-body">{row.offerAdded}</td>*/}
-                                    <td className="table-body">{row.source}</td>
+                                    <td className="table-body">
+                                      {row.created_by}
+                                    </td>
                                     <td className="table-body">
                                       <button
                                         className="btn btn-view"
