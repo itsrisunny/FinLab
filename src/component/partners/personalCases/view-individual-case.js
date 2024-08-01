@@ -543,6 +543,7 @@ const CaseNumberInLead = ({ menuAccess }) => {
                 salaryRecievedVia: resp?.salaried_detail?.salary_recieved_via
                   ? resp?.salaried_detail?.salary_recieved_via
                   : "-",
+                lastUpdatedAt: resp?.user_detail?.lastUpdatedAt,
               },
             },
           ]);
@@ -2864,7 +2865,7 @@ const CaseNumberInLead = ({ menuAccess }) => {
                                     <h6>Last updated date:</h6>
                                   </div>
                                   <div className="col-sm-6 text-secondary">
-                                    ---
+                                    {v?.lastUpdatedAt}
                                   </div>
                                 </div>
                                 <div className="row ">

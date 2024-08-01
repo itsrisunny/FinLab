@@ -422,6 +422,7 @@ const CaseNumberInLead = ({ menuAccess }) => {
               bankDetails: resp?.bank_details ? newBankDetailArray : [],
               agent_name: resp?.loan_requirement?.agent_name,
               source: resp?.loan_requirement?.created_by,
+              lastUpdatedAt: resp?.user_detail?.lastUpdatedAt,
             },
           ]);
 
@@ -2437,7 +2438,7 @@ const CaseNumberInLead = ({ menuAccess }) => {
                                     <h6>Last updated date:</h6>
                                   </div>
                                   <div className="col-sm-6 text-secondary">
-                                    ---
+                                    {v?.lastUpdatedAt}
                                   </div>
                                 </div>
                                 <div className="row ">
