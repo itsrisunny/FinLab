@@ -3,8 +3,13 @@ import { Link, useNavigate, NavLink, useParams } from "react-router-dom";
 import FinlabLogo from "../../assets/images/admin-dashboard/logofront.svg";
 console.log(window.location.pathname);
 export default function AdminNavBar({ menuAccess }) {
-  const { permissions, masterManagement, partnerManagement, superAdmin } =
-    menuAccess;
+  const {
+    permissions,
+    masterManagement,
+    partnerManagement,
+    superAdmin,
+    user_type,
+  } = menuAccess;
   let { caseID, type, offerId } = useParams();
   return (
     <>
@@ -487,14 +492,18 @@ export default function AdminNavBar({ menuAccess }) {
                           Admin User List
                         </NavLink>
                       </li>
-                      <li className="nav-item pad">
-                        <NavLink
-                          className="nav-link"
-                          to="/admin/userManagement/assignCases"
-                        >
-                          Assign Cases
-                        </NavLink>
-                      </li>
+                      {user_type === "admin" ? (
+                        <li className="nav-item pad">
+                          <NavLink
+                            className="nav-link"
+                            to="/admin/userManagement/assignCases"
+                          >
+                            Assign Cases
+                          </NavLink>
+                        </li>
+                      ) : (
+                        ""
+                      )}
                     </ul>
                   </div>
                 </li>

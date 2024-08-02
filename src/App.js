@@ -608,7 +608,11 @@ function App() {
           path="/admin/userManagement/assignCases"
           element={
             <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
-              <AssignCases menuAccess={menuAccess} />
+              {menuAccess?.user_type === "admin" ? (
+                <AssignCases menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorizedAdmin menuAccess={menuAccess} />
+              )}
             </RoleWrapper>
           }
           exact={true}
