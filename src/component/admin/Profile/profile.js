@@ -18,19 +18,17 @@ export default function Profile({ menuAccess }) {
 
   const [data, setData] = useState([]);
   const adminId = localStorage.getItem("adminId");
-  const filteredData = data.filter((item) => item.id == adminId);
-
-  useEffect(() => {
-    getAllProfileData(offset);
-  }, [offset]);
+  const userLoginType = localStorage.getItem("userLoginType");
 
   const getAllProfileData = (page) => {
     setLoader(true);
     const jsonData = {
       offset: page,
+      user_id: adminId,
+      type: userLoginType,
     };
     axios
-      .post(`${API_URL}admin-user/list-admin-user`, jsonData)
+      .post(`${API_URL}get-user-profile`, jsonData)
       .then((res) => {
         const { data } = res;
         setData(data?.data);
@@ -44,24 +42,20 @@ export default function Profile({ menuAccess }) {
 
   useEffect(() => {
     getAllProfileData();
-  }, []);
+  }, [userLoginType]);
 
-  function getRolePermissions(filteredData) {
+  function getRolePermissions(data) {
     const permissionsArray = [];
 
-    filteredData.forEach((value) => {
-      const { permissions } = value;
-      if (permissions.superAdmin) permissionsArray.push("Super Admin");
-      if (permissions.partnerManagement)
-        permissionsArray.push("Partner Management");
-      if (permissions.masterManagement)
-        permissionsArray.push("Master Management");
+    if (data.permissions.superAdmin) permissionsArray.push("Super Admin");
+    if (data.permissions.partnerManagement)
+      permissionsArray.push("Partner Management");
+    if (data.permissions.masterManagement)
+      permissionsArray.push("Master Management");
 
-      const { businessLoan, personalLoan } = permissions.permissions;
-
-      if (businessLoan.selectAll) permissionsArray.push("Business Loan");
-      if (personalLoan.selectAll) permissionsArray.push("Personal Loan");
-    });
+    const { businessLoan, personalLoan } = data.permissions.permissions;
+    if (businessLoan.selectAll) permissionsArray.push("Business Loan");
+    if (personalLoan.selectAll) permissionsArray.push("Personal Loan");
 
     return permissionsArray;
   }
@@ -84,165 +78,148 @@ export default function Profile({ menuAccess }) {
                     <div className="authentic-add-user">
                       <div className="card">
                         <div className="card-body">
-                          {filteredData.length > 0 ? (
-                            filteredData.map((profile) => (
-                              <form className="add-user">
-                                <div className="row">
-                                  <div className="col-lg-2 col-md-2 col-sx-2">
-                                    <div className="form-group">
-                                      <label htmlFor="">Employee Id</label>
-                                    </div>
-                                  </div>
-                                  <div className="col-lg-4 col-md-4 col-sx-4">
-                                    <div className="form-group">
-                                      <input
-                                        className="form-control"
-                                        type="text"
-                                        placeholder="Employee Id"
-                                        value={
-                                          profile.emp_id ? profile.emp_id : "-"
-                                        }
-                                        readOnly
-                                      />
-                                    </div>
+                          {userLoginType == data.user_type ? (
+                            <form className="add-user">
+                              <div className="row">
+                                <div className="col-lg-2 col-md-2 col-sx-2">
+                                  <div className="form-group">
+                                    <label htmlFor="">Employee Id</label>
                                   </div>
                                 </div>
-                                <div className="row">
-                                  <div className="col-lg-2 col-md-2 col-sx-2">
-                                    <div className="form-group">
-                                      <label htmlFor="">CRM Id</label>
-                                    </div>
-                                  </div>
-                                  <div className="col-lg-4 col-md-4 col-sx-4">
-                                    <div className="form-group">
-                                      <input
-                                        className="form-control"
-                                        type="text"
-                                        placeholder="CRM Id"
-                                        value={
-                                          profile.crm_id ? profile.crm_id : "-"
-                                        }
-                                        readOnly
-                                      />
-                                    </div>
+                                <div className="col-lg-4 col-md-4 col-sx-4">
+                                  <div className="form-group">
+                                    <input
+                                      className="form-control"
+                                      type="text"
+                                      placeholder="Employee Id"
+                                      value={data.emp_id ? data.emp_id : "-"}
+                                      readOnly
+                                    />
                                   </div>
                                 </div>
-                                <div className="row">
-                                  <div className="col-lg-2 col-md-2 col-sx-2">
-                                    <div className="form-group">
-                                      <label htmlFor="">Name</label>
-                                    </div>
-                                  </div>
-                                  <div className="col-lg-4 col-md-4 col-sx-4">
-                                    <div className="form-group">
-                                      <input
-                                        className="form-control"
-                                        type="text"
-                                        placeholder="Name"
-                                        value={
-                                          profile.name ? profile.name : "-"
-                                        }
-                                        readOnly
-                                      />
-                                    </div>
+                              </div>
+                              <div className="row">
+                                <div className="col-lg-2 col-md-2 col-sx-2">
+                                  <div className="form-group">
+                                    <label htmlFor="">CRM Id</label>
                                   </div>
                                 </div>
-                                <div className="row">
-                                  <div className="col-lg-2 col-md-2 col-sx-2">
-                                    <div className="form-group">
-                                      <label htmlFor="">Mobile Number</label>
-                                    </div>
-                                  </div>
-                                  <div className="col-lg-4 col-md-4 col-sx-4">
-                                    <div className="form-group">
-                                      <InputMask
-                                        mask="999 999 9999"
-                                        maskChar=""
-                                        className="form-control"
-                                        placeholder="Mobile Number(999 999 9999)"
-                                        value={
-                                          profile.mobile ? profile.mobile : "-"
-                                        }
-                                        readOnly
-                                      />
-                                    </div>
+                                <div className="col-lg-4 col-md-4 col-sx-4">
+                                  <div className="form-group">
+                                    <input
+                                      className="form-control"
+                                      type="text"
+                                      placeholder="CRM Id"
+                                      value={data.crm_id ? data.crm_id : "-"}
+                                      readOnly
+                                    />
                                   </div>
                                 </div>
-                                <div className="row">
-                                  <div className="col-lg-2 col-md-2 col-sx-2">
-                                    <div className="form-group">
-                                      <label htmlFor="">Email ID</label>
-                                    </div>
-                                  </div>
-                                  <div className="col-lg-4 col-md-4 col-sx-4">
-                                    <div className="form-group">
-                                      <input
-                                        className="form-control"
-                                        type="text"
-                                        placeholder="Email ID"
-                                        value={
-                                          profile.email ? profile.email : "-"
-                                        }
-                                        readOnly
-                                      />
-                                    </div>
+                              </div>
+                              <div className="row">
+                                <div className="col-lg-2 col-md-2 col-sx-2">
+                                  <div className="form-group">
+                                    <label htmlFor="">Name</label>
                                   </div>
                                 </div>
-                                <div className="row">
-                                  <div className="col-lg-2 col-md-2 col-sx-2">
-                                    <div className="form-group">
-                                      <label htmlFor="">Role</label>
-                                    </div>
-                                  </div>
-                                  <div className="col-lg-4 col-md-4 col-sx-4">
-                                    <div className="form-group">
-                                      <textarea
-                                        className="form-control input-field"
-                                        placeholder="Role"
-                                        value={
-                                          getRolePermissions(filteredData)
-                                            .length > 0
-                                            ? getRolePermissions(
-                                                filteredData
-                                              ).join("\n")
-                                            : "-"
-                                        }
-                                        rows={
-                                          getRolePermissions(filteredData)
-                                            .length > 0
-                                            ? getRolePermissions(filteredData)
-                                                .length
-                                            : 1
-                                        }
-                                        readOnly
-                                      />
-                                    </div>
+                                <div className="col-lg-4 col-md-4 col-sx-4">
+                                  <div className="form-group">
+                                    <input
+                                      className="form-control"
+                                      type="text"
+                                      placeholder="Name"
+                                      value={data.name ? data.name : "-"}
+                                      readOnly
+                                    />
                                   </div>
                                 </div>
-                                <div className="row">
-                                  <div className="col-lg-2 col-md-2 col-sx-2">
-                                    <div className="form-group">
-                                      <label htmlFor="">Status</label>
-                                    </div>
-                                  </div>
-                                  <div className="col-lg-4 col-md-4 col-sx-4">
-                                    <div className="form-group">
-                                      <input
-                                        className="form-control"
-                                        type="text"
-                                        placeholder="Status"
-                                        value={
-                                          profile.status == 1
-                                            ? "Active"
-                                            : "In-active"
-                                        }
-                                        readOnly
-                                      />
-                                    </div>
+                              </div>
+                              <div className="row">
+                                <div className="col-lg-2 col-md-2 col-sx-2">
+                                  <div className="form-group">
+                                    <label htmlFor="">Mobile Number</label>
                                   </div>
                                 </div>
-                              </form>
-                            ))
+                                <div className="col-lg-4 col-md-4 col-sx-4">
+                                  <div className="form-group">
+                                    <InputMask
+                                      mask="999 999 9999"
+                                      maskChar=""
+                                      className="form-control"
+                                      placeholder="Mobile Number(999 999 9999)"
+                                      value={data.mobile ? data.mobile : "-"}
+                                      readOnly
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="row">
+                                <div className="col-lg-2 col-md-2 col-sx-2">
+                                  <div className="form-group">
+                                    <label htmlFor="">Email ID</label>
+                                  </div>
+                                </div>
+                                <div className="col-lg-4 col-md-4 col-sx-4">
+                                  <div className="form-group">
+                                    <input
+                                      className="form-control"
+                                      type="text"
+                                      placeholder="Email ID"
+                                      value={data.email ? data.email : "-"}
+                                      readOnly
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="row">
+                                <div className="col-lg-2 col-md-2 col-sx-2">
+                                  <div className="form-group">
+                                    <label htmlFor="">Role</label>
+                                  </div>
+                                </div>
+                                <div className="col-lg-4 col-md-4 col-sx-4">
+                                  <div className="form-group">
+                                    <textarea
+                                      className="form-control input-field"
+                                      placeholder="Role"
+                                      value={
+                                        getRolePermissions(data).length > 0
+                                          ? getRolePermissions(data).join("\n")
+                                          : "-"
+                                      }
+                                      rows={
+                                        getRolePermissions(data).length > 0
+                                          ? getRolePermissions(data).length
+                                          : 1
+                                      }
+                                      readOnly
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="row">
+                                <div className="col-lg-2 col-md-2 col-sx-2">
+                                  <div className="form-group">
+                                    <label htmlFor="">Status</label>
+                                  </div>
+                                </div>
+                                <div className="col-lg-4 col-md-4 col-sx-4">
+                                  <div className="form-group">
+                                    <input
+                                      className="form-control"
+                                      type="text"
+                                      placeholder="Status"
+                                      value={
+                                        data.status == 1
+                                          ? "Active"
+                                          : "In-active"
+                                      }
+                                      readOnly
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                            </form>
                           ) : (
                             <p>No profile data found</p>
                           )}

@@ -5,10 +5,13 @@ import AdminNavBar from "../layouts/partner-admin-nav-bar";
 import { Row, Col, Form, Table } from "react-bootstrap";
 import axios from "axios";
 import { API_URL } from "../../../config/constant";
+import Loader from "../../loader";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 export default function AssignRole({ menuAccess }) {
+  const [loader, setLoader] = useState(false);
   const [emailId, setEmailId] = useState();
+  const [name, setName] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
   const [isMaster, setIsMaster] = useState(false);
   const [isPartnerList, setIsPartnerList] = useState(false);
@@ -60,7 +63,6 @@ export default function AssignRole({ menuAccess }) {
   };
 
   const handleResetFunc = () => {
-    setEmailId("");
     setPermissions({
       businessLoan: {
         selectAll: false,
@@ -86,6 +88,7 @@ export default function AssignRole({ menuAccess }) {
   const [agentId, setAgentId] = useState("");
   const handleSearchRecords = () => {
     // Handle form submit logic here
+    setLoader(true);
     if (emailId) {
       axios
         .post(`${API_URL}partner-user/partner-permission-detail`, {
@@ -95,6 +98,7 @@ export default function AssignRole({ menuAccess }) {
           const { data } = res;
           if (data?.status === 200) {
             setAgentId(data?.data?.partner_id);
+            setName(data?.data?.partner_name)
             const permissions = data?.data?.permissions;
             if (permissions) {
               setIsAdmin(permissions?.isAdmin);
@@ -122,15 +126,23 @@ export default function AssignRole({ menuAccess }) {
                 },
               });
             }
+            setLoader(false);
           } else {
+            setLoader(false);
+            toast.error("Please enter Valid ID!");
           }
         })
         .catch((e) => {
           console.log(e);
+          setLoader(false);
         });
+    } else {
+      toast.error("Please enter ID!");
+      setLoader(false);
     }
   };
   const handleSavePermission = () => {
+    setLoader(true);
     if (agentId) {
       const jsonFormData = {
         partnerId: agentId,
@@ -146,18 +158,24 @@ export default function AssignRole({ menuAccess }) {
           if (data?.status === 200) {
             toast.success(data?.message);
             handleResetFunc();
+            setEmailId("");
+            setName("");
           } else {
             toast.error(data?.message);
           }
+          setLoader(false);
         })
         .catch((err) => {
           console.log(err);
+          setLoader(false);
         });
     } else {
       toast.error("Please enter valid partner ID!");
     }
   };
   return (
+    <>
+    {loader && <Loader />}
     <div className="layout-wrapper">
       <div className="layout-container">
         <AdminNavBar menuAccess={menuAccess} />
@@ -194,6 +212,23 @@ export default function AssignRole({ menuAccess }) {
                   </button>
                 </Col>
               </Form.Group>
+              <Form.Group
+                  as={Row}
+                  className="mb-4 w-100"
+                  controlId="formPartnerId"
+                >
+                  <Form.Label column sm={2} className="text-center">
+                    Name
+                  </Form.Label>
+                  <Col sm={4}>
+                    <Form.Control
+                      type="string"
+                      value={name}
+                      className="text-center"
+                      disabled={true}
+                    />
+                  </Col>
+                </Form.Group>
 
               <Form.Group
                 as={Row}
@@ -272,5 +307,6 @@ export default function AssignRole({ menuAccess }) {
       </div>
       <ToastContainer />
     </div>
+    </>
   );
 }
