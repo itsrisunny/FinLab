@@ -445,7 +445,7 @@ export default function AdminNavBar({ menuAccess }) {
                     aria-controls="submenu-7"
                   >
                     <i
-                      className="fa fa-futbol-o nav-icon"
+                      className="fa fa-truck nav-icon"
                       aria-hidden="true"
                     ></i>
                     User Management
@@ -510,6 +510,57 @@ export default function AdminNavBar({ menuAccess }) {
               ) : (
                 ""
               )}
+
+              {superAdmin ? (
+                <li className="nav-item dropdownitem">
+                  <Link
+                    className={
+                      window.location.pathname ==
+                        "/admin/caseAssign/assignCases"
+                        ? "active"
+                        : ""
+                    }
+                    to="#"
+                    data-toggle="collapse"
+                    aria-expanded="true"
+                    data-target="#submenu-8"
+                    aria-controls="submenu-8"
+                  >
+                    <i
+                      className="fa fa-car nav-icon"
+                      aria-hidden="true"
+                    ></i>
+                    Case Assign
+                    <i
+                      className="fa fa-caret-down pull-right"
+                      aria-hidden="true"
+                    ></i>
+                  </Link>
+                  <div
+                    id="submenu-8"
+                    className={
+                      window.location.pathname ==
+                      "/admin/caseAssign/assignCases"
+                        ? "submenu collapse show"
+                        : "submenu collapse"
+                    }
+                  >
+                    <ul className="nav flex-column">
+                      <li className="nav-item pad">
+                        <NavLink
+                          className="nav-link"
+                          to="/admin/caseAssign/assignCases"
+                        >
+                          Assign Cases
+                        </NavLink>
+                      </li>
+                    </ul>
+                  </div>
+                </li>
+              ) : (
+                ""
+              )}
+
               {masterManagement ? (
                 <li className="nav-item dropdownitem">
                   <Link

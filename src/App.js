@@ -74,6 +74,7 @@ import AssignCases from "./component/admin/userManagement/assignCases.js";
 import AddUserManage from "./component/admin/userManagement/add-user.js";
 import AssignRole from "./component/admin/userManagement/assign-role.js";
 import AdminUserList from "./component/admin/userManagement/adminUserList.js";
+import CaseAssign from "./component/admin/CaseAssign/caseAssign.js";
 import PartnerAddUserManage from "./component/partners/userManagementPartner/add-user.js";
 import PartnerAssignRole from "./component/partners/userManagementPartner/assign-role.js";
 import PartnerAdminUserList from "./component/partners/userManagementPartner/partnerAdminUserList.js";
@@ -649,6 +650,19 @@ function App() {
             <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
               {menuAccess?.superAdmin ? (
                 <AdminUserList menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorizedAdmin menuAccess={menuAccess} />
+              )}
+            </RoleWrapper>
+          }
+          exact={true}
+        />
+        <Route
+          path="/admin/caseAssign/assignCases"
+          element={
+            <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
+              {menuAccess?.superAdmin ? (
+                <CaseAssign menuAccess={menuAccess} />
               ) : (
                 <UnAuthorizedAdmin menuAccess={menuAccess} />
               )}
