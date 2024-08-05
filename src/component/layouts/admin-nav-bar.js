@@ -445,7 +445,7 @@ export default function AdminNavBar({ menuAccess }) {
                     aria-controls="submenu-7"
                   >
                     <i
-                      className="fa fa-truck nav-icon"
+                      className="fa fa-user nav-icon"
                       aria-hidden="true"
                     ></i>
                     User Management
@@ -527,7 +527,7 @@ export default function AdminNavBar({ menuAccess }) {
                     aria-controls="submenu-8"
                   >
                     <i
-                      className="fa fa-car nav-icon"
+                      className="fa fa-file nav-icon"
                       aria-hidden="true"
                     ></i>
                     Case Assign
