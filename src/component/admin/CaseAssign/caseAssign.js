@@ -79,7 +79,6 @@ export default function CaseAssign({ menuAccess }) {
                         <Form.Control
                           type="text"
                           className="text-center"
-                          disabled={true}
                           value="bishnoicm202@gmail.com"
                         />
                       </Col>
@@ -88,34 +87,31 @@ export default function CaseAssign({ menuAccess }) {
 
                   {selectedOption === "partner" && (
                     <>
-                    <div style={{width:"50%"}}>
-                      <Row className="mb-2">
-                        <Form.Label column sm={4} className="text-center">
-                          Partner Id
-                        </Form.Label>
-                        <Col sm={8}>
-                          <Form.Control
-                            type="text"
-                            className="text-center"
-                            disabled={true}
-                            value="FP-0010030"
-                          />
-                        </Col>
+                      <div style={{ width: "50%" }}>
+                        <Row className="mb-2">
+                          <Form.Label column sm={4} className="text-center">
+                            Partner Id
+                          </Form.Label>
+                          <Col sm={8}>
+                            <Form.Control
+                              type="text"
+                              className="text-center"
+                              value="FP-0010030"
+                            />
+                          </Col>
                         </Row>
                         <Row>
-
-                        <Form.Label column sm={4} className="text-center">
-                          Agent Id
-                        </Form.Label>
-                        <Col sm={8}>
-                          <Form.Control
-                            type="text"
-                            className="text-center"
-                            disabled={true}
-                            value="FP-0010030-3"
-                          />
-                        </Col>
-                      </Row>
+                          <Form.Label column sm={4} className="text-center">
+                            Agent Id
+                          </Form.Label>
+                          <Col sm={8}>
+                            <Form.Control
+                              type="text"
+                              className="text-center"
+                              value="FP-0010030-3"
+                            />
+                          </Col>
+                        </Row>
                       </div>
                     </>
                   )}
