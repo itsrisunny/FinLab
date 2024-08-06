@@ -194,6 +194,7 @@ export default function AssignRole({ menuAccess }) {
         });
     } else {
       toast.error("Please enter valid ID!");
+      setLoader(false);
     }
   };
 

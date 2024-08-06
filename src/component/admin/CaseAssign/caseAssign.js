@@ -15,31 +15,6 @@ export default function CaseAssign({ menuAccess }) {
   const [loader, setLoader] = useState(false);
   const navigate = useNavigate();
 
-  const [selectedOption, setSelectedOption] = useState("");
-  const [loanType, setLoanType] = useState("");
-  const [email, setEmail] = useState("");
-  const [caseType, setCaseType] = useState("");
-  const handleUserTypeFunction = (event) => {
-    setSelectedOption(event.target.value);
-  };
-  const handleLoanTypeFunction = (e) => {
-    setLoanType(e.target.value);
-  };
-  const handleEmailFunction = (e) => {
-    setEmail(e.target.value);
-  };
-  const handleCaseTypeFunction = (e) => {
-    setCaseType(e.target.value);
-  };
-  const handleSearchCase = () => {
-    let jsonData = {
-      userType: selectedOption,
-      loanType: loanType,
-      email: email,
-      caseType: caseType,
-    };
-  };
-
   return (
     <>
       {loader && <Loader />}
@@ -62,11 +37,7 @@ export default function CaseAssign({ menuAccess }) {
                     Created by
                   </Form.Label>
                   <Col sm={4}>
-                    <Form.Control
-                      as="select"
-                      className="text-center"
-                      onChange={handleUserTypeFunction}
-                    >
+                    <Form.Control as="select" className="text-center">
                       <option value="customer">Customer</option>
                       <option value="agent">Agent</option>
                       <option value="partner">Partner</option>
@@ -76,20 +47,16 @@ export default function CaseAssign({ menuAccess }) {
                     Loan Type
                   </Form.Label>
                   <Col sm={4}>
-                    <Form.Control
-                      as="select"
-                      className="text-center"
-                      onChange={handleLoanTypeFunction}
-                    >
+                    <Form.Control as="select" className="text-center">
+                      <option value="Both">All Loans</option>
                       <option value="Bussiness Loan">Bussiness Loan</option>
                       <option value="Personal Loan">Personal Loan</option>
-                      <option value="Both">Both</option>
                     </Form.Control>
                   </Col>
                 </Form.Group>
                 <Form.Group
                   as={Row}
-                  className="mb-2 w-100"
+                  className="mb-4 w-100"
                   controlId="formCaseAssign"
                 >
                   <Form.Label column sm={2} className="text-center">
@@ -99,8 +66,7 @@ export default function CaseAssign({ menuAccess }) {
                     <Form.Control
                       type="text"
                       className="text-center"
-                      value={email}
-                      onChange={handleEmailFunction}
+                      value="bishnoicm202@gmail.com"
                     />
                   </Col>
 
@@ -108,11 +74,8 @@ export default function CaseAssign({ menuAccess }) {
                     Case Type
                   </Form.Label>
                   <Col sm={4}>
-                    <Form.Control
-                      as="select"
-                      className="text-center"
-                      onClick={handleCaseTypeFunction}
-                    >
+                    <Form.Control as="select" className="text-center">
+                      <option value="All Cases">All Cases</option>
                       <option value="Incomplete Lead">Incomplete Lead</option>
                       <option value="Lead">Lead</option>
                       <option value="Offered">Offered</option>
@@ -121,10 +84,10 @@ export default function CaseAssign({ menuAccess }) {
                     </Form.Control>
                   </Col>
                 </Form.Group>
-                <h5>OR</h5>
+                <h5 style={{ marginTop: "12px" }}>OR</h5>
                 <Form.Group
                   as={Row}
-                  className="mb-4 w-100"
+                  className="mb-4 mt-4 w-100 "
                   controlId="formCaseAssign"
                 >
                   <Form.Label column sm={2} className="text-center">
@@ -134,30 +97,51 @@ export default function CaseAssign({ menuAccess }) {
                     <Form.Control type="string" className="text-center" />
                   </Col>
                 </Form.Group>
-                <div className="text-center mt-2 mb-2">
-                  <button
-                    type="button"
-                    className="btn btn-primary"
-                    onClick={handleSearchCase}
-                  >
+                <div className="text-center mt-2 mb-4">
+                  <button type="button" className="btn btn-primary">
                     Search
                   </button>
                 </div>
                 <Form.Group
-                  as={Row}
-                  className=" mb-4 w-100"
+                  as={Col}
+                  sm={6}
+                  className=" mb-4 w-100 d-flex flex-column align-items-center"
                   controlId="formCaseAssign"
+                  style={{
+                    border: "1px solid #ccc",
+                    borderRadius: "10px",
+                    backgroundColor: "#f0f0f0",
+                  }}
                 >
-                  <Col sm={12}>
+                  <Col sm={6} className="mb-2 text-center">
+                    <Form.Control
+                      type="string"
+                      className="text-center"
+                      value="Name: Chander Mohan"
+                      readOnly
+                      style={{
+                        border: "none",
+                        backgroundColor: "inherit",
+                        fontSize: "20px",
+                        fontWeight: "bold",
+                        padding: "0",
+                      }}
+                    />
                     <Form.Control
                       type="string"
                       className="text-center"
                       value="Total count of leads: 3242"
+                      style={{
+                        border: "none",
+                        backgroundColor: "inherit",
+                        fontSize: "18px",
+                        padding: "0",
+                      }}
                     />
                   </Col>
                 </Form.Group>
-                <div className="topHeadings mb-2">
-                  <h3>Case Assign to Agent Id</h3>
+                <div className="topHeadings mb-2 mt-4">
+                  <h3>Assign to Agent Id</h3>
                 </div>
                 <Form.Group
                   as={Row}
