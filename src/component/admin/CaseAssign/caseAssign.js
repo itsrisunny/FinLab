@@ -13,8 +13,53 @@ import { useNavigate } from "react-router-dom";
 
 export default function CaseAssign({ menuAccess }) {
   const [loader, setLoader] = useState(false);
+  const [createdBy, setCreatedBy] = useState("customer");
+  const [loanType, setLoanType] = useState("");
+  const [email, setEmail] = useState("");
+  const [caseType, setCaseType] = useState("");
+  const [name, setName] = useState("");
+  const [totalCase, setTotalCase] = useState(0);
+  const [message, setMessage] = useState("");
   const navigate = useNavigate();
-
+  const handleCreatedByFun = (e) => {
+    setCreatedBy(e.target.value);
+  };
+  const handleLoanTypeFun = (e) => {
+    setLoanType(e.target.value);
+  };
+  const handleEmailFun = (e) => {
+    setEmail(e.target.value);
+  };
+  const handleCaseTypeFun = (e) => {
+    setCaseType(e.target.value);
+  };
+  const handleSearchFun = () => {
+    setLoader(true);
+    let jsonForm = {
+      created_by: createdBy,
+      email_id: email,
+      loan_type: loanType,
+      case_type: caseType,
+    };
+    axios
+      .post(API_URL + `search-case`, jsonForm)
+      .then((res) => {
+        const { data } = res;
+        if (data.data.status === 404) {
+          setMessage(data.data.message);
+          setName("");
+          setTotalCase(0);
+        } else {
+          setMessage("");
+          setName(data.data.name);
+          setTotalCase(data.data.totalCase);
+        }
+        setLoader(false);
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+  };
   return (
     <>
       {loader && <Loader />}
@@ -37,7 +82,11 @@ export default function CaseAssign({ menuAccess }) {
                     Created by
                   </Form.Label>
                   <Col sm={4}>
-                    <Form.Control as="select" className="text-center">
+                    <Form.Control
+                      as="select"
+                      className="text-center"
+                      onChange={handleCreatedByFun}
+                    >
                       <option value="customer">Customer</option>
                       <option value="agent">Agent</option>
                       <option value="partner">Partner</option>
@@ -47,10 +96,14 @@ export default function CaseAssign({ menuAccess }) {
                     Loan Type
                   </Form.Label>
                   <Col sm={4}>
-                    <Form.Control as="select" className="text-center">
-                      <option value="Both">All Loans</option>
-                      <option value="Bussiness Loan">Bussiness Loan</option>
-                      <option value="Personal Loan">Personal Loan</option>
+                    <Form.Control
+                      as="select"
+                      className="text-center"
+                      onChange={handleLoanTypeFun}
+                    >
+                      <option value="">All Loans</option>
+                      <option value="business">Bussiness Loan</option>
+                      <option value="personal">Personal Loan</option>
                     </Form.Control>
                   </Col>
                 </Form.Group>
@@ -66,7 +119,8 @@ export default function CaseAssign({ menuAccess }) {
                     <Form.Control
                       type="text"
                       className="text-center"
-                      value="bishnoicm202@gmail.com"
+                      onChange={handleEmailFun}
+                      value={email}
                     />
                   </Col>
 
@@ -74,13 +128,17 @@ export default function CaseAssign({ menuAccess }) {
                     Case Type
                   </Form.Label>
                   <Col sm={4}>
-                    <Form.Control as="select" className="text-center">
-                      <option value="All Cases">All Cases</option>
-                      <option value="Incomplete Lead">Incomplete Lead</option>
-                      <option value="Lead">Lead</option>
-                      <option value="Offered">Offered</option>
-                      <option value="Closed">Closed</option>
-                      <option value="Declined">Declined</option>
+                    <Form.Control
+                      as="select"
+                      className="text-center"
+                      onChange={handleCaseTypeFun}
+                    >
+                      <option value="">All Cases</option>
+                      <option value="incomplete">Incomplete Lead</option>
+                      <option value="lead">Lead</option>
+                      <option value="offered">Offered</option>
+                      <option value="closed">Closed</option>
+                      <option value="declined">Declined</option>
                     </Form.Control>
                   </Col>
                 </Form.Group>
@@ -98,7 +156,11 @@ export default function CaseAssign({ menuAccess }) {
                   </Col>
                 </Form.Group>
                 <div className="text-center mt-2 mb-4">
-                  <button type="button" className="btn btn-primary">
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={handleSearchFun}
+                  >
                     Search
                   </button>
                 </div>
@@ -113,32 +175,36 @@ export default function CaseAssign({ menuAccess }) {
                     backgroundColor: "#f0f0f0",
                   }}
                 >
-                  <Col sm={6} className="mb-2 text-center">
-                    <Form.Control
-                      type="string"
-                      className="text-center"
-                      value="Name: Chander Mohan"
-                      readOnly
-                      style={{
-                        border: "none",
-                        backgroundColor: "inherit",
-                        fontSize: "20px",
-                        fontWeight: "bold",
-                        padding: "0",
-                      }}
-                    />
-                    <Form.Control
-                      type="string"
-                      className="text-center"
-                      value="Total count of leads: 3242"
-                      style={{
-                        border: "none",
-                        backgroundColor: "inherit",
-                        fontSize: "18px",
-                        padding: "0",
-                      }}
-                    />
-                  </Col>
+                  {totalCase ? (
+                    <Col sm={6} className="mb-2 text-center">
+                      <Form.Control
+                        type="string"
+                        className="text-center"
+                        value={`Name: ${name}`}
+                        readOnly
+                        style={{
+                          border: "none",
+                          backgroundColor: "inherit",
+                          fontSize: "20px",
+                          fontWeight: "bold",
+                          padding: "0",
+                        }}
+                      />
+                      <Form.Control
+                        type="string"
+                        className="text-center"
+                        value={`Total count of leads: ${totalCase}`}
+                        style={{
+                          border: "none",
+                          backgroundColor: "inherit",
+                          fontSize: "18px",
+                          padding: "0",
+                        }}
+                      />
+                    </Col>
+                  ) : (
+                    message
+                  )}
                 </Form.Group>
                 <div className="topHeadings mb-2 mt-4">
                   <h3>Assign to Agent Id</h3>
@@ -155,7 +221,7 @@ export default function CaseAssign({ menuAccess }) {
                     <Form.Control
                       type="string"
                       className="text-center"
-                      value="264,345"
+                      value=""
                     />
                   </Col>
                 </Form.Group>
