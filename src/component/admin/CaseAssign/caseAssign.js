@@ -15,12 +15,6 @@ export default function CaseAssign({ menuAccess }) {
   const [loader, setLoader] = useState(false);
   const navigate = useNavigate();
 
-  const [selectedOption, setSelectedOption] = useState("customer");
-
-  const handleDropdownChange = (event) => {
-    setSelectedOption(event.target.value);
-  };
-
   return (
     <>
       {loader && <Loader />}
@@ -43,11 +37,7 @@ export default function CaseAssign({ menuAccess }) {
                     Created by
                   </Form.Label>
                   <Col sm={4}>
-                    <Form.Control
-                      as="select"
-                      className="text-center"
-                      onChange={handleDropdownChange}
-                    >
+                    <Form.Control as="select" className="text-center">
                       <option value="customer">Customer</option>
                       <option value="agent">Agent</option>
                       <option value="partner">Partner</option>
@@ -58,68 +48,34 @@ export default function CaseAssign({ menuAccess }) {
                   </Form.Label>
                   <Col sm={4}>
                     <Form.Control as="select" className="text-center">
+                      <option value="Both">All Loans</option>
                       <option value="Bussiness Loan">Bussiness Loan</option>
                       <option value="Personal Loan">Personal Loan</option>
-                      <option value="Both">Both</option>
                     </Form.Control>
                   </Col>
                 </Form.Group>
                 <Form.Group
                   as={Row}
-                  className="mb-2 w-100"
+                  className="mb-4 w-100"
                   controlId="formCaseAssign"
                 >
-                  {(selectedOption === "customer" ||
-                    selectedOption === "agent") && (
-                    <>
-                      <Form.Label column sm={2} className="text-center">
-                        From Email ID
-                      </Form.Label>
-                      <Col sm={4}>
-                        <Form.Control
-                          type="text"
-                          className="text-center"
-                          value="bishnoicm202@gmail.com"
-                        />
-                      </Col>
-                    </>
-                  )}
+                  <Form.Label column sm={2} className="text-center">
+                    From Email ID
+                  </Form.Label>
+                  <Col sm={4}>
+                    <Form.Control
+                      type="text"
+                      className="text-center"
+                      value="bishnoicm202@gmail.com"
+                    />
+                  </Col>
 
-                  {selectedOption === "partner" && (
-                    <>
-                      <div style={{ width: "50%" }}>
-                        <Row className="mb-2">
-                          <Form.Label column sm={4} className="text-center">
-                            Partner Id
-                          </Form.Label>
-                          <Col sm={8}>
-                            <Form.Control
-                              type="text"
-                              className="text-center"
-                              value="FP-0010030"
-                            />
-                          </Col>
-                        </Row>
-                        <Row>
-                          <Form.Label column sm={4} className="text-center">
-                            Agent Id
-                          </Form.Label>
-                          <Col sm={8}>
-                            <Form.Control
-                              type="text"
-                              className="text-center"
-                              value="FP-0010030-3"
-                            />
-                          </Col>
-                        </Row>
-                      </div>
-                    </>
-                  )}
                   <Form.Label column sm={2} className="text-center">
                     Case Type
                   </Form.Label>
                   <Col sm={4}>
                     <Form.Control as="select" className="text-center">
+                      <option value="All Cases">All Cases</option>
                       <option value="Incomplete Lead">Incomplete Lead</option>
                       <option value="Lead">Lead</option>
                       <option value="Offered">Offered</option>
@@ -128,10 +84,10 @@ export default function CaseAssign({ menuAccess }) {
                     </Form.Control>
                   </Col>
                 </Form.Group>
-                <h5>OR</h5>
+                <h5 style={{ marginTop: "12px" }}>OR</h5>
                 <Form.Group
                   as={Row}
-                  className="mb-4 w-100"
+                  className="mb-4 mt-4 w-100 "
                   controlId="formCaseAssign"
                 >
                   <Form.Label column sm={2} className="text-center">
@@ -141,26 +97,51 @@ export default function CaseAssign({ menuAccess }) {
                     <Form.Control type="string" className="text-center" />
                   </Col>
                 </Form.Group>
-                <div className="text-center mt-2 mb-2">
+                <div className="text-center mt-2 mb-4">
                   <button type="button" className="btn btn-primary">
                     Search
                   </button>
                 </div>
                 <Form.Group
-                  as={Row}
-                  className=" mb-4 w-100"
+                  as={Col}
+                  sm={6}
+                  className=" mb-4 w-100 d-flex flex-column align-items-center"
                   controlId="formCaseAssign"
+                  style={{
+                    border: "1px solid #ccc",
+                    borderRadius: "10px",
+                    backgroundColor: "#f0f0f0",
+                  }}
                 >
-                  <Col sm={12}>
+                  <Col sm={6} className="mb-2 text-center">
+                    <Form.Control
+                      type="string"
+                      className="text-center"
+                      value="Name: Chander Mohan"
+                      readOnly
+                      style={{
+                        border: "none",
+                        backgroundColor: "inherit",
+                        fontSize: "20px",
+                        fontWeight: "bold",
+                        padding:"0"
+                      }}
+                    />
                     <Form.Control
                       type="string"
                       className="text-center"
                       value="Total count of leads: 3242"
+                      style={{
+                        border: "none",
+                        backgroundColor: "inherit",
+                        fontSize: "18px",
+                        padding:"0"
+                      }}
                     />
                   </Col>
                 </Form.Group>
-                <div className="topHeadings mb-2">
-                  <h3>Case Assign to Agent Id</h3>
+                <div className="topHeadings mb-2 mt-4">
+                  <h3>Assign to Agent Id</h3>
                 </div>
                 <Form.Group
                   as={Row}
