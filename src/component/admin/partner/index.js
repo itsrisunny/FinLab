@@ -106,7 +106,7 @@ const LeadCase = ({ menuAccess }) => {
 
   return (
     <>
-    {loader && <Loader />}
+      {loader && <Loader />}
       <div className="layout-wrapper">
         <div className="layout-container">
           <AdminNavBar menuAccess={menuAccess} />
@@ -172,7 +172,7 @@ const LeadCase = ({ menuAccess }) => {
                                   <th className="table-head">Email Id</th>
                                   <th className="table-head">Phone Number</th>
                                   <th className="table-head">PAN</th>
-                                  <th className="table-head">GST</th>
+                                  <th className="table-head">Agent</th>
                                   <th className="table-head">Register As</th>
                                   <th className="table-head">Applied Date</th>
                                   <th className="table-head">Status</th>
@@ -206,7 +206,16 @@ const LeadCase = ({ menuAccess }) => {
                                     <td className="table-body">
                                       {row.pan_card}
                                     </td>
-                                    <td className="table-body">{row.gst}</td>
+                                    <td className="table-body">
+                                      <Link
+                                        to={
+                                          `/admin/partner/index/` +
+                                          row.partner_id
+                                        }
+                                      >
+                                        {row.child_count}
+                                      </Link>
+                                    </td>
                                     <td className="table-body">
                                       {row.register_as}
                                     </td>

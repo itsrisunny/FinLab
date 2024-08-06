@@ -377,7 +377,10 @@ export default function AdminNavBar({ menuAccess }) {
                       window.location.pathname == "/admin/partner/index" ||
                       window.location.pathname
                         .toLowerCase()
-                        .includes("/admin/partner-detail")
+                        .includes("/admin/partner-detail") ||
+                      window.location.pathname
+                        .toLowerCase()
+                        .includes("/admin/partner/index")
                         ? "active"
                         : ""
                     }
@@ -400,7 +403,10 @@ export default function AdminNavBar({ menuAccess }) {
                       window.location.pathname == "/admin/partner/index" ||
                       window.location.pathname
                         .toLowerCase()
-                        .includes("/admin/partner-detail")
+                        .includes("/admin/partner-detail") ||
+                      window.location.pathname
+                        .toLowerCase()
+                        .includes("/admin/partner/index")
                         ? "submenu collapse show"
                         : "submenu collapse"
                     }
@@ -444,10 +450,7 @@ export default function AdminNavBar({ menuAccess }) {
                     data-target="#submenu-7"
                     aria-controls="submenu-7"
                   >
-                    <i
-                      className="fa fa-truck nav-icon"
-                      aria-hidden="true"
-                    ></i>
+                    <i className="fa fa-truck nav-icon" aria-hidden="true"></i>
                     User Management
                     <i
                       className="fa fa-caret-down pull-right"
@@ -516,7 +519,7 @@ export default function AdminNavBar({ menuAccess }) {
                   <Link
                     className={
                       window.location.pathname ==
-                        "/admin/caseAssign/assignCases"
+                      "/admin/caseAssign/assignCases"
                         ? "active"
                         : ""
                     }
@@ -526,10 +529,7 @@ export default function AdminNavBar({ menuAccess }) {
                     data-target="#submenu-8"
                     aria-controls="submenu-8"
                   >
-                    <i
-                      className="fa fa-car nav-icon"
-                      aria-hidden="true"
-                    ></i>
+                    <i className="fa fa-car nav-icon" aria-hidden="true"></i>
                     Case Assign
                     <i
                       className="fa fa-caret-down pull-right"

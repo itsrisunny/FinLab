@@ -25,6 +25,7 @@ import AdminLeadCase from "./component/admin/case/leadCase.js";
 import AdminIncompleteLeadCase from "./component/admin/case/incompleteLeadCase.js";
 import AdminDeclinedLeadCases from "./component/admin/case/declinedCases.js";
 import AdminPartnerList from "./component/admin/partner/index.js";
+import AdminPartnerAgentList from "./component/admin/partner/agentList.js";
 import AdminPartnerView from "./component/admin/partner/partnerView.js";
 import AdminPartnerAssignRole from "./component/admin/partner/assignRole.js";
 import AdminWecomedUserList from "./component/admin/case/listWelcomeCases.js";
@@ -220,6 +221,20 @@ function App() {
             <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
               {menuAccess?.partnerManagement ? (
                 <AdminPartnerList menuAccess={menuAccess} />
+              ) : (
+                <UnAuthorizedAdmin menuAccess={menuAccess} />
+              )}
+            </RoleWrapper>
+          }
+          exact={true}
+        />
+
+        <Route
+          path="/admin/partner/index/:parentId"
+          element={
+            <RoleWrapper role="Admin" setMenuAccess={setMenuAccess}>
+              {menuAccess?.partnerManagement ? (
+                <AdminPartnerAgentList menuAccess={menuAccess} />
               ) : (
                 <UnAuthorizedAdmin menuAccess={menuAccess} />
               )}
