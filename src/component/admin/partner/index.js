@@ -11,6 +11,7 @@ import CurrencyFormat from "react-currency-format";
 import Paginator from "react-hooks-paginator";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Button } from "react-bootstrap";
 
 const LIMIT = 10;
 
@@ -207,14 +208,17 @@ const LeadCase = ({ menuAccess }) => {
                                       {row.pan_card}
                                     </td>
                                     <td className="table-body">
-                                      <Link
-                                        to={
-                                          `/admin/partner/index/` +
-                                          row.partner_id
-                                        }
+                                      <Button
+                                        variant="link"
+                                        href={`/admin/partner/index/${row.partner_id}`}
+                                        className="btn btn-view"
+                                        style={{
+                                          textDecoration: "none",
+                                          width:"100%"
+                                        }}
                                       >
                                         {row.child_count}
-                                      </Link>
+                                      </Button>
                                     </td>
                                     <td className="table-body">
                                       {row.register_as}

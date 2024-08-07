@@ -58,6 +58,8 @@ export default function CaseAssign({ menuAccess }) {
       })
       .catch((res) => {
         console.log(res);
+        setLoader(false);
+        toast.error("No valid Id in this Created by");
       });
   };
   return (
@@ -176,7 +178,7 @@ export default function CaseAssign({ menuAccess }) {
                   }}
                 >
                   {totalCase ? (
-                    <Col sm={6} className="mb-2 text-center">
+                    <Col sm={12} className="mb-2 text-center">
                       <Form.Control
                         type="string"
                         className="text-center"
@@ -188,6 +190,10 @@ export default function CaseAssign({ menuAccess }) {
                           fontSize: "20px",
                           fontWeight: "bold",
                           padding: "0",
+                          whiteSpace: "nowrap",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          width: "100%",
                         }}
                       />
                       <Form.Control
