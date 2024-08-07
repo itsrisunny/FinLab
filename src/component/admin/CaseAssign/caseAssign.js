@@ -10,7 +10,7 @@ import axios from "axios";
 import { API_URL } from "../../../config/constant";
 import Loader from "../../loader";
 import { useNavigate } from "react-router-dom";
-
+import Swal from "sweetalert2";
 export default function CaseAssign({ menuAccess }) {
   const [loader, setLoader] = useState(false);
   const [createdBy, setCreatedBy] = useState("customer");
@@ -20,6 +20,9 @@ export default function CaseAssign({ menuAccess }) {
   const [name, setName] = useState("");
   const [totalCase, setTotalCase] = useState(0);
   const [message, setMessage] = useState("");
+  const [from, setFrom] = useState("");
+  const [cases, setCases] = useState([]);
+  const [agentsIds, setAgentsIds] = useState("");
   const navigate = useNavigate();
   const handleCreatedByFun = (e) => {
     setCreatedBy(e.target.value);
@@ -49,16 +52,57 @@ export default function CaseAssign({ menuAccess }) {
           setMessage(data.data.message);
           setName("");
           setTotalCase(0);
+          setFrom("");
+          setCases([]);
         } else {
           setMessage("");
           setName(data.data.name);
           setTotalCase(data.data.totalCase);
+          setFrom(data.data.id);
+          setCases(data.data.caseNumbers);
         }
         setLoader(false);
       })
       .catch((res) => {
         console.log(res);
       });
+  };
+  const handleAgentId = (e) => {
+    setAgentsIds(e.target.value);
+  };
+  const handleFormSubmit = () => {
+    if (cases.length && agentsIds) {
+      setLoader(true);
+      let formData = {
+        from: from,
+        created_by: localStorage.getItem("adminId"),
+        cases: cases,
+        to: agentsIds,
+      };
+      console.log(formData);
+      axios
+        .post(API_URL + `search-case/asign`, formData)
+        .then((res) => {
+          setLoader(false);
+          Swal.fire({
+            icon: "success",
+            title: "Success!",
+            text: "Cases has been successfully transfered",
+            showDenyButton: false,
+            showCancelButton: false,
+            confirmButtonText: "OK",
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+          }).then((result) => {
+            if (result.isConfirmed) {
+              //window.location.reload();
+            }
+          });
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
   };
   return (
     <>
@@ -175,36 +219,32 @@ export default function CaseAssign({ menuAccess }) {
                     backgroundColor: "#f0f0f0",
                   }}
                 >
-                  {totalCase ? (
-                    <Col sm={6} className="mb-2 text-center">
-                      <Form.Control
-                        type="string"
-                        className="text-center"
-                        value={`Name: ${name}`}
-                        readOnly
-                        style={{
-                          border: "none",
-                          backgroundColor: "inherit",
-                          fontSize: "20px",
-                          fontWeight: "bold",
-                          padding: "0",
-                        }}
-                      />
-                      <Form.Control
-                        type="string"
-                        className="text-center"
-                        value={`Total count of leads: ${totalCase}`}
-                        style={{
-                          border: "none",
-                          backgroundColor: "inherit",
-                          fontSize: "18px",
-                          padding: "0",
-                        }}
-                      />
-                    </Col>
-                  ) : (
-                    message
-                  )}
+                  <Col sm={6} className="mb-2 text-center">
+                    <Form.Control
+                      type="string"
+                      className="text-center"
+                      value={`Name: ${name}`}
+                      readOnly
+                      style={{
+                        border: "none",
+                        backgroundColor: "inherit",
+                        fontSize: "20px",
+                        fontWeight: "bold",
+                        padding: "0",
+                      }}
+                    />
+                    <Form.Control
+                      type="string"
+                      className="text-center"
+                      value={`Total count of leads: ${totalCase}`}
+                      style={{
+                        border: "none",
+                        backgroundColor: "inherit",
+                        fontSize: "18px",
+                        padding: "0",
+                      }}
+                    />
+                  </Col>
                 </Form.Group>
                 <div className="topHeadings mb-2 mt-4">
                   <h3>Assign to Agent Id</h3>
@@ -221,7 +261,8 @@ export default function CaseAssign({ menuAccess }) {
                     <Form.Control
                       type="string"
                       className="text-center"
-                      value=""
+                      onChange={handleAgentId}
+                      placeholder="Enter Agent ID (If you want to assign multipe agents then add Id with ,)"
                     />
                   </Col>
                 </Form.Group>
@@ -230,7 +271,11 @@ export default function CaseAssign({ menuAccess }) {
                     Close
                   </button>
                   &nbsp;
-                  <button type="button" className="btn btn-primary">
+                  <button
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={handleFormSubmit}
+                  >
                     Submit
                   </button>
                 </div>
