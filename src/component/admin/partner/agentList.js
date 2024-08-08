@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import AdminHeader from "../../layouts/admin-header";
 import { useParams } from "react-router-dom";
 import AdminFooter from "../../layouts/admin-footer";
@@ -10,6 +11,7 @@ const LIMIT = 10;
 export default function AgentList({ menuAccess }) {
   let { parentId } = useParams();
   const [loader, setLoader] = useState(false);
+  const navigate = useNavigate();
   const [data, setData] = useState([]);
   useEffect(() => {
     getAllPartnersData();
@@ -31,6 +33,10 @@ export default function AgentList({ menuAccess }) {
         setLoader(false);
       });
   };
+
+  const handleBackButton = () => {
+    navigate(-1);
+  };
   return (
     <>
       {loader && <Loader />}
@@ -42,6 +48,13 @@ export default function AgentList({ menuAccess }) {
             <div className="mainContent">
               <div className="topHeadings">
                 <h3>Partner's Agent List</h3>
+                <button
+                    className="btn-warning"
+                    style={{ height: "2rem" }}
+                    onClick={handleBackButton}
+                  >
+                    Back
+                  </button>
               </div>
               <div className="contentBlocks">
                 <div className="sectionTable">

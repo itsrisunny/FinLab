@@ -210,11 +210,16 @@ const LeadCase = ({ menuAccess }) => {
                                     <td className="table-body">
                                       <Button
                                         variant="link"
-                                        href={`/admin/partner/index/${row.partner_id}`}
+                                        href={
+                                          row.child_count === 0
+                                            ? "#"
+                                            : `/admin/partner/index/${row.partner_id}`
+                                        }
                                         className="btn btn-view"
                                         style={{
                                           textDecoration: "none",
-                                          width:"100%"
+                                          width: "100%",
+                                          pointerEvents: row.child_count === 0 ? "none" : "auto",
                                         }}
                                       >
                                         {row.child_count}
